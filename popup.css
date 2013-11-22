@@ -1,0 +1,28 @@
+#popup-wrapper {
+  font-family: OpenDyslexic;
+  padding: 10px;
+  min-width: 350px;
+}
+h3:first-child {
+  margin-top: 0;
+}
+ul {
+  padding-left: 0;
+}
+li {
+  list-style: none;
+  padding: 5px;
+  margin-bottom: 4px;
+}
+a {
+  display: block;
+  text-decoration: none;
+}
+
+.color {
+  width: 70%;
+}
+
+.apply {
+  width: 25%;
+}
