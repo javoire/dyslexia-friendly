@@ -20,7 +20,6 @@ chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
         };
       };
       break;
-
     case "font-color":
       console.log('changing font color to', message.value);
       var all = document.getElementsByTagName("*");
