@@ -45,7 +45,7 @@ body .abImageBlock img{
   height:100% !important;
 }
 h1, h2, h3, h4, h5, h6, .abH{
-  font-family:OpenDyslexic,sans-serif!important;
+  /*font-family:OpenDyslexic,sans-serif!important;*/
 }
 #abBody{
   min-width: 100% !important;
@@ -58,7 +58,7 @@ h1, h2, h3, h4, h5, h6, .abH{
 
 @media screen and (max-width: 480px) {
   body{
-    font-family:OpenDyslexic,sans-serif!important;
+    /*font-family:OpenDyslexic,sans-serif!important;*/
     color:rgb(1,2,49);
 
   }
@@ -82,7 +82,7 @@ h1, h2, h3, h4, h5, h6, .abH{
 
   }
   body{
-    font-family:OpenDyslexic,sans-serif!important;
+    /*font-family:OpenDyslexic,sans-serif!important;*/
 
   }
   p{
@@ -101,15 +101,15 @@ p,p.postText{
 }
 @media print {
   *{
-    font-family:OpenDyslexic,sans-serif!important;
+    /*font-family:OpenDyslexic,sans-serif!important;*/
 
   }
   body{
-    font-family:OpenDyslexic,sans-serif!important;
+    /*font-family:OpenDyslexic,sans-serif!important;*/
 
   }
   p{
-    font-family:OpenDyslexic,sans-serif!important;
+    /*font-family:OpenDyslexic,sans-serif!important;*/
 
   }
 
@@ -128,7 +128,7 @@ li:nth-child(even){
 
 }
 *,input,.postText{
-  font-family:OpenDyslexic,sans-serif!important;
+  /*font-family:OpenDyslexic,sans-serif!important;*/
   letter-spacing:.1em;
 
 }

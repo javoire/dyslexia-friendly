@@ -5,9 +5,10 @@ chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
 
   chrome.tabs.getSelected(null, function(tab){
     var msg = {
-      type: request.type, 
-      color: request.color
+      type: request.type,
+      value: request.value
     };
+
     console.log('background.js sending message to content script', msg);
     chrome.tabs.sendMessage(tab.id, msg);
   });
