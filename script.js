@@ -8,8 +8,9 @@ for (var i = all.length - 1; i >= 0; i--) {
 };
 
 chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
+  console.log('content script received message', message);
   switch(message.type) {
-    case "colors-div":
+    case "bg-color":
     console.log('content script received message from background.js', message.color);
 
     var all = document.getElementsByTagName("*");

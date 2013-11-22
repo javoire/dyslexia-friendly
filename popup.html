@@ -3,7 +3,7 @@
   #popup-wrapper {
     font-family: OpenDyslexic;
     padding: 10px;
-    min-width: 200px;
+    min-width: 350px;
   }
   h3:first-child {
     margin-top: 0;
@@ -20,28 +20,40 @@
     display: block;
     text-decoration: none;
   }
+
+  .color {
+    width: 70%;
+  }
+  .apply {
+    width: 25%;
+  }
 </style>
+<script type="text/javascript" src="jscolor/jscolor.js"></script>
 <script type="text/javascript" src="popup.js"></script>
 <div id="popup-wrapper">
   <h3>Font</h3>
   <ul>
-    <li>Open Dyslectic</li>
-    <li>Comic Sans</li>
+    <li><a href="#">Open Dyslectic</a></li>
+    <li><a href="#">Comic Sans</a></li>
   </ul>
   <h3>Font Color</h3>
   <ul>
-    <li style="background-color: #fff;"><a href="#" data-color="#fff">&nbsp;</a></li>
+    <input class="color">
+    <input type="submit" class="apply" id="apply-font-color" value="Apply">
+<!--     <li style="background-color: #fff;"><a href="#" data-color="#fff">&nbsp;</a></li>
     <li style="background-color: #eee;"><a href="#" data-color="#eee">&nbsp;</a></li>
     <li style="background-color: #00F;"><a href="#" data-color="#00F">&nbsp;</a></li>
     <li style="background-color: #0F0;"><a href="#" data-color="#0F0">&nbsp;</a></li>
-    <li style="background-color: #F00;"><a href="#" data-color="#F00">&nbsp;</a></li>
+    <li style="background-color: #F00;"><a href="#" data-color="#F00">&nbsp;</a></li> -->
   </ul>
   <h3>Background Color</h3>
   <ul>
-    <li style="background-color: #fff;"><a href="#" data-color="#fff">&nbsp;</a></li>
+    <input class="color">
+    <input type="submit" class="apply" id="apply-bg-color" value="Apply">
+  <!--   <li style="background-color: #fff;"><a href="#" data-color="#fff">&nbsp;</a></li>
     <li style="background-color: #eee;"><a href="#" data-color="#eee">&nbsp;</a></li>
     <li style="background-color: #00F;"><a href="#" data-color="#00F">&nbsp;</a></li>
     <li style="background-color: #0F0;"><a href="#" data-color="#0F0">&nbsp;</a></li>
-    <li style="background-color: #F00;"><a href="#" data-color="#F00">&nbsp;</a></li>
+    <li style="background-color: #F00;"><a href="#" data-color="#F00">&nbsp;</a></li> -->
   </ul>
 </div>
