@@ -1,8 +1,15 @@
 {
   "name": "Dyslexia friendly",
-  "description": "Make the current page dyslexia friendly",
-  "icons": { "128": "icon.png"},
   "version": "1.0",
+  "manifest_version": 2,
+  "icons": { 
+    "128": "icon.png"
+  },
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Make this page dyslexia friendly",
+    "default_popup": "popup.html"
+  },
   "permissions": [
     "activeTab"
   ],
@@ -11,12 +18,33 @@
     "persistent": false
   },
   "content_scripts": [ {
-    "css":        ["style.css"],
-    "matches": [ "http://*/*", "https://*/*"]
-  }],
-  "browser_action": {
-    "default_title": "Make this page dyslexia friendly",
-	"default_icon": "icon.png"
-  },
-  "manifest_version": 2
+    "matches": [ "http://*/*", "https://*/*"],
+    "js": ["script.js"],
+    "css": ["font.css","style.css"]
+  }]
 }
+
+// {
+//   "name": "Dyslexia friendly",
+//   "description": "Make the current page dyslexia friendly",
+//   "icons": { "128": "icon.png"},
+//   "version": "1.0",
+//   "permissions": [
+//     "activeTab"
+//   ],
+//   // "background": {
+//   //   "scripts": ["background.js"],
+//   //   "persistent": false
+//   // },
+//   "content_scripts": [ {
+//     // "css":        ["style.css"],
+//     "matches": [ "http://*/*", "https://*/*"]
+//   }],
+//   "browser_action": {
+//     "default_title": "Make this page dyslexia friendly",
+//     "default_popup": "popup.html",
+// 	"default_icon": "icon.png"
+//   },
+//   "manifest_version": 2
+//   // "web_accessible_resources": ["script.js", "popup.html"]
+// }

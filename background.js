@@ -1,9 +1,18 @@
-// Körs när ikonen klickas i chrome
-chrome.browserAction.onClicked.addListener(function(tab) {
-  console.log('Turning ' + tab.url + ' red!');
-chrome.tabs.executeScript( null, {code:"var x = 10; x"},
-   function(results){ console.log(results);} );
+console.log('background.js loaded');
+
+chrome.extension.onMessage.addListener(function(request, sender, sendResponse) {
+  switch(request.type) {
+    case "color-divs":
+    console.log('click event in popup received', request.color);
+    chrome.tabs.getSelected(null, function(tab){
+      console.log('background.js sending message to content script');
+      chrome.tabs.sendMessage(tab.id, {
+        type: "colors-div", 
+        color: request.color
+      });
+    });
+
+    break;
+  }
+  return true;
 });
-function magic(){
-document.body.style.backgroundColor="red";
-}
