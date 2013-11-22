@@ -1,0 +1,3 @@
+"matches": [ "http://www.aftonbladet.se/*", "http://aftonbladet.se/*"]
+
+"matches": [ "http://*/*", "https://*/*"]

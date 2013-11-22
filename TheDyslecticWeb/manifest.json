@@ -1,0 +1,22 @@
+{
+  "name": "Dyslexia friendly",
+  "description": "Make the current page dyslexia friendly",
+  "icons": { "128": "icon.png"},
+  "version": "1.0",
+  "permissions": [
+    "activeTab"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [ {
+    "css":        ["style.css"],
+    "matches": [ "http://*/*", "https://*/*"]
+  }],
+  "browser_action": {
+    "default_title": "Make this page dyslexia friendly",
+	"default_icon": "icon.png"
+  },
+  "manifest_version": 2
+}
