@@ -26,12 +26,23 @@ function injectCss(e) {
 }
 
 window.onload = function() {
-    document.getElementById('apply-bg-color').addEventListener('click', injectCss, false);
-    document.getElementById('apply-font-color').addEventListener('click', injectCss, false);
+    // document.getElementById('apply-bg-color').addEventListener('click', injectCss, false);
+    // document.getElementById('apply-font-color').addEventListener('click', injectCss, false);
 
     // add listeners to font links
     var fontLinks = document.querySelectorAll('.font-list li a');
+
+    function setSelected(e) {
+        // clear seletec
+        for (var i = fontLinks.length - 1; i >= 0; i--) {
+            fontLinks[i].className = "";
+        };
+        // set clicked as selected
+        e.target.className = "selected";
+    }
+
     for (var i = fontLinks.length - 1; i >= 0; i--) {
         fontLinks[i].addEventListener('click', injectCss, false);
+        fontLinks[i].addEventListener('click', setSelected, false);
     }
 };
