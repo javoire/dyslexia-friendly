@@ -18,7 +18,7 @@
             "19": "images/icon-19.png",
             "38": "images/icon-38.png"
         },
-        "default_title": "Increases readability of this webpage",
+        "default_title": "Increases readability of web pages",
         "default_popup": "popup.html"
     },
     "options_page": "options.html",
@@ -42,8 +42,8 @@
     "permissions": [
         "activeTab",
         "background",
-        "http://*/",
-        "https://*/"
+        "http://*/*",
+        "https://*/*"
     ],
     "web_accessible_resources": [
         "fonts/opendyslexic-regular-webfont.eot",
