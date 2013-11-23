@@ -9,19 +9,19 @@ function injectCss(e) {
     var value = e.target.getAttribute('data-value');
 
     if (key.match(/color/)) {
-        value = "#" + e.target.parentNode.querySelectorAll('.color')[0].value; // get hex color from input
+        value = '#' + e.target.parentNode.querySelectorAll('.color')[0].value; // get hex color from input
     } else if (key.match(/font/)) {
         value = '"' + value + '"';
     }
 
     switch(type) {
-        case 'css':
-            var css = '* { ' + key + ': ' + value + ' !important}';
-            console.log('injecting css from popup.js', css);
-            chrome.tabs.insertCSS({
-                code: css
-            });  
-            break;
+    case 'css':
+        var css = '* { ' + key + ': ' + value + ' !important}';
+        console.log('injecting css from popup.js', css);
+        chrome.tabs.insertCSS({
+            code: css
+        });
+        break;
     }
 }
 
