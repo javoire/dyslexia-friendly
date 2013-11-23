@@ -222,12 +222,26 @@ module.exports = function (grunt) {
                         'images/{,*/}*.{webp,gif}',
                         '_locales/{,*/}*.json'
                     ]
-                }, {
+                },{
                     expand: true,
                     cwd: '.tmp/images',
                     dest: '<%= yeoman.dist %>/images',
                     src: [
                         'generated/*'
+                    ]
+                },{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        'scripts/lib/jscolor/{,*/}*.{png,gif}'
+                    ]
+                },{
+                    expand: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.dist %>',
+                    src: [
+                        'fonts/*'
                     ]
                 }]
             }
