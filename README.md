@@ -17,8 +17,10 @@ in Google Chrome, enable "Developer mode", click "Load unpacked extension" and s
 
 It will soon be available as a download in Google Play
 
-Based on
+Credits
 --------
+
+This extension is based on resources and ideas from:
 
 * http://antijingoist.github.io/web-accessibility/
 * http://opendyslexic.org/
