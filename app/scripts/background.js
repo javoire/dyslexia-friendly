@@ -2,10 +2,6 @@
 
 console.log('background.js loaded');
 
-chrome.runtime.onInstalled.addListener( function (details) {
-    console.log('previousVersion', details.previousVersion);
-});
-
 // forward incoming msg from popup to content script
 // chrome.extension.onMessage.addListener(function(message, sender, sendResponse) {
 chrome.extension.onMessage.addListener(function(message) {
