@@ -13,7 +13,7 @@ $(document).ready(function(){
         $(data).appendTo('body');
     });
     $('body').mousemove(function(event) {
-        $("#ruler").css('top', event.pageY - 30);
-        $("#ruler").css('width', $(window).innerWidth());
+        $('#ruler').css('top', event.pageY - 30);
+        $('#ruler').css('width', $(window).innerWidth());
     });
 });
