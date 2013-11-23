@@ -111,10 +111,10 @@ p:hover, li:hover {
 /* Ruler */
 
 #ruler {
-  height: 1.4em;
+  height: 1.6em;
   background-color: rgba(0,0,0,.1);
   position: absolute;
-  top:-100px;
+  top:-50px;
   z-index: 10000000000;
 }
 
