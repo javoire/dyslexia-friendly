@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <link href="styles/main.css" rel="stylesheet">
+    <!-- build:js scripts/lib.js -->
+    <script src="bower_components/jscolor/jscolor.js"></script>
+    <!-- endbuild -->
+
+<!--    <script src="bower_components/jquery.highlight-3.js"></script>
+    <script src="bower_components/symbolpop.js"></script>-->
+
+    <!-- build:js scripts/popup.js -->
+    <script src="scripts/popup.js"></script>
+    <!-- endbuild -->
+  </head>
+  <body>
+    <!-- CHROME EXTENSION POPUP -->
+    <div id="popup-wrapper">
+      <h3>Font</h3>
+      <ul class="font-list">
+        <li><a data-type="css" data-key="font-family" data-value="opendyslexic" href="#">Open Dyslexic</a></li>
+        <li><a data-type="css" data-key="font-family" data-value="Comic Sans MS" href="#">Comic Sans</a></li>
+      </ul>     
+      <h3>Font Color</h3>
+      <ul>
+        <input class="color">
+        <input type="submit" class="apply" id="apply-font-color" data-type="css" data-key="color" value="Apply">
+      </ul>
+      <h3>Background Color</h3>
+      <ul>
+        <input class="color">
+        <input type="submit" class="apply" id="apply-bg-color" data-type="css" data-key="background-color" value="Apply">
+      </ul>
+    </div>
+  </body>
+</html>
