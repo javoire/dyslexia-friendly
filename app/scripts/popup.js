@@ -3,7 +3,7 @@
 console.log('popup.js loaded');
 
 // TODO: standardise message sending
-function injectCss(e) {
+function onSettingClicked(e) {
     var type = e.target.getAttribute('data-type');
     var key = e.target.getAttribute('data-key');
     var value = e.target.getAttribute('data-value');
@@ -16,18 +16,23 @@ function injectCss(e) {
 
     switch(type) {
     case 'css':
-        var css = '* { ' + key + ': ' + value + ' !important}';
-        console.log('injecting css from popup.js', css);
-        chrome.tabs.insertCSS({
-            code: css
+        chrome.runtime.sendMessage({
+            message: 'css',
+            data: {
+                key: key,
+                value: value
+            }
         });
         break;
     }
+
+    // save setting in storage
+    chrome.storage.sync.set({'dfFont': value});
 }
 
 window.onload = function() {
-    // document.getElementById('apply-bg-color').addEventListener('click', injectCss, false);
-    // document.getElementById('apply-font-color').addEventListener('click', injectCss, false);
+    // document.getElementById('apply-bg-color').addEventListener('click', onSettingClicked, false);
+    // document.getElementById('apply-font-color').addEventListener('click', onSettingClicked, false);
 
     // add listeners to font links
     var fontLinks = document.querySelectorAll('.font-list li a');
@@ -35,14 +40,14 @@ window.onload = function() {
     function setSelected(e) {
         // clear seletec
         for (var i = fontLinks.length - 1; i >= 0; i--) {
-            fontLinks[i].className = "";
-        };
+            fontLinks[i].className = '';
+        }
         // set clicked as selected
-        e.target.className = "selected";
+        e.target.className = 'selected';
     }
 
     for (var i = fontLinks.length - 1; i >= 0; i--) {
-        fontLinks[i].addEventListener('click', injectCss, false);
+        fontLinks[i].addEventListener('click', onSettingClicked, false);
         fontLinks[i].addEventListener('click', setSelected, false);
     }
 };

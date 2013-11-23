@@ -2,6 +2,10 @@
 
 console.log('[CONTENT SCRIPT] content script loaded');
 
+// load saved settings
+// send message to background.js and tell it to inject font from storage
+chrome.runtime.sendMessage({ message: 'init' } );
+
 $(document).ready(function(){
     console.log('[CONTENT SCRIPT] document loaded and jquery is with us!');
     
@@ -13,7 +17,7 @@ $(document).ready(function(){
         $(data).appendTo('body');
     });
     $('body').mousemove(function(event) {
-        $('#ruler').css('top', event.pageY - 10);
+        $('#ruler').css('top', event.pageY - 30);
         $('#ruler').css('width', $(window).innerWidth());
     });
 });
