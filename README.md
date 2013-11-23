@@ -1,4 +1,4 @@
-The Dyslectic Web
+Dyslexia Friendly
 =================
 
-A project to make the web more accessible to dyslectics
+Dyslexia Friendly is a chrome extensions to make web pages more readable for dyslectics
