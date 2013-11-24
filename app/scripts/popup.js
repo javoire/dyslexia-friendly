@@ -2,7 +2,6 @@
 
 console.log('popup.js loaded');
 
-// TODO: standardise message sending
 function onSettingClicked(e) {
     var type = e.target.getAttribute('data-type');
     var key = e.target.getAttribute('data-key');
@@ -11,7 +10,8 @@ function onSettingClicked(e) {
     if (key.match(/color/)) {
         value = '#' + e.target.parentNode.querySelectorAll('.color')[0].value; // get hex color from input
     } else if (key.match(/font/)) {
-        value = '"' + value + '"';
+        chrome.storage.sync.set({'dfFont': value}); // save font setting in storage
+        value = '"' + value + '"'; // font family needs to be in quotes
     }
 
     switch(type) {
@@ -26,23 +26,35 @@ function onSettingClicked(e) {
         break;
     }
 
-    // save setting in storage
-    chrome.storage.sync.set({'dfFont': value});
 }
 
 window.onload = function() {
     // document.getElementById('apply-bg-color').addEventListener('click', onSettingClicked, false);
     // document.getElementById('apply-font-color').addEventListener('click', onSettingClicked, false);
 
-    // add listeners to font links
     var fontLinks = document.querySelectorAll('.font-list li a');
 
-    function setSelected(e) {
-        // clear seletec
+    // set selected based on whats saved in storage
+    chrome.storage.sync.get('dfFont', function(data) {
+        console.log('got dfFont from storage', data);
+        if (!data.dfFont) {
+            console.log('no font saved');
+            return;
+        }
+        var userFont = data.dfFont;
         for (var i = fontLinks.length - 1; i >= 0; i--) {
+            fontLinks[i].className = ''; // clear
+            console.log('if', fontLinks[i].getAttribute('data-value'), userFont);
+            if (fontLinks[i].getAttribute('data-value') === userFont) {
+                fontLinks[i].className = 'selected'; // set
+            }
+        }
+    });
+
+    function setSelected(e) {
+        for (var i = fontLinks.length - 1; i >= 0; i--) { // clear selected
             fontLinks[i].className = '';
         }
-        // set clicked as selected
         e.target.className = 'selected';
     }
 
