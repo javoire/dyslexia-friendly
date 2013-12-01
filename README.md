@@ -1,10 +1,10 @@
-Dyslexia Friendly
+DyslexiaFriendly
 ================
 
 Description
 -----------
 
-Dyslexia Friendly is a Google Chrome extension that increases readabilty of web pages
+DyslexiaFriendly is a Google Chrome extension that increases readabilty of web pages
 
 Features
 --------
@@ -28,6 +28,12 @@ Roadmap
 -------
 
 Further customization of fonts and colors
+
+Authors
+-------
+
+* @javoire
+* @rafel
 
 Credits
 --------
