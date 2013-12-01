@@ -9,7 +9,7 @@ DyslexiaFriendly is a Google Chrome extension that increases readabilty of web p
 Features
 --------
 
-When active, there's the option to change the font on all web sites to either Open Dyslexic or Comic Sans. There page's visual appearance is also enhanced with odd/even background shading of paragraphs and a vertical ruler that follow the mouse cursor.
+When active, there's the option to change the font on all web sites to either Open Dyslexic or Comic Sans. The visual appearance of all web sites is also enhanced with odd/even background shading of paragraphs and a vertical ruler that follows the mouse cursor.
 
 The features listed here are also implemented: http://antijingoist.github.io/web-accessibility/
 
