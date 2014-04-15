@@ -282,7 +282,7 @@ module.exports = function (grunt) {
         compress: {
             dist: {
                 options: {
-                    archive: 'package/Test.zip'
+                    archive: 'package/DyslexiaFriendly.zip'
                 },
                 files: [{
                     expand: true,

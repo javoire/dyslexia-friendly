@@ -114,6 +114,8 @@ p:hover, li:hover {
   height: 1.6em;
   background-color: rgba(0,0,0,.1);
   position: absolute;
+  left: 0;
+  right: 0;
   top:-50px;
   z-index: 10000000000;
 }

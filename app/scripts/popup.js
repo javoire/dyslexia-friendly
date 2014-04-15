@@ -1,6 +1,6 @@
 'use strict';
 
-console.log('popup.js loaded');
+// console.log('popup.js loaded');
 
 function onSettingClicked(e) {
     var type = e.target.getAttribute('data-type');
@@ -36,15 +36,15 @@ window.onload = function() {
 
     // set selected based on whats saved in storage
     chrome.storage.sync.get('dfFont', function(data) {
-        console.log('got dfFont from storage', data);
+        // console.log('got dfFont from storage', data);
         if (!data.dfFont) {
-            console.log('no font saved');
+            // console.log('no font saved');
             return;
         }
         var userFont = data.dfFont;
         for (var i = fontLinks.length - 1; i >= 0; i--) {
             fontLinks[i].className = ''; // clear
-            console.log('if', fontLinks[i].getAttribute('data-value'), userFont);
+            // console.log('if', fontLinks[i].getAttribute('data-value'), userFont);
             if (fontLinks[i].getAttribute('data-value') === userFont) {
                 fontLinks[i].className = 'selected'; // set
             }
