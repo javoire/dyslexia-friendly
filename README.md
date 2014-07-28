@@ -16,13 +16,13 @@ The features listed here are also implemented: http://antijingoist.github.io/web
 Usage
 -----
 
-To try the extension in developer mode, just navigate to
+To use the extension in developer mode, just navigate to
 
 > chrome://extensions
 
 in Google Chrome, enable "Developer mode", click "Load unpacked extension" and select the app/ folder.
 
-It will soon be available as a download in Google Play.
+Or [download the latest published version](https://chrome.google.com/webstore/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo) from Chrome Web Store
 
 Roadmap
 -------
