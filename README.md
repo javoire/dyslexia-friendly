@@ -1,6 +1,8 @@
 DyslexiaFriendly
 ================
 
+#### [Download in Chrome Web Store](https://chrome.google.com/webstore/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo)
+
 Description
 -----------
 
@@ -13,7 +15,7 @@ You can change the font on all web sites to either Open Dyslexic or Comic Sans. 
 
 The features listed here are also implemented: http://antijingoist.github.io/web-accessibility/
 
-Usage
+Develop
 -----
 
 To use the extension in developer mode, just navigate to
@@ -21,8 +23,6 @@ To use the extension in developer mode, just navigate to
 > chrome://extensions
 
 in Google Chrome, enable "Developer mode", click "Load unpacked extension" and select the app/ folder.
-
-Or [download the latest published version](https://chrome.google.com/webstore/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo) from Chrome Web Store
 
 Roadmap
 -------
