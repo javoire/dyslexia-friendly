@@ -18,7 +18,7 @@
             "19": "images/icon-19.png",
             "38": "images/icon-38.png"
         },
-        "default_title": "Increases readability of web pages",
+        "default_title": "Make the website dyslexia friendly",
         "default_popup": "popup.html"
     },
     "options_page": "options.html",
@@ -32,7 +32,7 @@
                 "styles/main.css"
             ],
             "js": [
-                "bower_components/jquery/jquery.js",
+                "bower_components/jquery/dist/jquery.js",
                 "scripts/contentscript.js"
             ],
             "run_at": "document_end",

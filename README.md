@@ -22,7 +22,7 @@ To use the extension in developer mode, just navigate to
 
 > chrome://extensions
 
-in Google Chrome, enable "Developer mode", click "Load unpacked extension" and select the app/ folder.
+in Google Chrome, enable "Developer mode", click "Load unpacked extension" and select the `src/` folder.
 
 Roadmap
 -------

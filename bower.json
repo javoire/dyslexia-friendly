@@ -1,6 +1,8 @@
 {
   "name": "test",
   "version": "0.0.0",
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^2.2.1"
+  },
   "devDependencies": {}
 }
