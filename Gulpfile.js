@@ -12,6 +12,15 @@ var uglify = require('gulp-uglify');
 var zip = require('gulp-zip');
 var gutil = require('gulp-util');
 var open = require('gulp-open');
+var webserver = require('gulp-webserver');
+
+gulp.task('serve', function() {
+  gulp.src('src')
+    .pipe(webserver({
+      livereload: true,
+      open: true
+    }));
+});
 
 //clean build directory
 gulp.task('clean', function() {

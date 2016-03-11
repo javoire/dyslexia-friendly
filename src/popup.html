@@ -2,28 +2,24 @@
 <html>
   <head>
     <link href="styles/main.css" rel="stylesheet">
-    <script src="scripts/popup.js"></script>
   </head>
   <body>
     <!-- CHROME EXTENSION POPUP -->
     <div id="popup-wrapper">
+
+      <h3>Enabled</h3>
+      <input data-config-key="enabled" type="checkbox">
+
       <h3>Font</h3>
       <ul class="font-list">
-        <li><a class="selected" data-type="css" data-key="font-family" data-value="opendyslexic" href="#">Open Dyslexic</a></li>
-        <li><a data-type="css" data-key="font-family" data-value="Comic Sans MS" href="#">Comic Sans</a></li>
+        <li><a data-config-key="selectedFont" data-config-value="opendyslexic" href="#">Open Dyslexic</a></li>
+        <li><a data-config-key="selectedFont" data-config-value="Comic Sans MS" href="#">Comic Sans</a></li>
+        <li><a data-config-key="selectedFont" data-config-value="Open Sans" href="#">Open Sans</a></li>
       </ul>
-<!--       <h3>Font Color</h3>
-      <ul>
-        <input class="color">
-        <input type="submit" class="apply" id="apply-font-color" data-type="css" data-key="color" value="Apply">
-      </ul>
-      <h3>Background Color</h3>
-      <ul>
-        <input class="color">
-        <input type="submit" class="apply" id="apply-bg-color" data-type="css" data-key="background-color" value="Apply">
-      </ul> -->
+
     </div>
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
+    <script src="scripts/popup.js"></script>
   </body>
 </html>
