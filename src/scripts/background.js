@@ -10,14 +10,14 @@ function injectCss(key, value) {
 
 // Run as soon as a navigation has been committed
 // i.e. before document has loaded
-chrome.webNavigation.onCommitted.addListener(function(e) {
+chrome.webNavigation.onCommitted.addListener(function() {
   chrome.storage.sync.get('dfFont', function(data) {
     if (!data.dfFont) {
       return;
     }
     injectCss('font-family', data.dfFont);
   });
-})
+});
 
 // TODO: this is ugly
 chrome.runtime.onMessage.addListener(function(request) {

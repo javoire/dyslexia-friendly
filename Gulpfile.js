@@ -47,8 +47,8 @@ gulp.task('jshint', function() {
 
 //copy vendor scripts and uglify all other scripts, creating source maps
 gulp.task('scripts', ['jshint'], function() {
-	gulp.src('src/scripts/vendors/**/*.js')
-		.pipe(gulp.dest('build/scripts/vendors'));
+	gulp.src('src/bower_components/jquery/dist/jquery.js')
+		.pipe(gulp.dest('build/bower_components/jquery/dist/'));
 	return gulp.src(['src/scripts/**/*.js', '!src/scripts/vendors/**/*.js'])
 		.pipe(stripdebug())
 		.pipe(uglify({outSourceMap: true}))
@@ -74,7 +74,7 @@ gulp.task('zip', ['html', 'scripts', 'styles', 'copy'], function() {
 		.pipe(zip(mapFileName))
 		.pipe(gulp.dest('dist'));
 	//build distributable extension
-	return gulp.src(['build/**', '!build/scripts/**/*.map'])
+	return gulp.src(['build/**/*', '!build/scripts/**/*.map'])
 		.pipe(zip(distFileName))
 		.pipe(gulp.dest('dist'));
 });
