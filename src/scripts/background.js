@@ -1,34 +1,27 @@
 'use strict';
 
-// console.log('background.js loaded');
-
 function injectCss(key, value) {
   var css = '* { ' + key + ': ' + value + ' !important}';
-  // console.log('injecting css', css);
   chrome.tabs.insertCSS({
-    code: css
+    code: css,
+    runAt: 'document_start' // inject before page css is loaded
   });
 }
 
-// TODO: this is ugly
-chrome.runtime.onMessage.addListener(
-  function(request) {
-    if (request.message === 'init') {
-      // console.log('received init message', request.message);
-      chrome.storage.sync.get('dfFont', function(data) { // check if we have settings saved from before
-        // console.log('data from storage: ', data);
-        if (!data.dfFont) {
-          return;
-        }
-
-        injectCss('font-family', data.dfFont);
-      });
+// Run as soon as a navigation has been committed
+// i.e. before document has loaded
+chrome.webNavigation.onCommitted.addListener(function(e) {
+  chrome.storage.sync.get('dfFont', function(data) {
+    if (!data.dfFont) {
       return;
     }
+    injectCss('font-family', data.dfFont);
+  });
+})
 
-    if (request.message === 'css') {
-      // console.log('received css message', request.data);
-      injectCss(request.data.key, request.data.value);
-    }
+// TODO: this is ugly
+chrome.runtime.onMessage.addListener(function(request) {
+  if (request.message === 'css') {
+    injectCss(request.data.key, request.data.value);
   }
-);
+});
