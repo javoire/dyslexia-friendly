@@ -10,10 +10,12 @@ var jshint = require('gulp-jshint');
 var stripdebug = require('gulp-strip-debug');
 var uglify = require('gulp-uglify');
 var zip = require('gulp-zip');
+var gutil = require('gulp-util');
+var open = require('gulp-open');
 
 //clean build directory
 gulp.task('clean', function() {
-	return gulp.src('build/*', {read: false})
+	return gulp.src('build/**', {read: false})
 		.pipe(clean());
 });
 
@@ -64,22 +66,35 @@ gulp.task('styles', function() {
 		.pipe(gulp.dest('build/styles'));
 });
 
+// Build files
+gulp.task('build', ['html', 'scripts', 'styles', 'copy']);
+
 //build ditributable and sourcemaps after other tasks completed
-gulp.task('zip', ['html', 'scripts', 'styles', 'copy'], function() {
+// NOTE: broken. skips most font files... gulp-zip?
+gulp.task('zip', ['build'], function() {
 	var manifest = require('./src/manifest'),
 		distFileName = manifest.name + ' v' + manifest.version + '.zip',
 		mapFileName = manifest.name + ' v' + manifest.version + '-maps.zip';
+
 	//collect all source maps
 	gulp.src('build/scripts/**/*.map')
 		.pipe(zip(mapFileName))
 		.pipe(gulp.dest('dist'));
+
 	//build distributable extension
 	return gulp.src(['build/**/*', '!build/scripts/**/*.map'])
 		.pipe(zip(distFileName))
 		.pipe(gulp.dest('dist'));
 });
 
-//run all tasks after build directory has been cleaned
-gulp.task('default', ['clean'], function() {
-    gulp.start('zip');
+// Switches to chrome window unfortunately
+gulp.task('reload', function() {
+	// using https://chrome.google.com/webstore/detail/extensions-reloader/fimgfedafeadlieiabdeeaodndnlbhid
+	gulp.src('src')
+		.pipe(open({uri: 'http://reload.extensions', app: 'google chrome'}));
+});
+
+// watch and build
+gulp.task('default', ['build'], function() {
+    gulp.watch(['src/**'], ['build']);
 });
