@@ -51,6 +51,8 @@ gulp.task('jshint', function() {
 gulp.task('scripts', ['jshint'], function() {
 	gulp.src('src/bower_components/jquery/dist/jquery.js')
 		.pipe(gulp.dest('build/bower_components/jquery/dist/'));
+	gulp.src('src/bower_components/jquery-ui/jquery-ui.min.js')
+		.pipe(gulp.dest('build/bower_components/jquery-ui/'));
 	return gulp.src(['src/scripts/**/*.js', '!src/scripts/vendors/**/*.js'])
 		.pipe(stripdebug())
 		.pipe(uglify({outSourceMap: true}))
