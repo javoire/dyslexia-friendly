@@ -3,32 +3,32 @@
 // console.log('background.js loaded');
 
 function injectCss(key, value) {
-    var css = '* { ' + key + ': ' + value + ' !important}';
-    // console.log('injecting css', css);
-    chrome.tabs.insertCSS({
-        code: css
-    });
+  var css = '* { ' + key + ': ' + value + ' !important}';
+  // console.log('injecting css', css);
+  chrome.tabs.insertCSS({
+    code: css
+  });
 }
 
 // TODO: this is ugly
 chrome.runtime.onMessage.addListener(
-    function(request) {
-        if (request.message === 'init') {
-            // console.log('received init message', request.message);
-            chrome.storage.sync.get('dfFont', function(data) { // check if we have settings saved from before
-                // console.log('data from storage: ', data);
-                if (!data.dfFont) {
-                    return;
-                }
-
-                injectCss('font-family', data.dfFont);
-            });
-            return;
+  function(request) {
+    if (request.message === 'init') {
+      // console.log('received init message', request.message);
+      chrome.storage.sync.get('dfFont', function(data) { // check if we have settings saved from before
+        // console.log('data from storage: ', data);
+        if (!data.dfFont) {
+          return;
         }
 
-        if (request.message === 'css') {
-            // console.log('received css message', request.data);
-            injectCss(request.data.key, request.data.value);
-        }
+        injectCss('font-family', data.dfFont);
+      });
+      return;
     }
+
+    if (request.message === 'css') {
+      // console.log('received css message', request.data);
+      injectCss(request.data.key, request.data.value);
+    }
+  }
 );
