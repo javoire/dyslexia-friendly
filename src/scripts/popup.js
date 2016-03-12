@@ -4,8 +4,9 @@ window.onload = function() {
   $(document).ready(function() {
 
     /**
-    * Update UI with current state
-    */
+     * Update UI with current state of the config
+     * @param  {Object} config Current config
+     */
     function update(config) {
       uiElements.enabled.prop('checked', config.enabled);
       uiElements.fontSelection.removeClass('selected');

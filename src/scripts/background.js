@@ -1,12 +1,17 @@
 'use strict';
 
-// function injectCss(key, value) {
-//   var css = '* { ' + key + ': ' + value + ' !important}';
-//   chrome.tabs.insertCSS({
-//     code: css,
-//     runAt: 'document_start' // inject before page css is loaded
-//   });
-// }
+/**
+ * Inject CSS in the web page
+ * @param  {String} property   Css property
+ * @param  {String} value Css value
+ */
+function injectCss(property, value) {
+  var css = '* { ' + property + ': ' + value + ' !important}';
+  chrome.tabs.insertCSS({
+    code: css,
+    runAt: 'document_start' // inject before page css is loaded
+  });
+}
 
 // default user config
 var DEFAULT_CONFIG = {
@@ -72,7 +77,19 @@ chrome.runtime.onInstalled.addListener(function() {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.message === 'save') {
-    config.set(request.data.configKey, request.data.configValue, sendResponse);
+    config.set(request.data.configKey, request.data.configValue, function(config) {
+      // Do things based on the configKey
+
+      // NOTE: things here might move to contentscript.js
+      // TODO: enable/disable
+      // TODO: set ruler height
+      // TODO: update colors
+      // Set font family
+      injectCss('font-family', config.selectedFont);
+
+      // pass the config to the popup
+      sendResponse(config);
+    });
     return true; // otherwise sendResponse won't be called
   } else if (request.message === 'init') {
     config.get(null, sendResponse);
@@ -84,9 +101,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 // i.e. before document has loaded
 chrome.webNavigation.onCommitted.addListener(function() {
   config.get(null, function(config) {
-    if (!config.selectedFont) {
-      return;
-    }
-    // injectCss('font-family', config.selectedFont);
+    injectCss('font-family', config.selectedFont);
   });
 });
