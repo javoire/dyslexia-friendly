@@ -1,6 +1,5 @@
 {
   "name": "dyslexia-friendly",
-  "version": "0.1.0",
   "dependencies": {
     "gulp-open": "^1.0.0"
   },
