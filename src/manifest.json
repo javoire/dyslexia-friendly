@@ -1,73 +1,73 @@
 {
-    "name": "Dyslexia Friendly",
-    "version": "0.1.0",
-    "manifest_version": 2,
-    "description": "Increases readability of web pages for dyslectics",
-    "icons": {
-        "16": "images/icon-16.png",
-        "128": "images/icon-128.png"
-    },
-    "default_locale": "en",
-    "background": {
-        "scripts": [
-            "scripts/background.js"
-        ]
-    },
-    "browser_action": {
-        "default_icon": {
-            "19": "images/icon-19.png",
-            "38": "images/icon-38.png"
-        },
-        "default_title": "Make the website dyslexia friendly",
-        "default_popup": "popup.html"
-    },
-    "options_page": "options.html",
-    "content_scripts": [
-        {
-            "matches": [
-                "http://*/*",
-                "https://*/*"
-            ],
-            "css": [
-                "styles/main.css"
-            ],
-            "js": [
-                "bower_components/jquery/dist/jquery.js",
-                "scripts/contentscript.js"
-            ],
-            "run_at": "document_start",
-            "all_frames": false
-        }
-    ],
-    "permissions": [
-        "activeTab",
-        "background",
-        "http://*/*",
-        "https://*/*",
-        "storage",
-        "webNavigation"
-    ],
-    "web_accessible_resources": [
-        "fonts/opendyslexic-regular-webfont.eot",
-        "fonts/opendyslexic-regular-webfont.eot",
-        "fonts/opendyslexic-regular-webfont.woff",
-        "fonts/opendyslexic-regular-webfont.ttf",
-        "fonts/opendyslexic-regular-webfont.svg",
-        "fonts/opendyslexic-italic-webfont.eot",
-        "fonts/opendyslexic-italic-webfont.eot",
-        "fonts/opendyslexic-italic-webfont.woff",
-        "fonts/opendyslexic-italic-webfont.ttf",
-        "fonts/opendyslexic-italic-webfont.svg",
-        "fonts/opendyslexic-bold-webfont.eot",
-        "fonts/opendyslexic-bold-webfont.eot",
-        "fonts/opendyslexic-bold-webfont.woff",
-        "fonts/opendyslexic-bold-webfont.ttf",
-        "fonts/opendyslexic-bold-webfont.svg",
-        "fonts/opendyslexic-bolditalic-webfont.eot",
-        "fonts/opendyslexic-bolditalic-webfont.eot",
-        "fonts/opendyslexic-bolditalic-webfont.woff",
-        "fonts/opendyslexic-bolditalic-webfont.ttf",
-        "fonts/opendyslexic-bolditalic-webfont.svg",
-        "ruler.html"
+  "name": "Dyslexia Friendly",
+  "version": "0.1.1",
+  "manifest_version": 2,
+  "description": "Increases readability of web pages for dyslectics",
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "scripts/background.js"
     ]
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "38": "images/icon-38.png"
+    },
+    "default_title": "Make the website dyslexia friendly",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "styles/main.css"
+      ],
+      "js": [
+        "bower_components/jquery/dist/jquery.js",
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "background",
+    "http://*/*",
+    "https://*/*",
+    "storage",
+    "webNavigation"
+  ],
+  "web_accessible_resources": [
+    "fonts/opendyslexic-regular-webfont.eot",
+    "fonts/opendyslexic-regular-webfont.eot",
+    "fonts/opendyslexic-regular-webfont.woff",
+    "fonts/opendyslexic-regular-webfont.ttf",
+    "fonts/opendyslexic-regular-webfont.svg",
+    "fonts/opendyslexic-italic-webfont.eot",
+    "fonts/opendyslexic-italic-webfont.eot",
+    "fonts/opendyslexic-italic-webfont.woff",
+    "fonts/opendyslexic-italic-webfont.ttf",
+    "fonts/opendyslexic-italic-webfont.svg",
+    "fonts/opendyslexic-bold-webfont.eot",
+    "fonts/opendyslexic-bold-webfont.eot",
+    "fonts/opendyslexic-bold-webfont.woff",
+    "fonts/opendyslexic-bold-webfont.ttf",
+    "fonts/opendyslexic-bold-webfont.svg",
+    "fonts/opendyslexic-bolditalic-webfont.eot",
+    "fonts/opendyslexic-bolditalic-webfont.eot",
+    "fonts/opendyslexic-bolditalic-webfont.woff",
+    "fonts/opendyslexic-bolditalic-webfont.ttf",
+    "fonts/opendyslexic-bolditalic-webfont.svg",
+    "ruler.html"
+  ]
 }
