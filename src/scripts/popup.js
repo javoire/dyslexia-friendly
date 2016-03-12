@@ -2,7 +2,28 @@
 
 window.onload = function() {
   $(document).ready(function() {
-    $('[data-config-key="enabled"]').change(function() {
+
+    /**
+    * Update UI with current state
+    */
+    function update(config) {
+      uiElements.enabled.prop('checked', config.enabled);
+      uiElements.fontSelection.removeClass('selected');
+
+      $('[data-config-value="'+config.selectedFont+'"]').addClass('selected');
+    }
+
+    var uiElements = {
+      enabled: $('[data-config-key="enabled"]'),
+      fontSelection: $('[data-config-key="selectedFont"]')
+    }
+
+
+    /**
+    * Event handlers
+    */
+
+    uiElements.enabled.change(function() {
       var enabled = $(this).is(':checked');
       chrome.runtime.sendMessage({
         message: 'save',
@@ -10,10 +31,10 @@ window.onload = function() {
           configKey: 'enabled',
           configValue: enabled
         }
-      });
+      }, update);
     });
 
-    $('[data-config-key="selectedFont"]').click(function() {
+    uiElements.fontSelection.click(function() {
       var selectedFont = $(this).data('configValue');
       chrome.runtime.sendMessage({
         message: 'save',
@@ -21,7 +42,7 @@ window.onload = function() {
           configKey: 'selectedFont',
           configValue: selectedFont
         }
-      });
+      }, update);
     });
   });
 };
