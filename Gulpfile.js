@@ -14,6 +14,7 @@ var gutil = require('gulp-util');
 var open = require('gulp-open');
 var webserver = require('gulp-webserver');
 
+// For UI prototyping
 gulp.task('serve', function() {
   gulp.src('src')
     .pipe(webserver({
