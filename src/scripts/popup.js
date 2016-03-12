@@ -18,6 +18,11 @@ window.onload = function() {
       fontSelection: $('[data-config-key="selectedFont"]')
     }
 
+    /**
+    * Init
+    */
+
+    chrome.runtime.sendMessage({ message: 'init' }, update);
 
     /**
     * Event handlers

@@ -11,7 +11,7 @@
 // default user config
 var DEFAULT_CONFIG = {
   enabled: true,
-  selectedFont: 'opendyslectic'
+  selectedFont: 'opendyslexic'
 };
 
 var config = {
@@ -73,6 +73,9 @@ chrome.runtime.onInstalled.addListener(function() {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.message === 'save') {
     config.set(request.data.configKey, request.data.configValue, sendResponse);
+    return true; // otherwise sendResponse won't be called
+  } else if (request.message === 'init') {
+    config.get(null, sendResponse);
     return true; // otherwise sendResponse won't be called
   }
 });
