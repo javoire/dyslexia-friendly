@@ -1,65 +1,54 @@
 'use strict';
 
-// console.log('popup.js loaded');
-
-function onSettingClicked(e) {
-  var type = e.target.getAttribute('data-type');
-  var key = e.target.getAttribute('data-key');
-  var value = e.target.getAttribute('data-value');
-
-  if (key.match(/color/)) {
-    value = '#' + e.target.parentNode.querySelectorAll('.color')[0].value; // get hex color from input
-  } else if (key.match(/font/)) {
-    chrome.storage.sync.set({'dfFont': value}); // save font setting in storage
-    value = '"' + value + '"'; // font family needs to be in quotes
-  }
-
-  switch(type) {
-    case 'css':
-    chrome.runtime.sendMessage({
-      message: 'css',
-      data: {
-        key: key,
-        value: value
-      }
-    });
-    break;
-  }
-
-}
-
 window.onload = function() {
-  // document.getElementById('apply-bg-color').addEventListener('click', onSettingClicked, false);
-  // document.getElementById('apply-font-color').addEventListener('click', onSettingClicked, false);
+  $(document).ready(function() {
 
-  var fontLinks = document.querySelectorAll('.font-list li a');
+    /**
+     * Update UI with current state of the config
+     * @param  {Object} config Current config
+     */
+    function update(config) {
+      uiElements.enabled.prop('checked', config.enabled);
+      uiElements.fontSelection.removeClass('selected');
 
-  // set selected based on whats saved in storage
-  chrome.storage.sync.get('dfFont', function(data) {
-    // console.log('got dfFont from storage', data);
-    if (!data.dfFont) {
-      // console.log('no font saved');
-      return;
+      $('[data-config-value="'+config.selectedFont+'"]').addClass('selected');
     }
-    var userFont = data.dfFont;
-    for (var i = fontLinks.length - 1; i >= 0; i--) {
-      fontLinks[i].className = ''; // clear
-      // console.log('if', fontLinks[i].getAttribute('data-value'), userFont);
-      if (fontLinks[i].getAttribute('data-value') === userFont) {
-        fontLinks[i].className = 'selected'; // set
-      }
+
+    var uiElements = {
+      enabled: $('[data-config-key="enabled"]'),
+      fontSelection: $('[data-config-key="selectedFont"]')
     }
+
+    /**
+    * Init
+    */
+
+    chrome.runtime.sendMessage({ message: 'init' }, update);
+
+    /**
+    * Event handlers
+    */
+
+    uiElements.enabled.change(function() {
+      var enabled = $(this).is(':checked');
+      chrome.runtime.sendMessage({
+        message: 'save',
+        data: {
+          configKey: 'enabled',
+          configValue: enabled
+        }
+      }, update);
+    });
+
+    uiElements.fontSelection.click(function() {
+      var selectedFont = $(this).data('configValue');
+      chrome.runtime.sendMessage({
+        message: 'save',
+        data: {
+          configKey: 'selectedFont',
+          configValue: selectedFont
+        }
+      }, update);
+    });
   });
-
-  function setSelected(e) {
-    for (var i = fontLinks.length - 1; i >= 0; i--) { // clear selected
-      fontLinks[i].className = '';
-    }
-    e.target.className = 'selected';
-  }
-
-  for (var i = fontLinks.length - 1; i >= 0; i--) {
-    fontLinks[i].addEventListener('click', onSettingClicked, false);
-    fontLinks[i].addEventListener('click', setSelected, false);
-  }
 };

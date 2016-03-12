@@ -12,6 +12,15 @@ var uglify = require('gulp-uglify');
 var zip = require('gulp-zip');
 var gutil = require('gulp-util');
 var open = require('gulp-open');
+var webserver = require('gulp-webserver');
+
+gulp.task('serve', function() {
+  gulp.src('src')
+    .pipe(webserver({
+      livereload: true,
+      open: true
+    }));
+});
 
 //clean build directory
 gulp.task('clean', function() {
@@ -51,6 +60,8 @@ gulp.task('jshint', function() {
 gulp.task('scripts', ['jshint'], function() {
 	gulp.src('src/bower_components/jquery/dist/jquery.js')
 		.pipe(gulp.dest('build/bower_components/jquery/dist/'));
+	gulp.src('src/bower_components/jquery-ui/jquery-ui.min.js')
+		.pipe(gulp.dest('build/bower_components/jquery-ui/'));
 	return gulp.src(['src/scripts/**/*.js', '!src/scripts/vendors/**/*.js'])
 		.pipe(stripdebug())
 		.pipe(uglify({outSourceMap: true}))
