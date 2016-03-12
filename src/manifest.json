@@ -2,7 +2,7 @@
   "name": "Dyslexia Friendly",
   "version": "0.1.1",
   "manifest_version": 2,
-  "description": "Increases readability of web pages for dyslectics",
+  "description": "Increases readability of web pages by changing fonts, contrast and adding a reading ruler",
   "icons": {
     "16": "images/icon-16.png",
     "128": "images/icon-128.png"
