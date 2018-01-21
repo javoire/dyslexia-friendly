@@ -1,15 +1,10 @@
 'use strict';
 
-/**
- * Inject CSS in the web page
- * @param  {String} property Css property
- * @param  {String} value Css value
- */
-function injectCss(property, value) {
-  var css = '* { ' + property + ': ' + value + ' !important}';
-  chrome.tabs.insertCSS({
-    code: css,
-    runAt: 'document_start' // inject before page css is loaded
+function notifyContentScript(config) {
+  console.log('notifying contentscript');
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { message: "applyConfigInContentScript", config: config }, function (response) {
+    });
   });
 }
 
@@ -82,24 +77,7 @@ chrome.runtime.onInstalled.addListener(function () {
 // listen for messages
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === 'updateConfig') {
-    // store.set(request.data.configKey, request.data.configValue, function (store) {
-    // Do things based on the configKey
-
-    // NOTE: things here might move to contentscript.js
-    // TODO: enable/disable
-    // TODO: set ruler height
-    // TODO: update colors
-    // Set font family
-    // injectCss('font-family', store.selectedFont);
-
-    // pass the store to the popup
-    // sendResponse(store);
-    // });
-    console.log(request)
-
     store.update(request.data)
-
-    // return true; // otherwise sendResponse won't be called
   } else if (request.message === 'init') {
     store.get(null, sendResponse);
     return true; // otherwise sendResponse won't be called
@@ -124,13 +102,3 @@ chrome.tabs.onActivated.addListener(function () {
 
 // 3) apply config on store change for current tab
 store.subscribe(notifyContentScript)
-
-function notifyContentScript(config) {
-  console.log('notifying contentscript');
-  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-    chrome.tabs.sendMessage(tabs[0].id, { message: "applyConfigInContentScript", config: config }, function (response) {
-      // console.log(response.farewell);
-    });
-  });
-  // injectCss('font-family', config.font);
-}

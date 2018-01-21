@@ -49,7 +49,7 @@ window.onload = function () {
           data[this.name] = parseInt(this.value)
         });
 
-      console.log('sending to background script:', data);
+      // console.log('sending to background script:', data);
       chrome.runtime.sendMessage({
         message: 'updateConfig',
         data: data
