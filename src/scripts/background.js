@@ -13,7 +13,7 @@ function injectCss(property, value) {
   });
 }
 
-// default user config
+// default user store
 var DEFAULT_CONFIG = {
   enabled: 1,
   font: "opendyslexic",
@@ -21,59 +21,29 @@ var DEFAULT_CONFIG = {
   rulerWidth: "26"
 };
 
-var config = {
+var subscribers = [];
+var store = {
   /**
    * Interpolate form data with what's in the store, in case values are missing from the form
    * then save.
    */
   update: function (newData, cb) {
-
     chrome.storage.sync.get('config', function (store) {
-
-      // since and "off" checkbox is non-existent in a jquery-serialized form we need to check if
-      // it has "disappeared".. and thus assume it's now set to "off"
-
-      // get entries with "on" value from store
-      // 
-
       var updated = Object.assign(store.config, newData);
-      // var config = data.config ||  DEFAULT_CONFIG; // fallback to default config
       chrome.storage.sync.set({ config: updated }, function () {
         console.log('Saved config', updated);
+        // notify subscribers
+        subscribers.forEach(function (cb) {
+          cb(updated)
+        })
         return cb ? cb(updated) : true;
       });
     });
   },
 
-
-  // /**
-  //  * Set config by getting entire config obj,
-  //  * updating the property and saving it back
-  //  * @param  {String}   key   config key
-  //  * @param  {String}   value config value
-  //  * @param  {Function} cb    (Optional) callback provided with the updated config obj
-  //  */
-  // set: function (key, value, cb) {
-  //   cb = cb || function () { };
-  //   chrome.storage.sync.get('config', function (data) {
-  //     var config = data.config ||  DEFAULT_CONFIG; // fallback to default config
-  //     config[key] = value;
-  //     chrome.storage.sync.set({ config: config }, function () {
-  //       console.log('Saved config', config);
-  //       return cb(config);
-  //     });
-  //   });
-  // },
-  // /**
-  //  * Get specific config value
-  //  * null key returns entire config
-  //  * @param  {String}   key key to get value of
-  //  * @param  {Function} cb  callback provided with the value
-  //  */
   get: function (key, cb) {
-    // cb = cb || function () { };
-    chrome.storage.sync.get('config', function (data) {
-      var config = data.config || DEFAULT_CONFIG; // fallback to default config
+    chrome.storage.sync.get('config', function (store) {
+      var config = store.config || DEFAULT_CONFIG; // fallback to default store
 
       // don't do this
       if (!key) {
@@ -81,6 +51,12 @@ var config = {
       }
       return cb ? cb(config[key]) : true;
     });
+  },
+
+  // subscribe to changes in store
+  subscribe: function (cb) {
+    subscribers.push(cb)
+    cb(store);
   }
 };
 
@@ -88,7 +64,7 @@ var config = {
  * Installed
  */
 
-// save default config if not exists
+// save default store if not exists
 chrome.runtime.onInstalled.addListener(function () {
   chrome.storage.sync.get('config', function (data) {
     if (!data.config) {
@@ -103,9 +79,10 @@ chrome.runtime.onInstalled.addListener(function () {
  * Runtime
  */
 
+// listen for messages
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   if (request.message === 'updateConfig') {
-    // config.set(request.data.configKey, request.data.configValue, function (config) {
+    // store.set(request.data.configKey, request.data.configValue, function (store) {
     // Do things based on the configKey
 
     // NOTE: things here might move to contentscript.js
@@ -113,26 +90,47 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     // TODO: set ruler height
     // TODO: update colors
     // Set font family
-    // injectCss('font-family', config.selectedFont);
+    // injectCss('font-family', store.selectedFont);
 
-    // pass the config to the popup
-    // sendResponse(config);
+    // pass the store to the popup
+    // sendResponse(store);
     // });
     console.log(request)
 
-    config.update(request.data)
+    store.update(request.data)
 
-    return true; // otherwise sendResponse won't be called
+    // return true; // otherwise sendResponse won't be called
   } else if (request.message === 'init') {
-    config.get(null, sendResponse);
+    store.get(null, sendResponse);
     return true; // otherwise sendResponse won't be called
   }
 });
 
-// Run as soon as a navigation has been committed
-// i.e. before document has loaded
+// 1) apply config on navigation
+// NOTE: seems to run many times on one nav
 chrome.webNavigation.onCommitted.addListener(function () {
-  config.get(null, function (config) {
-    // injectCss('font-family', config.selectedFont);
-  });
+  // Run as soon as a navigation has been committed
+  // i.e. before document has loaded
+
+  console.log('onCommitted');
+  store.get(null, notifyContentScript);
 });
+
+// 2) apply config on tab switch
+chrome.tabs.onActivated.addListener(function () {
+  console.log('onActivated')
+  store.get(null, notifyContentScript);
+});
+
+// 3) apply config on store change for current tab
+store.subscribe(notifyContentScript)
+
+function notifyContentScript(config) {
+  console.log('notifying contentscript');
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(tabs[0].id, { message: "applyConfigInContentScript", config: config }, function (response) {
+      // console.log(response.farewell);
+    });
+  });
+  // injectCss('font-family', config.font);
+}

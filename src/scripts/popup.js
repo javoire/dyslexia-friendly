@@ -23,6 +23,12 @@ window.onload = function () {
           data[this.name] = 0
         });
 
+      // convert string attr to int
+      $('input[type=checkbox]:checked', form)
+        .each(function (checkbox) {
+          data[this.name] = parseInt(this.value)
+        });
+
       console.log('sending to background script:', data);
       chrome.runtime.sendMessage({
         message: 'updateConfig',
@@ -31,15 +37,7 @@ window.onload = function () {
     }
 
     function syncStoreToForm(config) {
-      // find elems where key is [name] and update state based on value
-      window.hej = []
-      Object.keys(config).forEach(function (key) {
-        var hej = form.find('[name="' + key + '"]')
-        window.hej.push(hej)
-      });
-
-      // for all inputs, based on their type, update their attributed accordingly
-
+      // for all inputs, based on their type, update their attributes accordingly
       inputs.each(function () {
         var value = config[this.name];
         switch (this.type) {
@@ -59,7 +57,7 @@ window.onload = function () {
             break;
           case 'range':
             this.value = value
-            $('label[for="'+ this.name +'"]').text(value + 'px')
+            $('label[for="' + this.name + '"]').text(value + 'px')
             break;
         }
       })
@@ -69,63 +67,21 @@ window.onload = function () {
     // submit form and update all configs
     inputs.change(function () {
       if (this.type === 'range') {
-        $('label[for="'+ this.name +'"]').text(this.value + 'px')
+        $('label[for="' + this.name + '"]').text(this.value + 'px')
       }
       form.submit()
     })
 
-    // update UI and save new config
+    // save for data to store
     $('#configForm').submit(function (e) {
       syncFormToStore($(this))
       e.preventDefault();
     })
 
     /**
-     * Update UI with current state of the config
-     * @param  {Object} config Current config
-     */
-    // function update(config) {
-    //   uiElements.enabled.prop('checked', config.enabled);
-    //   uiElements.fontSelection.removeClass('selected');
-
-    //   $('[data-config-value="'+config.selectedFont+'"]').addClass('selected');
-    // }
-
-    // var uiElements = {
-    //   enabled: $('[data-config-key="enabled"]'),
-    //   fontSelection: $('[data-config-key="selectedFont"]')
-    // }
-
-    /**
     * Init
     */
 
     chrome.runtime.sendMessage({ message: 'init' }, syncStoreToForm);
-
-    /**
-    * Event handlers
-    */
-
-    // uiElements.enabled.change(function() {
-    //   var enabled = $(this).is(':checked');
-    //   chrome.runtime.sendMessage({
-    //     message: 'save',
-    //     data: {
-    //       configKey: 'enabled',
-    //       configValue: enabled
-    //     }
-    //   }, update);
-    // });
-
-    // uiElements.fontSelection.click(function() {
-    //   var selectedFont = $(this).data('configValue');
-    //   chrome.runtime.sendMessage({
-    //     message: 'save',
-    //     data: {
-    //       configKey: 'selectedFont',
-    //       configValue: selectedFont
-    //     }
-    //   }, update);
-    // });
   });
 };
