@@ -185,57 +185,8 @@ body.dyslexia-friendly li:hover {
   padding-right: 10px;
 }
 
-/* #popup-wrapper h3 {
-  font-size: 24px;
-  margin-bottom: 5px;
-}
-
-#popup-wrapper h3:first-child {
-  margin-top: 0;
-}
-
-#popup-wrapper ul {
-  padding-left: 0;
-  margin-top: 0;
-}
-
-#popup-wrapper ul:last-child {
-  margin-bottom: 0;
-}
-
-#popup-wrapper li {
-  list-style: none;
-  margin-bottom: 4px;
-}
-
-#popup-wrapper li a {
-  padding: 5px;
-  color: #000;
-}
-
-#popup-wrapper li a.selected {
-  background-color: #eee;
-}
-
-#popup-wrapper li:nth-child(even) {
-  background-color: inherit;
-}
-
-#popup-wrapper a {
-  display: block;
-  text-decoration: none;
-}
-
-#popup-wrapper .color {
-  width: 70%;
-}
-
-#popup-wrapper .apply {
-  width: 25%;
-}
-
 /* Options page */
 
-/* #options { */
-  /* padding: 20px; */
-/* } */ */
+#dyslexia-friendly-options {
+  padding: 20px;
+}
