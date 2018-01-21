@@ -1,34 +1,62 @@
 'use strict';
 
 var ruler = document.createElement('div');
-ruler.setAttribute('id', 'ruler');
+ruler.setAttribute('id', 'dyslexia-friendly-ruler');
+
+var cssNamespace = 'dyslexia-friendly';
+var fontPrefix = 'dyslexia-friendly-font-';
 
 function getRulerStyle(height) {
-  return 'height:' + height + 'px; position:absolute; background:black; top:100px; opacity:0.3';
+  return 'height:' + height + 'px;';
 }
+
 
 function applyConfig(config) {
   console.log('applying config in contentscript', config)
-  // apply CSS based on config
 
-  // enable ruler
-  // set ruler width
-  if (config.rulerEnabled) {
+  if (config.enabled) {
     $(document).ready(function () {
-      document.body.appendChild(ruler)
-      $('body').mousemove(function (event) {
-        $(ruler).css('top', event.pageY - 30);
-      });
+      // apply base CSS
+      document.body.classList.add(cssNamespace)
+
+      // find previous font class and remove
+      document.body.classList.forEach(function (classname) {
+        if (classname.startsWith(fontPrefix)) {
+          document.body.classList.remove(classname)
+        }
+      })
+      document.body.classList.add(fontPrefix + config.font)
     });
+
+    // apply font
+
+    // enable ruler
+    // set ruler width
+    if (config.rulerEnabled) {
+      $(document).ready(function () {
+        document.body.appendChild(ruler)
+        $('body').mousemove(function (event) {
+          $(ruler).css('top', event.pageY - config.rulerWidth / 2);
+        });
+      });
+    } else {
+      $(document).ready(function () {
+        try {
+          document.body.removeChild(ruler)
+        } catch (e) { };
+      });
+    }
+
+    ruler.setAttribute('style', getRulerStyle(config.rulerWidth))
   } else {
+    // remove css and ruler
     $(document).ready(function () {
+      document.body.classList.remove(cssNamespace)
       try {
         document.body.removeChild(ruler)
-      } catch(e) {};
+      } catch (e) { };
     });
   }
-
-  ruler.setAttribute('style', getRulerStyle(config.rulerWidth))
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {

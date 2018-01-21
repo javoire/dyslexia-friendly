@@ -61,9 +61,14 @@ This one is designed for dyslexic readers, though
 it can be useful to increase readability for anyone
 else                                                 */
 
-* {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic * {
   /* default font setting */
-  /*font-family: "opendyslexic" !important; /* default */
+  font-family: "opendyslexic" !important;
+}
+
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans * {
+  /* default font setting */
+  font-family: "Comic Sans MS" !important;
 }
 
 /* Use an off-white background. Some users need high
@@ -74,7 +79,7 @@ likely overrides stylesheets.
 The text is colored dark blue to assist with "glare"
 issues, but also to make the black symbols subtly stand
 out.                                                  */
-body {
+body.dyslexia-friendly {
   font-size: 14px;
   line-height: 200%;
   background: snow;
@@ -87,11 +92,11 @@ body {
 with a script that results in symbols being colored
 differently. This helps comprehension by making them
 subtly more visable.                                 */
-h1, h2, h3, h4, .highlight {
+body.dyslexia-friendly h1, h2, h3, h4, .highlight {
   font-style: bold;
   color: black;
 }
-.highlight {
+body.dyslexia-friendly .highlight {
   font-size: 125%;
 }
 
@@ -99,7 +104,7 @@ h1, h2, h3, h4, .highlight {
 on track while reading. This shading is very
 subtle so it is not annoying, but it still
 helps.                                       */
-p:nth-child(even), li:nth-child(even) {
+body.dyslexia-friendly p:nth-child(even), li:nth-child(even) {
   background-color: rgba(0,0,0, 0.06);
 }
 
@@ -107,19 +112,20 @@ p:nth-child(even), li:nth-child(even) {
 /* highlight text under cursor helps users focus
 on what they are currently reading. This shading
 is darker than the alt-paragraph shading.        */
-p:hover, li:hover {
+body.dyslexia-friendly p:hover, li:hover {
   background-color: rgba(0,0,0, 0.1) !important;
 }
 
 /* Ruler */
 
-#ruler {
+#dyslexia-friendly-ruler {
   height: 1.6em;
   background-color: rgba(0,0,0,.1);
   position: absolute;
   left: 0;
   right: 0;
-  top:-50px;
+  top:100px;
+  pointer-events: none;
   z-index: 10000000000;
 }
 
