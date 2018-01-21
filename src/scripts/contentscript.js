@@ -4,13 +4,13 @@ var ruler = document.createElement('div');
 ruler.setAttribute('id', 'dyslexia-friendly-ruler');
 
 var cssNamespace = 'dyslexia-friendly';
-var fontPrefix = 'dyslexia-friendly-font-';
+var fontClassPrefix = 'dyslexia-friendly-font-';
 
 function getRulerStyle(height) {
   return 'height:' + height + 'px;';
 }
 
-
+// TODO: structure better. This is too messy
 function applyConfig(config) {
   console.log('applying config in contentscript', config)
 
@@ -21,14 +21,12 @@ function applyConfig(config) {
 
       // find previous font class and remove
       document.body.classList.forEach(function (classname) {
-        if (classname.startsWith(fontPrefix)) {
+        if (classname.startsWith(fontClassPrefix)) {
           document.body.classList.remove(classname)
         }
       })
-      document.body.classList.add(fontPrefix + config.font)
+      document.body.classList.add(fontClassPrefix + config.font)
     });
-
-    // apply font
 
     // enable ruler
     // set ruler width
@@ -65,25 +63,4 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
       applyConfig(request.config)
       break;
   }
-
-  // console.log(sender.tab ?
-  // "from a content script:" + sender.tab.url :
-  // "from the extension", request.greeting);
-  // if (request.greeting == "hello")
-  // sendResponse({farewell: "goodbye"});
 });
-
-// $(document).ready(function(){
-
-
-
-  // check config for what to enable etc
-
-  //-------------------------------
-  // Ruler that follows mouse vertically
-  //-------------------------------
-  // $.get(chrome.extension.getURL('/ruler.html'), function(data) {
-  //   $(data).appendTo('body');
-  // });
-
-// });

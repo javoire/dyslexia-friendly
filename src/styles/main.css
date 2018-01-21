@@ -139,11 +139,47 @@ body.dyslexia-friendly li:hover {
 
 #popup-wrapper {
   font-family: "opendyslexic";
-  /* padding: 10px; */
   min-width: 350px;
+  font-size: 1rem;
 }
 
-#popup-wrapper h3 {
+#popup-wrapper #master-switch {
+  float: right;
+  margin-right: 10px;
+}
+
+#popup-wrapper label {
+  font-size: 1rem;
+}
+
+#popup-wrapper #p-width {
+  margin-bottom: 0;
+}
+
+#popup-wrapper .range-field {
+  margin: 0;
+}
+
+#popup-wrapper #head-cell {
+  background: #eee;
+}
+
+#popup-wrapper .switch label .lever {
+  margin: 0 3px;
+}
+
+#popup-wrapper table tr td {
+  vertical-align: top;
+}
+
+#popup-wrapper table tr td:first-child {
+  padding-left: 10px;
+}
+#popup-wrapper table tr td:last-child {
+  padding-right: 10px;
+}
+
+/* #popup-wrapper h3 {
   font-size: 24px;
   margin-bottom: 5px;
 }
@@ -194,6 +230,6 @@ body.dyslexia-friendly li:hover {
 
 /* Options page */
 
-#options {
-  padding: 20px;
-}
+/* #options { */
+  /* padding: 20px; */
+/* } */ */
