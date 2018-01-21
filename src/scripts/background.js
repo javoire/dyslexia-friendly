@@ -2,7 +2,7 @@
 
 /**
  * Inject CSS in the web page
- * @param  {String} property   Css property
+ * @param  {String} property Css property
  * @param  {String} value Css value
  */
 function injectCss(property, value) {

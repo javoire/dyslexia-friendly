@@ -1,17 +1,40 @@
 'use strict';
 
-function applyConfig(config) {
+var ruler = document.createElement('div');
+ruler.setAttribute('id', 'ruler');
 
+function getRulerStyle(height) {
+  return 'height:' + height + 'px; position:absolute; background:black; top:100px; opacity:0.3';
+}
+
+function applyConfig(config) {
+  console.log('applying config in contentscript', config)
+  // apply CSS based on config
+
+  // enable ruler
+  // set ruler width
+  if (config.rulerEnabled) {
+    $(document).ready(function () {
+      document.body.appendChild(ruler)
+      $('body').mousemove(function (event) {
+        $(ruler).css('top', event.pageY - 30);
+      });
+    });
+  } else {
+    $(document).ready(function () {
+      try {
+        document.body.removeChild(ruler)
+      } catch(e) {};
+    });
+  }
+
+  ruler.setAttribute('style', getRulerStyle(config.rulerWidth))
 }
 
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   switch (request.message) {
     case 'applyConfigInContentScript':
-      console.log('config', request.config);
       applyConfig(request.config)
-      // apply CSS based on config
-      // enable ruler
-      // set ruler width
       break;
   }
 
@@ -34,7 +57,5 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
   // $.get(chrome.extension.getURL('/ruler.html'), function(data) {
   //   $(data).appendTo('body');
   // });
-  // $('body').mousemove(function(event) {
-  //   $('#ruler').css('top', event.pageY - 30);
-  // });
+
 // });

@@ -32,6 +32,7 @@
         "styles/main.css"
       ],
       "js": [
+        "node_modules/jquery/dist/jquery.min.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_start",
