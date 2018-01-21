@@ -61,13 +61,11 @@ This one is designed for dyslexic readers, though
 it can be useful to increase readability for anyone
 else                                                 */
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic * {
-  /* default font setting */
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i) {
   font-family: "opendyslexic" !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-comicsans * {
-  /* default font setting */
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i) {
   font-family: "Comic Sans MS" !important;
 }
 
