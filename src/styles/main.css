@@ -92,7 +92,11 @@ body.dyslexia-friendly {
 with a script that results in symbols being colored
 differently. This helps comprehension by making them
 subtly more visable.                                 */
-body.dyslexia-friendly h1, h2, h3, h4, .highlight {
+body.dyslexia-friendly h1,
+body.dyslexia-friendly h2,
+body.dyslexia-friendly h3,
+body.dyslexia-friendly h4,
+body.dyslexia-friendly .highlight {
   font-style: bold;
   color: black;
 }
@@ -104,7 +108,8 @@ body.dyslexia-friendly .highlight {
 on track while reading. This shading is very
 subtle so it is not annoying, but it still
 helps.                                       */
-body.dyslexia-friendly p:nth-child(even), li:nth-child(even) {
+body.dyslexia-friendly p:nth-child(even),
+body.dyslexia-friendly li:nth-child(even) {
   background-color: rgba(0,0,0, 0.06);
 }
 
@@ -112,7 +117,8 @@ body.dyslexia-friendly p:nth-child(even), li:nth-child(even) {
 /* highlight text under cursor helps users focus
 on what they are currently reading. This shading
 is darker than the alt-paragraph shading.        */
-body.dyslexia-friendly p:hover, li:hover {
+body.dyslexia-friendly p:hover,
+body.dyslexia-friendly li:hover {
   background-color: rgba(0,0,0, 0.1) !important;
 }
 
