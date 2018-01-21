@@ -812,10 +812,6 @@ dom-serializer@0:
     domelementtype "~1.1.1"
     entities "~1.1.1"
 
-dom-value@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/dom-value/-/dom-value-1.0.1.tgz#6822454488171612512abf19a44959b2f28223e5"
-
 domelementtype@1:
   version "1.3.0"
   resolved "https://registry.npmjs.org/domelementtype/-/domelementtype-1.3.0.tgz#b17aed82e8ab59e52dd9c19b1756e0fc187204c2"
@@ -1122,12 +1118,6 @@ forever-agent@~0.6.1:
   version "0.6.1"
   resolved "https://registry.npmjs.org/forever-agent/-/forever-agent-0.6.1.tgz#fbc71f0c41adeb37f96c577ad1ed42d8fdacca91"
 
-form-controls@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/form-controls/-/form-controls-1.0.0.tgz#8fb8115f990779ad05a2851dab3974632c7199a2"
-  dependencies:
-    to-array "^0.1.4"
-
 form-data@~2.1.1:
   version "2.1.4"
   resolved "https://registry.npmjs.org/form-data/-/form-data-2.1.4.tgz#33c183acf193276ecaa98143a69e94bfee1750d1"
@@ -1143,17 +1133,6 @@ form-data@~2.3.1:
     asynckit "^0.4.0"
     combined-stream "^1.0.5"
     mime-types "^2.1.12"
-
-form-parse@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.npmjs.org/form-parse/-/form-parse-0.1.0.tgz#7bc71444026630e1123f20f0f14ca0bce0f2e62d"
-  dependencies:
-    dom-value "^1.0.1"
-    form-controls "^1.0.0"
-    is-submittable "^1.0.0"
-    reduce "^1.0.1"
-    squares "^0.2.1"
-    to-array "^0.1.4"
 
 fragment-cache@^0.2.1:
   version "0.2.1"
@@ -1914,10 +1893,6 @@ is-stream@^1.0.0, is-stream@^1.1.0:
   version "1.1.0"
   resolved "https://registry.npmjs.org/is-stream/-/is-stream-1.1.0.tgz#12d4a3dd4e68e0b79ceb8dbc84173ae80d91ca44"
 
-is-submittable@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npmjs.org/is-submittable/-/is-submittable-1.0.0.tgz#2ceeac59d874453c0eb35f3f63a7db0658bc1fc0"
-
 is-typedarray@~1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/is-typedarray/-/is-typedarray-1.0.0.tgz#e479c80858df0c1b11ddda6940f96011fcda4a9a"
@@ -1965,10 +1940,6 @@ isobject@^3.0.0, isobject@^3.0.1:
 isstream@~0.1.2:
   version "0.1.2"
   resolved "https://registry.npmjs.org/isstream/-/isstream-0.1.2.tgz#47e63f7af55afa6f92e1500e690eb8b8529c099a"
-
-jquery-ui@^1.11.4:
-  version "1.12.1"
-  resolved "https://registry.npmjs.org/jquery-ui/-/jquery-ui-1.12.1.tgz#bcb4045c8dd0539c134bc1488cdd3e768a7a9e51"
 
 jquery@^2.2.1:
   version "2.2.4"
@@ -2808,10 +2779,6 @@ object-keys@~0.4.0:
   version "0.4.0"
   resolved "https://registry.npmjs.org/object-keys/-/object-keys-0.4.0.tgz#28a6aae7428dd2c3a92f3d95f21335dd204e0336"
 
-object-keys@~1.0.0:
-  version "1.0.11"
-  resolved "https://registry.npmjs.org/object-keys/-/object-keys-1.0.11.tgz#c54601778ad560f1142ce0e01bcca8b56d13426d"
-
 object-visit@^1.0.0:
   version "1.0.1"
   resolved "https://registry.npmjs.org/object-visit/-/object-visit-1.0.1.tgz#f79c4493af0c5377b59fe39d395e41042dd045bb"
@@ -3276,12 +3243,6 @@ redent@^1.0.0:
     indent-string "^2.1.0"
     strip-indent "^1.0.1"
 
-reduce@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.npmjs.org/reduce/-/reduce-1.0.1.tgz#14fa2e5ff1fc560703a020cbb5fbaab691565804"
-  dependencies:
-    object-keys "~1.0.0"
-
 regex-not@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/regex-not/-/regex-not-1.0.0.tgz#42f83e39771622df826b02af176525d6a5f157f9"
@@ -3698,10 +3659,6 @@ split@0.3:
   dependencies:
     through "2"
 
-squares@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/squares/-/squares-0.2.1.tgz#08642dddd18c6ddcdeef362b1104b30ddcb3f26c"
-
 sshpk@^1.7.0:
   version "1.13.1"
   resolved "https://registry.npmjs.org/sshpk/-/sshpk-1.13.1.tgz#512df6da6287144316dc4c18fe1cf1d940739be3"
@@ -3942,10 +3899,6 @@ tiny-lr@0.1.4:
     faye-websocket "~0.7.2"
     parseurl "~1.3.0"
     qs "~2.2.3"
-
-to-array@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.npmjs.org/to-array/-/to-array-0.1.4.tgz#17e6c11f73dd4f3d74cda7a4ff3238e9ad9bf890"
 
 to-object-path@^0.3.0:
   version "0.3.0"
