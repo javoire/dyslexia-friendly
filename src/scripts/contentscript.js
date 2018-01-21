@@ -1,6 +1,9 @@
 'use strict';
 
 $(document).ready(function(){
+
+  // check config for what to enable etc
+
   //-------------------------------
   // Ruler that follows mouse vertically
   //-------------------------------

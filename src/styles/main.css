@@ -77,7 +77,7 @@ body {
   line-height: 200%;
   background: snow;
   margin: auto 0;
-  padding: 0 100;
+  padding: 0;
   color: #1A0033;
 }
 
@@ -125,7 +125,7 @@ p:hover, li:hover {
 
 #popup-wrapper {
   font-family: "opendyslexic";
-  padding: 10px;
+  /* padding: 10px; */
   min-width: 350px;
 }
 
