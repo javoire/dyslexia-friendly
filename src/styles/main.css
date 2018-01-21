@@ -141,6 +141,14 @@ body.dyslexia-friendly li:hover {
   font-size: 1rem;
 }
 
+/* default */
+#popup-wrapper .show-when-enabled {
+  display: none;
+}
+#popup-wrapper .show-when-ruler {
+  display: none;
+}
+
 #popup-wrapper #master-switch {
   float: right;
   margin-right: 10px;

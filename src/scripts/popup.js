@@ -6,6 +6,26 @@ window.onload = function () {
     var inputs = $('#configForm input');
     var form = $('#configForm');
 
+    // shows and hides parts of UI based on config
+    function updateUI(config) {
+      // UPDATE UI
+      if (config.enabled) {
+        // height issue: https://bugs.chromium.org/p/chromium/issues/detail?id=428044
+        setTimeout(function() {
+          $('.show-when-enabled').show();
+        }, 100)
+      } else {
+        $('.show-when-enabled').hide();
+      }
+      if (config.rulerEnabled) {
+        setTimeout(function() {
+          $('.show-when-ruler').show();
+        }, 100)
+      } else {
+        $('.show-when-ruler').hide();
+      }
+    }
+
     function formArrayToKeyValue(array) {
       var obj = {};
       array.forEach(function (item) {
@@ -34,6 +54,8 @@ window.onload = function () {
         message: 'updateConfig',
         data: data
       });
+
+      updateUI(data)
     }
 
     function syncStoreToForm(config) {
@@ -61,6 +83,8 @@ window.onload = function () {
             break;
         }
       })
+
+      updateUI(config)
     }
 
     // listen on changes on any form elements,

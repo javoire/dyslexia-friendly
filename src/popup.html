@@ -26,7 +26,7 @@
             </div>
           </td>
         </tr>
-        <tr>
+        <tr class="show-when-enabled">
           <td>Font</td>
           <td>
             <input name="font" id="opendyslexic" type="radio" value="opendyslexic" />
@@ -35,7 +35,7 @@
             <label style="width:100%" for="comicsans">Comic Sans</label>
           </td>
         </tr>
-        <tr>
+        <tr class="show-when-enabled">
           <td>Ruler</td>
           <td>
             <div class="switch">
@@ -46,12 +46,14 @@
                 On
               </label>
             </div>
-            <p id="p-width">Width:
-              <label for="rulerWidth"></label>
-            </p>
-            <p class="range-field">
-              <input type="range" id="rulerWidth" name="rulerWidth" min="10" max="50" />
-            </p>
+            <div class="show-when-ruler">
+              <p id="p-width">Width:
+                <label for="rulerWidth"></label>
+              </p>
+              <p class="range-field">
+                <input type="range" id="rulerWidth" name="rulerWidth" min="10" max="50" />
+              </p>
+            </div>
           </td>
         </tr>
       </table>
