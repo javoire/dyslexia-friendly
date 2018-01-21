@@ -1,7 +1,14 @@
 {
   "name": "dyslexia-friendly",
   "dependencies": {
-    "gulp-open": "^1.0.0"
+    "form-parse": "^0.1.0",
+    "gulp-open": "^1.0.0",
+    "jquery": "^2.2.1",
+    "jquery-ui": "^1.11.4",
+    "materialize-css": "^0.100.2"
+  },
+  "scripts": {
+    "start": "gulp serve"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
