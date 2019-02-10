@@ -1,7 +1,7 @@
 DyslexiaFriendly
 ================
 
-#### [Download in Chrome Web Store](https://chrome.google.com/webstore/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo)
+#### [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo)
 
 Description
 -----------
