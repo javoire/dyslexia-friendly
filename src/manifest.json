@@ -32,7 +32,7 @@
         "styles/main.css"
       ],
       "js": [
-        "bower_components/jquery/dist/jquery.js",
+        "node_modules/jquery/dist/jquery.min.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_start",
@@ -67,7 +67,6 @@
     "fonts/opendyslexic-bolditalic-webfont.eot",
     "fonts/opendyslexic-bolditalic-webfont.woff",
     "fonts/opendyslexic-bolditalic-webfont.ttf",
-    "fonts/opendyslexic-bolditalic-webfont.svg",
-    "ruler.html"
+    "fonts/opendyslexic-bolditalic-webfont.svg"
   ]
 }

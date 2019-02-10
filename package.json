@@ -1,7 +1,12 @@
 {
   "name": "dyslexia-friendly",
   "dependencies": {
-    "gulp-open": "^1.0.0"
+    "jquery": "^2.2.1",
+    "materialize-css": "^0.100.2"
+  },
+  "scripts": {
+    "start": "gulp serve",
+    "test": "exit 0"
   },
   "devDependencies": {
     "gulp": "^3.9.1",
@@ -9,11 +14,13 @@
     "gulp-cleanhtml": "^1.0.1",
     "gulp-jshint": "^2.0.0",
     "gulp-minify-css": "^1.2.4",
+    "gulp-open": "^2.1.0",
     "gulp-strip-debug": "^1.1.0",
     "gulp-uglify": "^1.5.3",
     "gulp-util": "^3.0.7",
     "gulp-webserver": "^0.9.1",
     "gulp-zip": "^3.2.0",
+    "jest": "^24.1.0",
     "jshint": "^2.9.1"
   }
 }

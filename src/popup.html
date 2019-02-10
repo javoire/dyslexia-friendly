@@ -1,25 +1,66 @@
 <!doctype html>
 <html>
-  <head>
-    <link href="styles/main.css" rel="stylesheet">
-  </head>
-  <body>
-    <!-- CHROME EXTENSION POPUP -->
-    <div id="popup-wrapper">
 
-      <!-- <h3>Enabled</h3>
-      <input data-config-key="enabled" type="checkbox"> -->
+<head>
+  <link href="/node_modules/materialize-css/dist/css/materialize.min.css" rel="stylesheet">
+  <link href="styles/main.css" rel="stylesheet">
+</head>
 
-      <h3>Font</h3>
-      <ul class="font-list">
-        <li><a data-config-key="selectedFont" data-config-value="opendyslexic" href="#">Open Dyslexic</a></li>
-        <li><a data-config-key="selectedFont" data-config-value="Comic Sans MS" href="#">Comic Sans</a></li>
-        <!-- <li><a data-config-key="selectedFont" data-config-value="Open Sans" href="#">Open Sans</a></li> -->
-      </ul>
+<body>
+  <!-- CHROME EXTENSION POPUP -->
+  <div id="popup-wrapper">
+    <form id="configForm" name "configForm">
+      <table class="bordered">
+        <tr>
+          <td colspan="2" id="head-cell">
+            Dyslexia Friendly
+            <div class="switch" id="master-switch">
+              <label>
+                Off
+                <input type="checkbox" id="enabled" name="enabled" value="1">
+                <span class="lever"></span>
+                On
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr class="show-when-enabled">
+          <td>Font</td>
+          <td>
+            <input name="font" id="opendyslexic" type="radio" value="opendyslexic" />
+            <label style="width:100%" for="opendyslexic">Open Dyslexic</label>
+            <input name="font" id="comicsans" type="radio" value="comicsans" />
+            <label style="width:100%" for="comicsans">Comic Sans</label>
+          </td>
+        </tr>
+        <tr class="show-when-enabled">
+          <td>Ruler</td>
+          <td>
+            <div class="switch">
+              <label>
+                Off
+                <input type="checkbox" id="rulerEnabled" name="rulerEnabled" value="1">
+                <span class="lever"></span>
+                On
+              </label>
+            </div>
+            <div class="show-when-ruler">
+              <p id="p-width">Width:
+                <label for="rulerWidth"></label>
+              </p>
+              <p class="range-field">
+                <input type="range" id="rulerWidth" name="rulerWidth" min="10" max="50" />
+              </p>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </form>
 
-    </div>
-    <script src="/bower_components/jquery/dist/jquery.js"></script>
-    <script src="/bower_components/jquery-ui/jquery-ui.min.js"></script>
-    <script src="scripts/popup.js"></script>
-  </body>
+  </div>
+  <script src="/node_modules/jquery/dist/jquery.js"></script>
+  <script src="/node_modules/materialize-css/dist/js/materialize.min.js"></script>
+  <script src="scripts/popup.js"></script>
+</body>
+
 </html>
