@@ -12,55 +12,55 @@ function getRulerStyle(height) {
 
 // TODO: structure better. This is too messy
 function applyConfig(config) {
-  console.log('applying config in contentscript', config)
+  console.log('applying config in contentscript', config);
 
   if (config.enabled) {
-    $(document).ready(function () {
+    $(document).ready(function() {
       // apply base CSS
-      document.body.classList.add(cssNamespace)
+      document.body.classList.add(cssNamespace);
 
       // find previous font class and remove
-      document.body.classList.forEach(function (classname) {
+      document.body.classList.forEach(function(classname) {
         if (classname.startsWith(fontClassPrefix)) {
-          document.body.classList.remove(classname)
+          document.body.classList.remove(classname);
         }
-      })
-      document.body.classList.add(fontClassPrefix + config.font)
+      });
+      document.body.classList.add(fontClassPrefix + config.font);
     });
 
     // enable ruler
     // set ruler width
     if (config.rulerEnabled) {
-      $(document).ready(function () {
-        document.body.appendChild(ruler)
-        $('body').mousemove(function (event) {
+      $(document).ready(function() {
+        document.body.appendChild(ruler);
+        $('body').mousemove(function(event) {
           $(ruler).css('top', event.pageY - config.rulerWidth / 2);
         });
       });
     } else {
-      $(document).ready(function () {
+      $(document).ready(function() {
         try {
-          document.body.removeChild(ruler)
-        } catch (e) { };
+          document.body.removeChild(ruler);
+        } catch (e) {}
       });
     }
 
-    ruler.setAttribute('style', getRulerStyle(config.rulerWidth))
+    ruler.setAttribute('style', getRulerStyle(config.rulerWidth));
   } else {
     // remove css and ruler
-    $(document).ready(function () {
-      document.body.classList.remove(cssNamespace)
+    $(document).ready(function() {
+      document.body.classList.remove(cssNamespace);
       try {
-        document.body.removeChild(ruler)
-      } catch (e) { };
+        document.body.removeChild(ruler);
+      } catch (e) {}
     });
   }
 }
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch (request.message) {
     case 'applyConfigInContentScript':
-      applyConfig(request.config)
+      applyConfig(request.config);
       break;
   }
 });
