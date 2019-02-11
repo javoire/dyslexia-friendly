@@ -4,19 +4,19 @@
   "manifest_version": 2,
   "description": "Increases readability of web pages by changing fonts, contrast and adding a reading ruler",
   "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
+    "16": "img/icon-16.png",
+    "128": "img/icon-128.png"
   },
   "default_locale": "en",
   "background": {
     "scripts": [
-      "scripts/background.js"
+      "background.js"
     ]
   },
   "browser_action": {
     "default_icon": {
-      "19": "images/icon-19.png",
-      "38": "images/icon-38.png"
+      "19": "img/icon-19.png",
+      "38": "img/icon-38.png"
     },
     "default_title": "Make the website dyslexia friendly",
     "default_popup": "popup.html"
@@ -28,12 +28,8 @@
         "http://*/*",
         "https://*/*"
       ],
-      "css": [
-        "styles/main.css"
-      ],
       "js": [
-        "node_modules/jquery/dist/jquery.min.js",
-        "scripts/contentscript.js"
+        "contentscript.js"
       ],
       "run_at": "document_start",
       "all_frames": false
