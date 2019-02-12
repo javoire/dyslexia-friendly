@@ -28,6 +28,10 @@
         "http://*/*",
         "https://*/*"
       ],
+      "css": [
+	"css/fonts.css",
+	"css/contentscript.css"
+      ],
       "js": [
         "contentscript.js"
       ],

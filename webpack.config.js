@@ -43,10 +43,10 @@ var options = {
   },
   module: {
     rules: [
-      {
-        test: /\.css$/,
-        loader: 'style-loader!css-loader'
-      },
+      // {
+      //   test: /\.css$/,
+      //   loader: 'style-loader!css-loader'
+      // },
       {
         test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
         loader: 'file-loader?name=[name].[ext]',
@@ -72,7 +72,8 @@ var options = {
         from: 'src/manifest.json',
         transform: function(content) {
           // generates the manifest file using the package.json informations
-	  return Buffer.from( // this doesn't work, fix
+          return Buffer.from(
+            // this doesn't work, fix
             JSON.stringify({
               description: process.env.npm_package_description,
               version: process.env.npm_package_version,
@@ -82,16 +83,24 @@ var options = {
         }
       },
       {
+        from: 'node_modules/materialize-css/dist/css/materialize.min.css',
+        to: 'css'
+      },
+      {
+        from: 'src/css',
+        to: 'css'
+      },
+      {
         from: 'src/fonts',
-	to: 'fonts'
+        to: 'fonts'
       },
       {
-	from: 'src/img',
-	to: 'img'
+        from: 'src/img',
+        to: 'img'
       },
       {
-	from: 'src/_locales',
-	to: '_locales'
+        from: 'src/_locales',
+        to: '_locales'
       }
     ]),
     new HtmlWebpackPlugin({
@@ -108,11 +117,10 @@ var options = {
   ]
 };
 
-console.log(env.NODE_ENV)
 if (env.NODE_ENV === 'development') {
   options.devtool = 'cheap-module-eval-source-map';
 } else {
-  options.devtool = false
+  options.devtool = false;
 }
 
 module.exports = options;

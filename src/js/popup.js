@@ -1,8 +1,4 @@
 import 'jquery';
-import 'materialize-css';
-import 'materialize-css/dist/css/materialize.css';
-import '../css/fonts.css';
-import '../css/popup.css';
 import $ from 'jquery';
 
 /**

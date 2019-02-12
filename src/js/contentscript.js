@@ -1,7 +1,6 @@
 'use strict';
 
 import $ from 'jquery';
-import '../css/contentscript.css';
 
 const ruler = document.createElement('div');
 ruler.setAttribute('id', 'dyslexia-friendly-ruler');
