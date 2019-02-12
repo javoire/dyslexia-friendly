@@ -10,7 +10,7 @@
 <body>
   <!-- CHROME EXTENSION POPUP -->
   <div id="popup-wrapper">
-    <form id="configForm" name "configForm">
+    <form id="configForm" name="configForm">
       <table class="bordered">
         <tr>
           <td colspan="2" id="head-cell">
@@ -28,10 +28,15 @@
         <tr class="show-when-enabled">
           <td>Font</td>
           <td>
-            <input name="font" id="opendyslexic" type="radio" value="opendyslexic" />
-            <label style="width:100%" for="opendyslexic">Open Dyslexic</label>
-            <input name="font" id="comicsans" type="radio" value="comicsans" />
-            <label style="width:100%" for="comicsans">Comic Sans</label>
+            <label style="width:100%" for="opendyslexic">
+              <input name="font" id="opendyslexic" type="radio" value="opendyslexic" />
+              <span>Open Dyslexic</span>
+            </label>
+            <br>
+            <label style="width:100%" for="comicsans">
+              <input name="font" id="comicsans" type="radio" value="comicsans" />
+              <span>Comic Sans</span>
+            </label>
           </td>
         </tr>
         <tr class="show-when-enabled">
@@ -57,8 +62,6 @@
         </tr>
       </table>
     </form>
-
   </div>
 </body>
-
 </html>
