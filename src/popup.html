@@ -2,14 +2,15 @@
 <html>
 
 <head>
-  <link href="/node_modules/materialize-css/dist/css/materialize.min.css" rel="stylesheet">
-  <link href="styles/main.css" rel="stylesheet">
+   <link href="css/materialize.min.css" rel="stylesheet">
+   <link href="css/fonts.css" rel="stylesheet">
+   <link href="css/popup.css" rel="stylesheet">
 </head>
 
 <body>
   <!-- CHROME EXTENSION POPUP -->
   <div id="popup-wrapper">
-    <form id="configForm" name "configForm">
+    <form id="configForm" name="configForm">
       <table class="bordered">
         <tr>
           <td colspan="2" id="head-cell">
@@ -27,10 +28,15 @@
         <tr class="show-when-enabled">
           <td>Font</td>
           <td>
-            <input name="font" id="opendyslexic" type="radio" value="opendyslexic" />
-            <label style="width:100%" for="opendyslexic">Open Dyslexic</label>
-            <input name="font" id="comicsans" type="radio" value="comicsans" />
-            <label style="width:100%" for="comicsans">Comic Sans</label>
+            <label style="width:100%" for="opendyslexic">
+              <input name="font" id="opendyslexic" type="radio" value="opendyslexic" />
+              <span>Open Dyslexic</span>
+            </label>
+            <br>
+            <label style="width:100%" for="comicsans">
+              <input name="font" id="comicsans" type="radio" value="comicsans" />
+              <span>Comic Sans</span>
+            </label>
           </td>
         </tr>
         <tr class="show-when-enabled">
@@ -56,11 +62,6 @@
         </tr>
       </table>
     </form>
-
   </div>
-  <script src="/node_modules/jquery/dist/jquery.js"></script>
-  <script src="/node_modules/materialize-css/dist/js/materialize.min.js"></script>
-  <script src="scripts/popup.js"></script>
 </body>
-
 </html>

@@ -1,10 +1,12 @@
 'use strict';
 
-var ruler = document.createElement('div');
+import $ from 'jquery';
+
+const ruler = document.createElement('div');
 ruler.setAttribute('id', 'dyslexia-friendly-ruler');
 
-var cssNamespace = 'dyslexia-friendly';
-var fontClassPrefix = 'dyslexia-friendly-font-';
+const cssNamespace = 'dyslexia-friendly';
+const fontClassPrefix = 'dyslexia-friendly-font-';
 
 function getRulerStyle(height) {
   return 'height:' + height + 'px;';
@@ -59,8 +61,8 @@ function applyConfig(config) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch (request.message) {
-    case 'applyConfigInContentScript':
-      applyConfig(request.config);
-      break;
+  case 'applyConfigInContentScript':
+    applyConfig(request.config);
+    break;
   }
 });

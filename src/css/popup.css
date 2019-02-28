@@ -1,0 +1,49 @@
+#popup-wrapper {
+  font-family: "opendyslexic";
+  min-width: 350px;
+  font-size: 1rem;
+}
+
+/* default */
+#popup-wrapper .show-when-enabled {
+  display: none;
+}
+#popup-wrapper .show-when-ruler {
+  display: none;
+}
+
+#popup-wrapper #master-switch {
+  float: right;
+  margin-right: 10px;
+}
+
+#popup-wrapper label {
+  font-size: 1rem;
+}
+
+#popup-wrapper #p-width {
+  margin-bottom: 0;
+}
+
+#popup-wrapper .range-field {
+  margin: 0;
+}
+
+#popup-wrapper #head-cell {
+  background: #eee;
+}
+
+#popup-wrapper .switch label .lever {
+  margin: 0 3px;
+}
+
+#popup-wrapper table tr td {
+  vertical-align: top;
+}
+
+#popup-wrapper table tr td:first-child {
+  padding-left: 10px;
+}
+#popup-wrapper table tr td:last-child {
+  padding-right: 10px;
+}

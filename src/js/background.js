@@ -2,11 +2,11 @@
 
 function notifyContentScript(config) {
   console.log('notifying contentscript');
-  chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     chrome.tabs.sendMessage(
       tabs[0].id,
-      {message: 'applyConfigInContentScript', config: config},
-      function(response) {},
+      { message: 'applyConfigInContentScript', config: config },
+      function() {}
     );
   });
 }
@@ -16,7 +16,7 @@ var DEFAULT_CONFIG = {
   enabled: 1,
   font: 'opendyslexic',
   rulerEnabled: 1,
-  rulerWidth: '26',
+  rulerWidth: '26'
 };
 
 var subscribers = [];
@@ -28,7 +28,7 @@ var store = {
   update: function(newData, cb) {
     chrome.storage.sync.get('config', function(store) {
       var updated = Object.assign(store.config, newData);
-      chrome.storage.sync.set({config: updated}, function() {
+      chrome.storage.sync.set({ config: updated }, function() {
         console.log('Saved config', updated);
         // notify subscribers
         subscribers.forEach(function(cb) {
@@ -55,7 +55,7 @@ var store = {
   subscribe: function(cb) {
     subscribers.push(cb);
     cb(store);
-  },
+  }
 };
 
 /**
@@ -66,7 +66,7 @@ var store = {
 chrome.runtime.onInstalled.addListener(function() {
   chrome.storage.sync.get('config', function(data) {
     if (!data.config) {
-      chrome.storage.sync.set({config: DEFAULT_CONFIG}, function() {
+      chrome.storage.sync.set({ config: DEFAULT_CONFIG }, function() {
         console.log('Default config saved', DEFAULT_CONFIG);
       });
     }

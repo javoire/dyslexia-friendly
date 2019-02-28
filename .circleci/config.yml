@@ -8,14 +8,17 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Dependencies"
+          name: 'Dependencies'
           command: |
             apt-get update
             apt-get -y install curl jq
             yarn
       - run:
-          name: "Test"
-          command: exit 0
+          name: 'Build'
+          command: yarn build
       - run:
-          name: "Package"
+          name: 'Test'
+          command: yarn test
+      - run:
+          name: 'Package'
           command: git archive -o dyslexia-friendly.zip HEAD
