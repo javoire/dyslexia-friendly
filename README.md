@@ -18,7 +18,7 @@ The features listed here are also implemented: http://antijingoist.github.io/web
 Develop
 -----
 
-To use the extension in developer mode, just navigate to
+To use the extension in developer mode, navigate to
 
 > chrome://extensions
 

@@ -1,17 +1,35 @@
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /.*/
+      - publish:
+          requires:
+            - build
+          filters:
+            # ensure publish only runs on pushed tags
+            branches:
+              ignore: /.*/
+            tags:
+              only: /.*/
+
 version: 2
 jobs:
   build:
     docker:
       - image: node:11
     environment:
-      - APP_ID: miepjgfkkommhllbbjaedffcpkncboeo
+      - PACKAGE_NAME: dyslexia-friendly.zip
     steps:
       - checkout
       - run:
           name: 'Dependencies'
           command: |
             apt-get update
-            apt-get -y install curl jq
+            apt-get -y install curl jq zip
             yarn
       - run:
           name: 'Build'
@@ -21,4 +39,15 @@ jobs:
           command: yarn test
       - run:
           name: 'Package'
-          command: git archive -o dyslexia-friendly.zip HEAD
+          command: utils/package.sh
+  publish:
+    docker:
+      - image: node:11
+    environment:
+      - APP_ID: miepjgfkkommhllbbjaedffcpkncboeo
+      # TODO: find a way to not have to specify this twice
+      - PACKAGE_NAME: dyslexia-friendly.zip
+    steps:
+      - run:
+          name: 'Publish'
+          command: utils/publish.sh
