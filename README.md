@@ -29,12 +29,6 @@ Roadmap
 
 Further customization of fonts and colors
 
-Contributors
--------
-
-* [@javoire](https://github.com/javoire)
-* [@rafel](https://github.com/rafel)
-
 Attributions
 --------
 
