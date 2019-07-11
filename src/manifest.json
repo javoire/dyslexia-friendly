@@ -1,6 +1,6 @@
 {
   "name": "Dyslexia Friendly",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "manifest_version": 2,
   "description": "Increases readability of websites by changing to easier-to-read fonts and adding visual enhancements",
   "icons": {
