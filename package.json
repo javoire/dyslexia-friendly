@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Increases readability of web pages by changing fonts, contrast and adding a reading ruler",
   "dependencies": {
-    "jquery": "^3.4.0",
+    "jquery": "^3.5.0",
     "materialize-css": "^1.0.0-rc.2"
   },
   "scripts": {
