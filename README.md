@@ -26,7 +26,10 @@ in Google Chrome, enable "Developer mode", click "Load unpacked extension" and s
 
 ### Publish
 
-After a PR is merged, create a new git tag and the publish pipeline will be triggered.
+After a PR is merged to master:
+
+1. Update the version in `src/manifest.json`
+1. Create a new git tag and the publish pipeline will be triggered.
 
 Roadmap
 -------
