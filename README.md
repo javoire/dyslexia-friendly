@@ -24,6 +24,10 @@ To use the extension in developer mode, navigate to
 
 in Google Chrome, enable "Developer mode", click "Load unpacked extension" and select the `src/` folder.
 
+### Publish
+
+After a PR is merged, create a new git tag and the publish pipeline will be triggered.
+
 Roadmap
 -------
 
