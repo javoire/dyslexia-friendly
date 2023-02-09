@@ -20,7 +20,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:11
+      - image: node:16
     environment:
       - PACKAGE_NAME: dyslexia-friendly.zip
     steps:
