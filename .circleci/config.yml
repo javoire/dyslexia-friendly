@@ -43,7 +43,6 @@ jobs:
       - persist_to_workspace:
           root: /root/project
           paths:
-            # Can't use var here...
             - dyslexia-friendly.zip
             - utils/publish.sh
   publish:
@@ -51,7 +50,6 @@ jobs:
       - image: node:11
     environment:
       - APP_ID: miepjgfkkommhllbbjaedffcpkncboeo
-      # TODO: find a way to not have to specify this twice
       - PACKAGE_NAME: dyslexia-friendly.zip
     steps:
       - attach_workspace:

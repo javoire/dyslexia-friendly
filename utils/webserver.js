@@ -2,7 +2,6 @@ const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const config = require('../webpack.config');
 const env = require('./env');
-const path = require('path');
 
 var options = config.chromeExtensionBoilerplate || {};
 var excludeEntriesToHotReload = options.notHotReload || [];
@@ -26,9 +25,7 @@ var compiler = webpack(config);
 
 var server = new WebpackDevServer(compiler, {
   hot: true,
-  contentBase: path.join(__dirname, '../build'),
-  headers: { 'Access-Control-Allow-Origin': '*' },
-  disableHostCheck: true
+  headers: { 'Access-Control-Allow-Origin': '*' }
 });
 
 server.listen(env.PORT);

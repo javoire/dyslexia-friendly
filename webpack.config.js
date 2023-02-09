@@ -2,7 +2,7 @@ const webpack = require('webpack');
 const path = require('path');
 const fileSystem = require('fs');
 const env = require('./utils/env');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
@@ -12,18 +12,9 @@ var alias = {};
 
 var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
 
-var fileExtensions = [
-  'jpg',
-  'jpeg',
-  'png',
-  'gif',
-  'eot',
-  'otf',
-  'svg',
-  'ttf',
-  'woff',
-  'woff2'
-];
+// var imgFileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+
+// var fontFileExtensions = ['eot', 'otf', 'ttf', 'woff', 'woff2'];
 
 if (fileSystem.existsSync(secretsPath)) {
   alias['secrets'] = secretsPath;
@@ -44,18 +35,29 @@ var options = {
   module: {
     rules: [
       // {
-      //   test: /\.css$/,
-      //   loader: 'style-loader!css-loader'
+      //   test: new RegExp('.(' + imgFileExtensions.join('|') + ')$'),
+      //   type: 'asset/resource',
+      //   exclude: /node_modules/,
+      //   generator: {
+      //     filename: 'img/[name].[ext]'
+      //   }
+      // },
+      // {
+      //   test: new RegExp('.(' + fontFileExtensions.join('|') + ')$'),
+      //   type: 'asset/resource',
+      //   exclude: /node_modules/,
+      //   generator: {
+      //     filename: 'fonts/[name].[ext]'
+      //   }
       // },
       {
-        test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
-        loader: 'file-loader?name=[name].[ext]',
+        test: /\.html$/,
+        use: ['html-loader'],
         exclude: /node_modules/
       },
       {
-        test: /\.html$/,
-        loader: 'html-loader',
-        exclude: /node_modules/
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader', 'postcss-loader']
       }
     ]
   },
@@ -64,45 +66,45 @@ var options = {
   },
   plugins: [
     // clean the build folder
-    new CleanWebpackPlugin(['build']),
+    new CleanWebpackPlugin({
+      cleanAfterEveryBuildPatterns: ['build']
+    }),
     // expose and write the allowed env vars on the compiled bundle
     //new webpack.EnvironmentPlugin(['NODE_ENV']),
-    new CopyWebpackPlugin([
-      {
-        from: 'src/manifest.json',
-        transform: function(content) {
-          // generates the manifest file using the package.json informations
-          return Buffer.from(
-            // this doesn't work, fix
-            JSON.stringify({
-              description: process.env.npm_package_description,
-              version: process.env.npm_package_version,
-              ...JSON.parse(content.toString())
-            })
-          );
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'src/manifest.json',
+          transform: function(content) {
+            // generates the manifest file using the package.json informations
+            return Buffer.from(
+              // this doesn't work? fix
+              JSON.stringify({
+                description: process.env.npm_package_description,
+                version: process.env.npm_package_version,
+                ...JSON.parse(content.toString())
+              })
+            );
+          }
+        },
+        // {
+        //   from: 'node_modules/tw-elements/dist/js/index.min.js',
+        //   to: 'vendor/tw-elements'
+        // },
+        {
+          from: 'src/fonts',
+          to: 'fonts'
+        },
+        {
+          from: 'src/img',
+          to: 'img'
+        },
+        {
+          from: 'src/_locales',
+          to: '_locales'
         }
-      },
-      {
-        from: 'node_modules/materialize-css/dist/css/materialize.min.css',
-        to: 'css'
-      },
-      {
-        from: 'src/css',
-        to: 'css'
-      },
-      {
-        from: 'src/fonts',
-        to: 'fonts'
-      },
-      {
-        from: 'src/img',
-        to: 'img'
-      },
-      {
-        from: 'src/_locales',
-        to: '_locales'
-      }
-    ]),
+      ]
+    }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'popup.html'),
       filename: 'popup.html',

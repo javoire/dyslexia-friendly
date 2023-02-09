@@ -1,3 +1,6 @@
+import '../css/fonts.css';
+import '../css/tailwind.css';
+import '../css/popup.css';
 import 'jquery';
 import $ from 'jquery';
 
@@ -80,16 +83,16 @@ function syncStoreToForm(config, inputs) {
   inputs.each(function() {
     const value = config[this.name];
     switch (this.type) {
-    case 'radio':
-      this.checked = value === this.value;
-      break;
-    case 'checkbox':
-      this.checked = !!value;
-      break;
-    case 'range':
-      this.value = value;
-      $('label[for="' + this.name + '"]').text(value + 'px');
-      break;
+      case 'radio':
+        this.checked = value === this.value;
+        break;
+      case 'checkbox':
+        this.checked = !!value;
+        break;
+      case 'range':
+        this.value = value;
+        $('label[for="' + this.name + '"]').text(value + 'px');
+        break;
     }
   });
 }
