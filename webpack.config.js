@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // load the secrets
 var alias = {};
@@ -19,6 +20,8 @@ var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
 if (fileSystem.existsSync(secretsPath)) {
   alias['secrets'] = secretsPath;
 }
+
+const isDev = env.NODE_ENV === 'development';
 
 var options = {
   mode: env.NODE_ENV,
@@ -57,7 +60,11 @@ var options = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader']
+        use: [
+          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+          'css-loader',
+          'postcss-loader'
+        ]
       }
     ]
   },
@@ -87,10 +94,16 @@ var options = {
             );
           }
         },
-        // {
-        //   from: 'node_modules/tw-elements/dist/js/index.min.js',
-        //   to: 'vendor/tw-elements'
-        // },
+        // These css files are hardcoded in manifest.json for
+        // injection into websites, so they need to be copied to the build folder
+        {
+          from: 'src/css/contentscript.css',
+          to: 'css/contentscript.css'
+        },
+        {
+          from: 'src/css/fonts.css',
+          to: 'css/fonts.css'
+        },
         {
           from: 'src/fonts',
           to: 'fonts'
@@ -116,11 +129,11 @@ var options = {
       chunks: ['options']
     }),
     new WriteFilePlugin()
-  ]
+  ].concat(isDev ? [] : [new MiniCssExtractPlugin()])
 };
 
-if (env.NODE_ENV === 'development') {
-  options.devtool = 'cheap-module-eval-source-map';
+if (isDev) {
+  options.devtool = 'eval-cheap-module-source-map';
 } else {
   options.devtool = false;
 }
