@@ -68,6 +68,26 @@
   line-height: 150%;
 }
 
+#popup-wrapper .example-ruler-width {
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+#popup-wrapper .ruler-size-label {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 150%;
+}
+
+#popup-wrapper .example-ruler-width .demo-ruler {
+  background-color: blue;
+  height: 20px;
+  flex-grow: 1;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 /* #popup-wrapper label { */
 /*   font-size: 1rem; */
 /* } */
