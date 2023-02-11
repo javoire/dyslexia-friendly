@@ -46,12 +46,13 @@ var options = {
   },
   module: {
     rules: [
+      // this is for bundling fonts for the popup
       {
         test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
         type: 'asset/resource',
         exclude: /node_modules/,
         generator: {
-          filename: 'fonts/[name].[ext]'
+          filename: 'fonts/[name][ext]'
         }
       },
       {
@@ -103,8 +104,9 @@ var options = {
             );
           }
         },
-        // These css files are hardcoded in manifest.json for
-        // injection into websites, so they need to be copied to the build folder
+        // These files are for injection into websites,
+        // so they need to be copied as is to the build folder.
+        // used by eg contentscript
         {
           from: 'src/css/contentscript.css',
           to: 'css/contentscript.css'
