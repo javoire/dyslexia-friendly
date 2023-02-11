@@ -12,14 +12,36 @@
   display: none;
 }
 
-#popup-wrapper #master-switch {
-  float: right;
-  margin-right: 10px;
+#popup-wrapper .header {
+  padding: 12px 20px 12px 32px;
+  background-color: #f7f8f9;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
-#popup-wrapper label {
-  font-size: 1rem;
+#popup-wrapper .header h1 {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 150%;
 }
+
+#popup-wrapper .header .form-switch {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+#popup-wrapper .header label {
+  font-size: 14px;
+  margin-left: 5px;
+  line-height: 150%;
+  margin-top: 3px;
+}
+
+/* #popup-wrapper label { */
+/*   font-size: 1rem; */
+/* } */
 
 #popup-wrapper #p-width {
   margin-bottom: 0;
