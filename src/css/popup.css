@@ -2,6 +2,7 @@
   font-family: 'opendyslexic';
   min-width: 350px;
   font-size: 1rem;
+  background-color: #fff;
 }
 
 /* default */
@@ -12,6 +13,10 @@
   display: none;
 }
 
+#popup-wrapper input[type='radio'] {
+  margin-top: 5px;
+}
+
 #popup-wrapper .header {
   padding: 12px 20px 12px 32px;
   background-color: #f7f8f9;
@@ -19,6 +24,11 @@
   flex-direction: row;
   justify-content: space-between;
   border-bottom: 1px solid #e5e7eb;
+}
+
+#popup-wrapper .form-check-label {
+  font-size: 14px;
+  line-height: 150%;
 }
 
 #popup-wrapper .header h1 {
@@ -41,7 +51,7 @@
 }
 
 #popup-wrapper .popup-section {
-  padding: 20px 20px 20px 32px;
+  margin: 20px 20px 20px 32px;
 }
 
 #popup-wrapper .popup-section .popup-section-header {
@@ -49,6 +59,7 @@
   display: flex;
   flex-direction: row;
   align-items: center;
+  margin-bottom: 12px;
 }
 
 #popup-wrapper .popup-section h2 {

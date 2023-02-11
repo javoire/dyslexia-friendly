@@ -31,6 +31,10 @@ After a PR is merged to master:
 1. Update the version in `src/manifest.json`
 1. Create a new git tag and the publish pipeline will be triggered.
 
+### Design
+
+CSS and UI elements are from https://tailwind-elements.com/
+
 Roadmap
 -------
 
