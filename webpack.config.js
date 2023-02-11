@@ -13,9 +13,18 @@ var alias = {};
 
 var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
 
-// var imgFileExtensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
-
-// var fontFileExtensions = ['eot', 'otf', 'ttf', 'woff', 'woff2'];
+var fileExtensions = [
+  'eot',
+  'otf',
+  'ttf',
+  'woff',
+  'woff2',
+  'jpg',
+  'jpeg',
+  'png',
+  'gif',
+  'svg'
+];
 
 if (fileSystem.existsSync(secretsPath)) {
   alias['secrets'] = secretsPath;
@@ -37,22 +46,14 @@ var options = {
   },
   module: {
     rules: [
-      // {
-      //   test: new RegExp('.(' + imgFileExtensions.join('|') + ')$'),
-      //   type: 'asset/resource',
-      //   exclude: /node_modules/,
-      //   generator: {
-      //     filename: 'img/[name].[ext]'
-      //   }
-      // },
-      // {
-      //   test: new RegExp('.(' + fontFileExtensions.join('|') + ')$'),
-      //   type: 'asset/resource',
-      //   exclude: /node_modules/,
-      //   generator: {
-      //     filename: 'fonts/[name].[ext]'
-      //   }
-      // },
+      {
+        test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
+        type: 'asset/resource',
+        exclude: /node_modules/,
+        generator: {
+          filename: 'fonts/[name].[ext]'
+        }
+      },
       {
         test: /\.html$/,
         use: ['html-loader'],
@@ -61,9 +62,17 @@ var options = {
       {
         test: /\.css$/,
         use: [
-          isDev ? 'style-loader' : MiniCssExtractPlugin.loader,
+          MiniCssExtractPlugin.loader,
           'css-loader',
-          'postcss-loader'
+          'postcss-loader',
+          {
+            loader: 'string-replace-loader',
+            options: {
+              search: 'chrome-extension://__MSG_@@extension_id__',
+              replace: '..',
+              flags: 'g'
+            }
+          }
         ]
       }
     ]
@@ -128,8 +137,10 @@ var options = {
       filename: 'options.html',
       chunks: ['options']
     }),
-    new WriteFilePlugin()
-  ].concat(isDev ? [] : [new MiniCssExtractPlugin()])
+    new WriteFilePlugin(),
+    // don't inline css in html...
+    new MiniCssExtractPlugin()
+  ]
 };
 
 if (isDev) {

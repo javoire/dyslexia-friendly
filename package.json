@@ -4,7 +4,8 @@
   "description": "Increases readability of web pages by changing fonts, contrast and adding a reading ruler",
   "dependencies": {
     "jquery": "^3.5.0",
-    "materialize-css": "^1.0.0-rc.2"
+    "materialize-css": "^1.0.0-rc.2",
+    "string-replace-loader": "^3.1.0"
   },
   "scripts": {
     "build": "NODE_ENV=production node utils/build.js",

@@ -2,6 +2,7 @@ const WebpackDevServer = require('webpack-dev-server');
 const webpack = require('webpack');
 const config = require('../webpack.config');
 const env = require('./env');
+const path = require('path');
 
 var options = config.chromeExtensionBoilerplate || {};
 var excludeEntriesToHotReload = options.notHotReload || [];
