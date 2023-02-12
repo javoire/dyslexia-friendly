@@ -86,6 +86,11 @@
   height: 20px;
   flex-grow: 1;
   background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+  font-size: 14px;
 }
 
 /* #popup-wrapper label { */
