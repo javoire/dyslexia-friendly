@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import 'tw-elements';
 import 'jquery';
 import $ from 'jquery';
@@ -31,7 +32,7 @@ import '../css/popup.css';
 //   }
 // }
 
-function arrayToMap(array) {
+function arrayToConfigMap(array) {
   const obj = {};
   array.forEach(item => {
     // the serialized form has "on" as checkbox values, convert to boolean instead
@@ -51,13 +52,9 @@ function isValidCallback(callback) {
  * @param callback - gets new config as param
  */
 function saveFormStateToStore(form, callback) {
-  // form state only contains values that are on, i.e
-  // checkboxes that are off are not in this map
-  const formState = arrayToMap(form.serializeArray());
-  console.log('seri', form.serializeArray());
-  console.log('obj', formState);
+  const formState = arrayToConfigMap(form.serializeArray());
 
-  // console.log('sending to background script:', config);
+  console.log('sending to background script:', formState);
   // pass new config to background script for saving
   chrome.runtime.sendMessage(
     {
@@ -99,6 +96,7 @@ function updateUiFromConfig(config, inputs) {
         break;
     }
   });
+  // update other UI states
 }
 
 window.onload = function() {

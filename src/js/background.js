@@ -33,13 +33,13 @@ chrome.runtime.onInstalled.addListener(function() {
 // listen for messages
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.message === 'updateConfig') {
-    console.log('updateConfig');
+    console.log('updateConfig event', request.data);
     store.update(request.data, sendResponse);
   } else if (request.message === 'getConfig') {
-    console.log('getConfig');
+    console.log('getConfig event');
     store.getAll(sendResponse);
-    return true; // otherwise sendResponse won't be called
   }
+  return true; // otherwise sendResponse won't be called
 });
 
 // 1) apply config on navigation
