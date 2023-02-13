@@ -4,11 +4,11 @@
 const { store, DEFAULT_CONFIG } = require('./lib/store');
 
 function notifyContentScript(config) {
-  console.log('notifying contentscript');
+  console.log('notifying contentscript', config);
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     chrome.tabs.sendMessage(
       tabs[0].id, // TODO: null check
-      { message: 'applyConfigInContentScript', config: config },
+      { message: 'applyConfigInContentScript', config },
       function() {}
     );
   });
@@ -30,7 +30,7 @@ chrome.runtime.onInstalled.addListener(function() {
  * Runtime
  */
 
-// listen for messages
+// listen for messages from popup
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.message === 'updateConfig') {
     console.log('updateConfig event', request.data);
@@ -49,14 +49,14 @@ chrome.webNavigation.onCommitted.addListener(function() {
   // i.e. before document has loaded
 
   console.log('onCommitted');
-  store.get(null, notifyContentScript);
+  store.getAll(notifyContentScript);
 });
 
 // 2) apply config on tab switch
 chrome.tabs.onActivated.addListener(function() {
   console.log('onActivated');
-  store.get(null, notifyContentScript);
+  store.getAll(notifyContentScript);
 });
 
-// 3) apply config on store change for current tab
+// 3) apply config on store change
 store.subscribe(notifyContentScript);
