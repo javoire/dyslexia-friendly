@@ -3,6 +3,7 @@
   <head> </head>
 
   <body>
+    <div id="dyslexia-friendly-ruler"></div>
     <!-- CHROME EXTENSION POPUP -->
     <div id="popup-wrapper">
       <form id="configForm" name="configForm">
@@ -13,11 +14,9 @@
               class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-gray bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
               type="checkbox"
               role="switch"
-              id="master-switch-input"
+              name="extensionEnabled"
+              id="master-switch-checkbox"
             />
-            <label for="master-switch-input">
-              Active
-            </label>
           </div>
         </div>
         <div class="popup-section">
@@ -28,23 +27,22 @@
                 class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-gray bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
                 type="checkbox"
                 role="switch"
-                id="font-switch-input"
+                name="fontEnabled"
+                id="font-switch-checkbox"
               />
-              <label for="font-switch-input">
-                Active
-              </label>
             </div>
           </div>
           <div class="form-check">
             <input
               class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-gray-50 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
               type="radio"
-              name="flexRadioDefault"
-              id="font-radio-opendyslexic"
+              name="fontChoice"
+              id="font-opendyslexic-radio"
+              value="opendyslexic"
             />
             <label
               class="form-check-label inline-block text-gray-800"
-              for="font-radio-opendyslexic"
+              for="font-opendyslexic-radio"
             >
               Open Dyslexic
             </label>
@@ -53,8 +51,9 @@
             <input
               class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-gray-50 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
               type="radio"
-              name="flexRadioDefault"
-              id="font-radio-comicsans"
+              name="fontChoice"
+              id="font-comicsans-radio"
+              value="comicsans"
             />
             <label
               class="form-check-label inline-block text-gray-800"
@@ -72,118 +71,23 @@
                 class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-gray bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
                 type="checkbox"
                 role="switch"
-                id="ruler-switch-input"
+                name="rulerEnabled"
+                id="ruler-switch-checkbox"
               />
-              <!-- <label for="ruler-switch-input"> -->
-              <!--   Active -->
-              <!-- </label> -->
             </div>
           </div>
           <div class="relative">
-            <label for="ruler-width" class="form-label ruler-size-label"
+            <label for="ruler-size-range" class="form-label ruler-size-label"
               >Size:</label
             >
             <input
               type="range"
               class="form-range appearance-none w-full h-6 p-0 bg-transparent focus:outline-none focus:ring-0 focus:shadow-none"
-              id="ruler-width"
+              name="rulerSize"
+              id="ruler-size-range"
             />
-            <div class="example-ruler-width">
-              <!-- TODO: change size live when dragging the slider -->
-              <div class="demo-ruler">
-                <div class-"demo-ruler-text">
-                  example ruler
-                </div>
-              </div>
-            </div>
           </div>
         </div>
-        <!-- <table class="bordered" id="popup-table"> -->
-        <!--   <tr> -->
-        <!--     <td colspan="2" id="head-cell"> -->
-        <!--       Dyslexia Friendly -->
-        <!--       <div -->
-        <!--         class="form-check form-switch float-right" -->
-        <!--         id="master-switch" -->
-        <!--       > -->
-        <!--         <input -->
-        <!--           class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-gray bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm" -->
-        <!--           type="checkbox" -->
-        <!--           role="switch" -->
-        <!--           id="flexSwitchCheckDefault" -->
-        <!--         /> -->
-        <!--       </div> -->
-        <!--       <!-1- <div class="switch" > -1-> -->
-        <!--       <!-1-   <label> -1-> -->
-        <!--       <!-1-     <input -1-> -->
-        <!--       <!-1-       type="checkbox" -1-> -->
-        <!--       <!-1-       id="enabled" -1-> -->
-        <!--       <!-1-       name="enabled" -1-> -->
-        <!--       <!-1-       value="1" -1-> -->
-        <!--       <!-1-     /> -1-> -->
-        <!--       <!-1-     <span class="lever"></span> -1-> -->
-        <!--       <!-1-   </label> -1-> -->
-        <!--       <!-1- </div> -1-> -->
-        <!--     </td> -->
-        <!--   </tr> -->
-        <!--   <tr class="show-when-enabledX"> -->
-        <!--     <td>Font</td> -->
-        <!--     <td> -->
-        <!--       <label style="width:100%" for="opendyslexic"> -->
-        <!--         <input -->
-        <!--           name="font" -->
-        <!--           id="opendyslexic" -->
-        <!--           type="radio" -->
-        <!--           value="opendyslexic" -->
-        <!--         /> -->
-        <!--         <span>Open Dyslexic</span> -->
-        <!--       </label> -->
-        <!--       <br /> -->
-        <!--       <label style="width:100%" for="comicsans"> -->
-        <!--         <input -->
-        <!--           name="font" -->
-        <!--           id="comicsans" -->
-        <!--           type="radio" -->
-        <!--           value="comicsans" -->
-        <!--         /> -->
-        <!--         <span>Comic Sans</span> -->
-        <!--       </label> -->
-        <!--     </td> -->
-        <!--   </tr> -->
-        <!--   <tr class="show-when-enabledX"> -->
-        <!--     <td>Ruler</td> -->
-        <!--     <td> -->
-        <!--       <div class="switch"> -->
-        <!--         <label> -->
-        <!--           Off -->
-        <!--           <input -->
-        <!--             type="checkbox" -->
-        <!--             id="rulerEnabled" -->
-        <!--             name="rulerEnabled" -->
-        <!--             value="1" -->
-        <!--           /> -->
-        <!--           <span class="lever"></span> -->
-        <!--           On -->
-        <!--         </label> -->
-        <!--       </div> -->
-        <!--       <div class="show-when-rulerX"> -->
-        <!--         <p id="p-width"> -->
-        <!--           Width: -->
-        <!--           <label for="rulerWidth"></label> -->
-        <!--         </p> -->
-        <!--         <p class="range-field"> -->
-        <!--           <input -->
-        <!--             type="range" -->
-        <!--             id="rulerWidth" -->
-        <!--             name="rulerWidth" -->
-        <!--             min="10" -->
-        <!--             max="50" -->
-        <!--           /> -->
-        <!--         </p> -->
-        <!--       </div> -->
-        <!--     </td> -->
-        <!--   </tr> -->
-        <!-- </table> -->
       </form>
     </div>
   </body>

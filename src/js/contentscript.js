@@ -12,7 +12,7 @@ function getRulerStyle(height) {
   return 'height:' + height + 'px;';
 }
 
-// TODO: structure better. This is too messy
+// TODO: structure better
 function applyConfig(config) {
   console.log('applying config in contentscript', config);
 
@@ -61,8 +61,8 @@ function applyConfig(config) {
 
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch (request.message) {
-  case 'applyConfigInContentScript':
-    applyConfig(request.config);
-    break;
+    case 'applyConfigInContentScript':
+      applyConfig(request.config);
+      break;
   }
 });

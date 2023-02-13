@@ -1,3 +1,18 @@
+/* 
+ * copied from contentscript.css 
+ * TODO: reuse css
+ * */
+#dyslexia-friendly-ruler {
+  height: 1.6em;
+  background-color: rgba(0, 0, 0, 0.1);
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100px;
+  pointer-events: none;
+  z-index: 10000000000;
+}
+
 #popup-wrapper {
   font-family: 'opendyslexic';
   min-width: 350px;
@@ -79,18 +94,6 @@
   font-weight: 700;
   font-size: 14px;
   line-height: 150%;
-}
-
-#popup-wrapper .example-ruler-width .demo-ruler {
-  background-color: blue;
-  height: 20px;
-  flex-grow: 1;
-  background-color: rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #333;
-  font-size: 14px;
 }
 
 /* #popup-wrapper label { */

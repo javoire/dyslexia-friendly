@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 'use strict';
 
 const { store, DEFAULT_CONFIG } = require('./lib/store');
@@ -6,7 +7,7 @@ function notifyContentScript(config) {
   console.log('notifying contentscript');
   chrome.tabs.query({ active: true, currentWindow: true }, function(tabs) {
     chrome.tabs.sendMessage(
-      tabs[0].id,
+      tabs[0].id, // TODO: null check
       { message: 'applyConfigInContentScript', config: config },
       function() {}
     );
@@ -17,14 +18,11 @@ function notifyContentScript(config) {
  * Installed
  */
 
-// save default store if not exists
+// save default config to store
 chrome.runtime.onInstalled.addListener(function() {
-  chrome.storage.sync.get('config', function(data) {
-    if (!data.config) {
-      chrome.storage.sync.set({ config: DEFAULT_CONFIG }, function() {
-        console.log('Default config saved', DEFAULT_CONFIG);
-      });
-    }
+  console.log('installed');
+  store.set(DEFAULT_CONFIG, config => {
+    console.log('default config saved', config);
   });
 });
 
@@ -35,9 +33,11 @@ chrome.runtime.onInstalled.addListener(function() {
 // listen for messages
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   if (request.message === 'updateConfig') {
-    store.update(request.data);
-  } else if (request.message === 'init') {
-    store.get(null, sendResponse);
+    console.log('updateConfig');
+    store.update(request.data, sendResponse);
+  } else if (request.message === 'getConfig') {
+    console.log('getConfig');
+    store.getAll(sendResponse);
     return true; // otherwise sendResponse won't be called
   }
 });
