@@ -8,7 +8,7 @@
   position: absolute;
   left: 0;
   right: 0;
-  top: 100px;
+  top: 0;
   pointer-events: none;
   z-index: 10000000000;
 }

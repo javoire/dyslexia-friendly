@@ -71,7 +71,7 @@ function saveFormStateToStore(form, callback) {
 }
 
 /**
- * Update form state based on config
+ * Update UI state from config
  *
  * @param config
  * @param inputs - jQuery elements
@@ -81,13 +81,11 @@ function updateUiFromConfig(config, inputs) {
   // update all form input states
   inputs.each(function() {
     const value = config[this.name];
-    console.log(this.name);
     switch (this.type) {
       case 'radio':
         this.checked = value === this.value;
         break;
       case 'checkbox':
-        console.log(this.checked);
         this.checked = !!value;
         break;
       case 'range':
@@ -104,6 +102,8 @@ window.onload = function() {
     const inputs = $('#configForm input');
     const form = $('#configForm');
     const ruler = $('#dyslexia-friendly-ruler');
+    const rulerRangeSlider = $('#ruler-size-range');
+    const configForm = $('#configForm');
 
     // form is submitted on any input change
     inputs.change(function() {
@@ -111,20 +111,32 @@ window.onload = function() {
     });
 
     // submitting the form saves the new config and updates the UI
-    $('#configForm').submit(function(e) {
+    configForm.submit(function(e) {
       saveFormStateToStore($(this), config => {
         updateUiFromConfig(config, inputs);
       });
       e.preventDefault();
     });
 
+    rulerRangeSlider.on('input', function(e) {
+      const value = rulerRangeSlider.val();
+      updateRulerSize(ruler, value);
+    });
+
     // On startup, load config from store and update ui,
     // and bind ruler position to mouse Y
     chrome.runtime.sendMessage({ message: 'getConfig' }, config => {
-      $('body').mousemove(() => ruler.css('top', event.pageY));
+      ruler.css('height', config.rulerSize);
+      ruler.css('marginTop', -config.rulerSize / 2);
+      $('body').mousemove(() => {
+        ruler.css('top', event.pageY);
+      });
       updateUiFromConfig(config, inputs);
     });
   });
 };
 
-const getRulerTopPixels = config => config.rulerWidth / 2;
+const updateRulerSize = function(ruler, value) {
+  ruler.css('height', value);
+  ruler.css('marginTop', -value / 2);
+};
