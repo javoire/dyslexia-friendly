@@ -19,75 +19,89 @@
             />
           </div>
         </div>
-        <div class="popup-section">
-          <div class="popup-section-header">
-            <h2>Font</h2>
-            <div class="form-check form-switch active-switch" id="font-switch">
-              <input
-                class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-gray bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
-                type="checkbox"
-                role="switch"
-                name="fontEnabled"
-                id="font-switch-checkbox"
-              />
+        <div class="popup-body" data-show-when="extensionEnabled">
+          <div class="popup-section">
+            <div class="popup-section-header">
+              <h2>Font</h2>
+              <div
+                class="form-check form-switch active-switch"
+                id="font-switch"
+              >
+                <input
+                  class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-gray bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+                  type="checkbox"
+                  role="switch"
+                  name="fontEnabled"
+                  id="font-switch-checkbox"
+                />
+              </div>
+            </div>
+            <div class="popup-section-body" data-show-when="fontEnabled">
+              <div class="form-check">
+                <input
+                  class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-gray-50 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  type="radio"
+                  name="fontChoice"
+                  id="font-opendyslexic-radio"
+                  value="opendyslexic"
+                />
+                <label
+                  class="form-check-label inline-block text-gray-800"
+                  for="font-opendyslexic-radio"
+                >
+                  Open Dyslexic
+                </label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-gray-50 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
+                  type="radio"
+                  name="fontChoice"
+                  id="font-comicsans-radio"
+                  value="comicsans"
+                />
+                <label
+                  class="form-check-label inline-block text-gray-800"
+                  for="font-comicsans-radio"
+                >
+                  Comic sans
+                </label>
+              </div>
             </div>
           </div>
-          <div class="form-check">
-            <input
-              class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-gray-50 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-              type="radio"
-              name="fontChoice"
-              id="font-opendyslexic-radio"
-              value="opendyslexic"
-            />
-            <label
-              class="form-check-label inline-block text-gray-800"
-              for="font-opendyslexic-radio"
-            >
-              Open Dyslexic
-            </label>
-          </div>
-          <div class="form-check">
-            <input
-              class="form-check-input appearance-none rounded-full h-4 w-4 border border-gray-300 bg-gray-50 checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain float-left mr-2 cursor-pointer"
-              type="radio"
-              name="fontChoice"
-              id="font-comicsans-radio"
-              value="comicsans"
-            />
-            <label
-              class="form-check-label inline-block text-gray-800"
-              for="font-comicsans-radio"
-            >
-              Comic sans
-            </label>
-          </div>
-        </div>
-        <div class="popup-section">
-          <div class="popup-section-header">
-            <h2>Ruler</h2>
-            <div class="form-check form-switch active-switch" id="font-switch">
-              <input
-                class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-gray bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
-                type="checkbox"
-                role="switch"
-                name="rulerEnabled"
-                id="ruler-switch-checkbox"
-              />
+          <div class="popup-section">
+            <div class="popup-section-header">
+              <h2>Ruler</h2>
+              <div
+                class="form-check form-switch active-switch"
+                id="font-switch"
+              >
+                <input
+                  class="form-check-input appearance-none w-9 -ml-10 rounded-full float-left h-5 align-top bg-gray bg-no-repeat bg-contain bg-gray-300 focus:outline-none cursor-pointer shadow-sm"
+                  type="checkbox"
+                  role="switch"
+                  name="rulerEnabled"
+                  id="ruler-switch-checkbox"
+                />
+              </div>
             </div>
-          </div>
-          <div class="relative">
-            <label for="ruler-size-range" class="form-label ruler-size-label"
-              >Size:</label
-            >
-            <input
-              type="range"
-              class="form-range appearance-none w-full h-6 p-0 bg-transparent focus:outline-none focus:ring-0 focus:shadow-none"
-              name="rulerSize"
-              id="ruler-size-range"
-              min="10"
-              max="60"
-            />
+            <div class="popup-section-body" data-show-when="rulerEnabled">
+              <div class="relative">
+                <label
+                  for="ruler-size-range"
+                  class="form-label ruler-size-label"
+                  >Size:</label
+                >
+                <input
+                  type="range"
+                  class="form-range appearance-none w-full h-6 p-0 bg-transparent focus:outline-none focus:ring-0 focus:shadow-none"
+                  name="rulerSize"
+                  id="ruler-size-range"
+                  min="10"
+                  max="60"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </form>

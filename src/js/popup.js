@@ -95,6 +95,16 @@ function updateUiFromConfig(config, inputs) {
     }
   });
   // update other UI states
+  const visibleSections = $('[data-show-when]');
+  visibleSections.each(function() {
+    const elem = $(this);
+    const showWhen = elem.data('show-when');
+    if (config[showWhen]) {
+      elem.show();
+    } else {
+      elem.hide();
+    }
+  });
 }
 
 window.onload = function() {
