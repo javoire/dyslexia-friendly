@@ -57,9 +57,8 @@ function applyConfig(config) {
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   switch (request.message) {
     case 'applyConfigInContentScript':
-      console.log(request, 'SDSADSAD');
       applyConfig(request.config);
       break;
   }
-  return true;
+  sendResponse(true);
 });
