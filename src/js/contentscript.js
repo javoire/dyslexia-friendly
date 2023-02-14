@@ -3,53 +3,50 @@
 
 import $ from 'jquery';
 
-const ruler = document.createElement('div');
-ruler.setAttribute('id', 'dyslexia-friendly-ruler');
-
 const cssNamespace = 'dyslexia-friendly';
 const fontClassPrefix = 'dyslexia-friendly-font-';
+const ruler = $('<div id="dyslexia-friendly-ruler"></div>');
 
-function getRulerStyle(height) {
-  return 'height:' + height + 'px;';
-}
+$(document).ready(function() {
+  $('body').append(ruler);
+  $('body').mousemove(function(event) {
+    ruler.css('top', event.pageY);
+  });
+});
 
-// TODO: structure better
 function applyConfig(config) {
   console.log('[Dyslexia Friendly] applying user settings to webpage', config);
   $(document).ready(function() {
+    const body = $('body');
+
     if (config.extensionEnabled) {
       // apply base CSS
-      document.body.classList.add(cssNamespace);
+      body.addClass(cssNamespace);
 
-      // find previous font class and remove
-      document.body.classList.forEach(function(classname) {
-        if (classname.startsWith(fontClassPrefix)) {
-          document.body.classList.remove(classname);
-        }
-      });
-      // add chosen font
-      document.body.classList.add(fontClassPrefix + config.fontChoice);
-
-      // enable ruler
-      // set ruler width
-      if (config.rulerEnabled) {
-        document.body.appendChild(ruler);
-        $('body').mousemove(function(event) {
-          $(ruler).css('top', event.pageY - config.rulerSize / 2);
+      // remove previous font class
+      body
+        .attr('class')
+        .split(' ')
+        .forEach(function(classname) {
+          if (classname.startsWith(fontClassPrefix)) {
+            body.removeClass(classname);
+          }
         });
-      } else {
-        try {
-          document.body.removeChild(ruler);
-        } catch (e) {}
+      if (config.fontEnabled) {
+        body.addClass(fontClassPrefix + config.fontChoice);
       }
 
-      ruler.setAttribute('style', getRulerStyle(config.rulerSize));
+      ruler.css('marginTop', -config.rulerSize / 2);
+      ruler.css('height', config.rulerSize);
+      if (config.rulerEnabled) {
+        ruler.show();
+      } else {
+        ruler.hide();
+      }
     } else {
-      // remove css and ruler
-      document.body.classList.remove(cssNamespace);
-      try {
-        document.body.removeChild(ruler);
-      } catch (e) {}
+      // remove main class to disable all modifications
+      body.removeClass(cssNamespace);
+      ruler.hide();
     }
   });
 }

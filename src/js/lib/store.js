@@ -42,15 +42,18 @@ const store = {
    */
   update: function(newConfigValues, cb) {
     chrome.storage.sync.get('config', function(store) {
-      const updated = updateChangedConfigValues(store.config, newConfigValues);
-      chrome.storage.sync.set({ config: updated }, function() {
-        console.log('saved updated config', updated);
+      const updatedConfig = updateChangedConfigValues(
+        store.config,
+        newConfigValues
+      );
+      chrome.storage.sync.set({ config: updatedConfig }, function() {
+        console.log('saved updated config', updatedConfig);
 
         // notify subscribers
-        subscribers.forEach(function(cb) {
-          cb(updated);
+        subscribers.forEach(function(subscriber) {
+          subscriber(updatedConfig);
         });
-        return cb ? cb(updated) : true;
+        return cb ? cb(updatedConfig) : true;
       });
     });
   },
