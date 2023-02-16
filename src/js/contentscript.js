@@ -14,11 +14,12 @@ $(document).ready(function() {
   $('body').mousemove(function(event) {
     ruler.css('top', event.pageY);
   });
-});
 
-function applyConfig(config) {
-  console.log('[Dyslexia Friendly] applying user settings to webpage', config);
-  $(document).ready(function() {
+  function applyConfig(config) {
+    console.log(
+      '[Dyslexia Friendly] applying user settings to webpage',
+      config
+    );
     const body = $('body');
 
     if (config.extensionEnabled) {
@@ -43,14 +44,14 @@ function applyConfig(config) {
       body.removeClass(cssNamespace);
       ruler.hide();
     }
-  });
-}
-
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  switch (request.message) {
-    case 'applyConfigInContentScript':
-      applyConfig(request.config);
-      break;
   }
-  sendResponse(true);
+
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    switch (request.message) {
+      case 'applyConfigInContentScript':
+        applyConfig(request.config);
+        break;
+    }
+    sendResponse(true);
+  });
 });

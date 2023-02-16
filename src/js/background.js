@@ -49,16 +49,10 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 });
 
 // 1) apply config on navigation / page reload
-chrome.webNavigation.onCommitted.addListener(function() {
-  // Run as soon as a navigation has been committed
-  // i.e. before document has loaded
-
-  console.log('onCommitted');
-  // timeout to get contentscript.js to wake up
-  // TODO: implement retry logic, check on chrome.runtime.lastError
-  setTimeout(() => {
-    store.getAll(notifyContentScript);
-  }, 50);
+chrome.webNavigation.onDOMContentLoaded.addListener(function() {
+  // onDOMContentLoaded means contentscript.js is alive
+  console.log('onDOMContentLoaded');
+  store.getAll(notifyContentScript);
 });
 
 // 2) apply config on tab switch
