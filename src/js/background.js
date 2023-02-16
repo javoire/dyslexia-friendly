@@ -13,7 +13,13 @@ function notifyContentScript(config) {
         if (ok) {
           console.log('contentscript OK reply');
         } else {
+          // this typically only happens on chrome settings pages,
+          // where the contentscript isn't injected, so it isn't replying.
+          // another edge case is when the extension is first installed,
+          // then existing tabs won't have the contentscript injected, so
+          // this will also occur.
           console.log('contentscript no reply');
+          console.log('error:', chrome.runtime.lastError);
         }
       }
     );
@@ -56,15 +62,12 @@ chrome.webNavigation.onDOMContentLoaded.addListener(function() {
 });
 
 // 2) apply config on tab switch
-// This is not working at all. Even with a 2 second delay,
-// the message is not sent to contentscript:
-// "Unchecked runtime.lastError: Could not establish connection. Receiving end does not exist."
-// chrome.tabs.onActivated.addListener(function() {
-//   console.log('onActivated');
-//   setTimeout(() => {
-//     store.getAll(notifyContentScript);
-//   }, 2000);
-// });
+// (only works for tabs opened after the extenion has been installed,
+// bc otherwise content.js does not exist on the page to react to the message)
+chrome.tabs.onActivated.addListener(function() {
+  console.log('tabs.onActivated');
+  store.getAll(notifyContentScript);
+});
 
 // 3) apply config on store change
 store.subscribe(notifyContentScript);
