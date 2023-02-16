@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 const {
   store,
   DEFAULT_CONFIG,
@@ -71,9 +69,6 @@ describe('store', () => {
       expect(config).toEqual(mockUpdatedConfig);
     });
   });
-});
-
-describe('store', () => {
   test('updateChangedConfigValue() updates correct values', () => {
     const storedConfig = {
       somenumber: 1,

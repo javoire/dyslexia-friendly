@@ -1,16 +1,6 @@
 /* eslint-disable no-console */
 // default user config
 var DEFAULT_CONFIG = {
-  // when the version number is updated, users locally stored config
-  // will be wiped so it works with any new changes,
-  // so there isn't any old deprecated or conflicting config values
-  // TODO: automate this number by reading package.json or manifest.json, on build
-  // with webpack Define plugin?
-  // or/also, check if local config contains key names that are invalid (outdated)
-  // and then also wipe it
-  // TODO maybe store is wiped on extension updates anyway?
-  extensionVersion: '2.0.0',
-
   // inputs:
   // these are the `name="something-checkbox"` etc,
   // names need to be manually in sync...
