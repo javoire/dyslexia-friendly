@@ -50,7 +50,6 @@ function updateUiFromConfig(config, inputs, body) {
         break;
       case 'range':
         this.value = value;
-        // $('label[for="' + this.name + '"]').text(value + 'px');
         break;
     }
   });
@@ -106,7 +105,6 @@ window.onload = function() {
     });
 
     // On popup open, load config from store and update ui,
-    // and bind ruler position to mouse Y
     chrome.runtime.sendMessage({ message: 'getConfig' }, config => {
       updateRulerSize(ruler, config.rulerSize);
       updateUiFromConfig(config, inputs, body);
