@@ -66,6 +66,7 @@ var options = {
           MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader',
+          // need relative asset links in the popup:
           {
             loader: 'string-replace-loader',
             options: {
