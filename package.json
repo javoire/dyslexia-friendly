@@ -12,13 +12,15 @@
     "start": "NODE_ENV=development node utils/webserver.js",
     "test": "jest",
     "lint": "eslint src",
-    "format": "prettier-eslint **/*.js"
+    "format": "prettier-eslint src/**/*.js"
   },
   "devDependencies": {
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
     "eslint": "^5.13.0",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-jest": "^27.2.1",
     "file-loader": "^6.2.0",
     "fs-extra": "7.0.1",
     "html-loader": "^4.2.0",
