@@ -12,9 +12,15 @@
   pointer-events: none;
   z-index: 10000000000;
 }
+body.dyslexia-friendly-font-opendyslexic {
+  font-family: 'opendyslexic' !important;
+}
+
+body.dyslexia-friendly-font-comicsans {
+  font-family: 'Comic Sans MS' !important;
+}
 
 #popup-wrapper {
-  font-family: 'opendyslexic';
   min-width: 350px;
   font-size: 1rem;
   background-color: #fff;

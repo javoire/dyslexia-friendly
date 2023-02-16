@@ -6,31 +6,10 @@ import $ from 'jquery';
 import '../css/fonts.css';
 import '../css/tailwind.css';
 import '../css/popup.css';
+import { removeClassStartsWith } from './lib/util';
 
-/**
- * Parse config and update corresponding UI elements
- *
- * @param config
- * @returns {undefined}
- */
-// function updateUI(config) {
-//   // UPDATE UI
-//   if (config.enabled) {
-//     // height issue: https://bugs.chromium.org/p/chromium/issues/detail?id=428044
-//     setTimeout(function() {
-//       $('.show-when-enabled').show();
-//     }, 100);
-//   } else {
-//     $('.show-when-enabled').hide();
-//   }
-//   if (config.rulerEnabled) {
-//     setTimeout(function() {
-//       $('.show-when-ruler').show();
-//     }, 100);
-//   } else {
-//     $('.show-when-ruler').hide();
-//   }
-// }
+// todo: reuse
+const fontClassPrefix = 'dyslexia-friendly-font-';
 
 function arrayToConfigMap(array) {
   const obj = {};
@@ -39,10 +18,6 @@ function arrayToConfigMap(array) {
     obj[item.name] = item.value === 'on' ? true : item.value;
   });
   return obj;
-}
-
-function isValidCallback(callback) {
-  return callback && typeof callback === 'function';
 }
 
 /*
@@ -61,12 +36,7 @@ function saveFormStateToStore(form, callback) {
       message: 'updateConfig',
       data: formState
     },
-    updatedConfig => {
-      // pass new config back to caller
-      if (isValidCallback(callback)) {
-        callback(updatedConfig);
-      }
-    }
+    callback
   );
 }
 
@@ -77,7 +47,7 @@ function saveFormStateToStore(form, callback) {
  * @param inputs - jQuery elements
  * @returns {undefined}
  */
-function updateUiFromConfig(config, inputs) {
+function updateUiFromConfig(config, inputs, body) {
   // update all form input states
   inputs.each(function() {
     const value = config[this.name];
@@ -94,7 +64,12 @@ function updateUiFromConfig(config, inputs) {
         break;
     }
   });
-  // update other UI states
+
+  // toggle font
+  removeClassStartsWith(body, fontClassPrefix);
+  body.addClass(fontClassPrefix + config.fontChoice);
+
+  // toggle visible sections
   const visibleSections = $('[data-show-when]');
   visibleSections.each(function() {
     const elem = $(this);
@@ -114,6 +89,7 @@ window.onload = function() {
     const ruler = $('#dyslexia-friendly-ruler');
     const rulerRangeSlider = $('#ruler-size-range');
     const configForm = $('#configForm');
+    const body = $('body');
 
     // form is submitted on any input change
     inputs.change(function() {
@@ -123,25 +99,27 @@ window.onload = function() {
     // submitting the form saves the new config and updates the UI
     configForm.submit(function(e) {
       saveFormStateToStore($(this), config => {
-        updateUiFromConfig(config, inputs);
+        updateUiFromConfig(config, inputs, body);
       });
       e.preventDefault();
     });
 
-    rulerRangeSlider.on('input', function(e) {
+    // update ruler size live as the user slides the range
+    rulerRangeSlider.on('input', function() {
       const value = rulerRangeSlider.val();
       updateRulerSize(ruler, value);
     });
 
-    // On startup, load config from store and update ui,
+    // bind ruler to mouse
+    body.mousemove(() => {
+      ruler.css('top', event.pageY);
+    });
+
+    // On popup open, load config from store and update ui,
     // and bind ruler position to mouse Y
     chrome.runtime.sendMessage({ message: 'getConfig' }, config => {
-      ruler.css('height', config.rulerSize);
-      ruler.css('marginTop', -config.rulerSize / 2);
-      $('body').mousemove(() => {
-        ruler.css('top', event.pageY);
-      });
-      updateUiFromConfig(config, inputs);
+      updateRulerSize(ruler, config.rulerSize);
+      updateUiFromConfig(config, inputs, body);
     });
   });
 };

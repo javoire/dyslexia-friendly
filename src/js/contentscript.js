@@ -3,6 +3,8 @@
 
 import $ from 'jquery';
 
+import { removeClassStartsWith } from './lib/util';
+
 const cssNamespace = 'dyslexia-friendly';
 const fontClassPrefix = 'dyslexia-friendly-font-';
 const ruler = $('<div id="dyslexia-friendly-ruler"></div>');
@@ -24,14 +26,7 @@ function applyConfig(config) {
       body.addClass(cssNamespace);
 
       // remove previous font class
-      body
-        .attr('class')
-        .split(' ')
-        .forEach(function(classname) {
-          if (classname.startsWith(fontClassPrefix)) {
-            body.removeClass(classname);
-          }
-        });
+      removeClassStartsWith(body, fontClassPrefix);
       if (config.fontEnabled) {
         body.addClass(fontClassPrefix + config.fontChoice);
       }
