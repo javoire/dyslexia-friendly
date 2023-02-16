@@ -4,10 +4,9 @@
 import $ from 'jquery';
 
 import { removeClassStartsWith } from './lib/util';
+import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts';
 
-const cssNamespace = 'dyslexia-friendly';
-const fontClassPrefix = 'dyslexia-friendly-font-';
-const ruler = $('<div id="dyslexia-friendly-ruler"></div>');
+const ruler = $(`<div id="${RULER_ID}"></div>`);
 
 $(document).ready(function() {
   $('body').append(ruler);
@@ -24,12 +23,12 @@ $(document).ready(function() {
 
     if (config.extensionEnabled) {
       // apply base CSS
-      body.addClass(cssNamespace);
+      body.addClass(CSS_NAMESPACE);
 
       // remove previous font class
-      removeClassStartsWith(body, fontClassPrefix);
+      removeClassStartsWith(body, FONT_CLASS_PREFIX);
       if (config.fontEnabled) {
-        body.addClass(fontClassPrefix + config.fontChoice);
+        body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
       }
 
       ruler.css('marginTop', -config.rulerSize / 2);
@@ -41,7 +40,7 @@ $(document).ready(function() {
       }
     } else {
       // remove main class to disable all modifications
-      body.removeClass(cssNamespace);
+      body.removeClass(CSS_NAMESPACE);
       ruler.hide();
     }
   }

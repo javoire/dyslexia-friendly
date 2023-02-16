@@ -8,3 +8,12 @@ export const removeClassStartsWith = (elem, classStartsWith) => {
       }
     });
 };
+
+export const arrayToConfigMap = array => {
+  const obj = {};
+  array.forEach(item => {
+    // the serialized form has "on" as checkbox values, convert to boolean instead
+    obj[item.name] = item.value === 'on' ? true : item.value;
+  });
+  return obj;
+};

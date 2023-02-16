@@ -6,19 +6,9 @@ import $ from 'jquery';
 import '../css/fonts.css';
 import '../css/tailwind.css';
 import '../css/popup.css';
-import { removeClassStartsWith } from './lib/util';
 
-// todo: reuse
-const fontClassPrefix = 'dyslexia-friendly-font-';
-
-function arrayToConfigMap(array) {
-  const obj = {};
-  array.forEach(item => {
-    // the serialized form has "on" as checkbox values, convert to boolean instead
-    obj[item.name] = item.value === 'on' ? true : item.value;
-  });
-  return obj;
-}
+import { removeClassStartsWith, arrayToConfigMap } from './lib/util';
+import { FONT_CLASS_PREFIX } from './lib/consts';
 
 /*
  * Send form to background store for saving
@@ -66,8 +56,8 @@ function updateUiFromConfig(config, inputs, body) {
   });
 
   // toggle font
-  removeClassStartsWith(body, fontClassPrefix);
-  body.addClass(fontClassPrefix + config.fontChoice);
+  removeClassStartsWith(body, FONT_CLASS_PREFIX);
+  body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
 
   // toggle visible sections
   const visibleSections = $('[data-show-when]');
