@@ -32,14 +32,14 @@ jobs:
             apt-get -y install zip
             yarn
       - run:
-          name: 'Build'
-          command: yarn build
-      - run:
           name: 'Lint'
           command: yarn lint
       - run:
           name: 'Test'
           command: yarn test
+      - run:
+          name: 'Build'
+          command: yarn build
       - run:
           name: 'Package'
           command: utils/package.sh
