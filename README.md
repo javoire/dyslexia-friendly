@@ -20,7 +20,7 @@ Develop
 
 ### Popup only
 
-Run the devserver. However, any messages to background or content scripts will not be sent (as those scripts don't exist in this mode). The devserver is useful for layout and styling.
+Run the devserver. However, any messages to background or content scripts will not be sent (as those scripts don't exist in this mode). The devserver is useful for tweaking layout and styling of the popup.
 
 ```
 $ yarn start
@@ -35,7 +35,7 @@ Do once:
 1. Enable "Developer mode",
 1. Click "Load unpacked extension" and select the `build/` folder
 
-Do on changes to source files
+Do on changes to source files:
 
 1. Run `yarn build`
 1. Navigate to `chrome://extensions` in Chrome
