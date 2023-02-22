@@ -32,18 +32,20 @@ jobs:
             apt-get -y install zip
             yarn
       - run:
-          name: 'Build'
-          command: yarn build
+          name: 'Lint'
+          command: yarn lint
       - run:
           name: 'Test'
           command: yarn test
+      - run:
+          name: 'Build'
+          command: yarn build
       - run:
           name: 'Package'
           command: utils/package.sh
       - persist_to_workspace:
           root: /root/project
           paths:
-            # Can't use var here...
             - dyslexia-friendly.zip
             - utils/publish.sh
   publish:
@@ -51,7 +53,6 @@ jobs:
       - image: node:11
     environment:
       - APP_ID: miepjgfkkommhllbbjaedffcpkncboeo
-      # TODO: find a way to not have to specify this twice
       - PACKAGE_NAME: dyslexia-friendly.zip
     steps:
       - attach_workspace:

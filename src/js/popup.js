@@ -1,95 +1,72 @@
+/* eslint-disable no-console */
+import 'tw-elements';
 import 'jquery';
 import $ from 'jquery';
 
-/**
- * Parse config and update corresponding UI elements
- *
- * @param config
- * @returns {undefined}
- */
-function updateUI(config) {
-  // UPDATE UI
-  if (config.enabled) {
-    // height issue: https://bugs.chromium.org/p/chromium/issues/detail?id=428044
-    setTimeout(function() {
-      $('.show-when-enabled').show();
-    }, 100);
-  } else {
-    $('.show-when-enabled').hide();
-  }
-  if (config.rulerEnabled) {
-    setTimeout(function() {
-      $('.show-when-ruler').show();
-    }, 100);
-  } else {
-    $('.show-when-ruler').hide();
-  }
-}
+import '../css/fonts.css';
+import '../css/tailwind.css';
+import '../css/popup.css';
 
-function formArrayToKeyValue(array) {
-  const obj = {};
-  array.forEach(item => {
-    obj[item.name] = item.value;
-  });
-  return obj;
-}
-
-function isValidCallback(callback) {
-  return callback && typeof callback === 'function';
-}
+import { removeClassStartsWith, arrayToConfigMap } from './lib/util';
+import { FONT_CLASS_PREFIX } from './lib/consts';
 
 /*
  * Send form to background store for saving
  *
  * @param form - jQuery form object
- * @param callback - callback when form has been saved, is passed {config}
+ * @param callback - gets new config as param
  */
-function syncFormToStore(form, callback) {
-  const config = formArrayToKeyValue(form.serializeArray());
+function saveFormStateToStore(form, callback) {
+  const formState = arrayToConfigMap(form.serializeArray());
 
-  // decorate config with checkboxes that are "off" as they're not included in the serialized form config
-  $('input[type=checkbox]:not(:checked)', form).each(function() {
-    config[this.name] = 0;
-  });
-
-  // convert string attr to int
-  $('input[type=checkbox]:checked', form).each(function() {
-    config[this.name] = parseInt(this.value);
-  });
-
-  // console.log('sending to background script:', config);
-  chrome.runtime.sendMessage({
-    message: 'updateConfig',
-    data: config
-  });
-
-  if (isValidCallback(callback)) {
-    callback(config);
-  }
+  console.log('sending to background script:', formState);
+  // pass new config to background script for saving
+  chrome.runtime.sendMessage(
+    {
+      message: 'updateConfig',
+      data: formState
+    },
+    callback
+  );
 }
 
 /**
- * Update form state based on saved config
+ * Update UI state from config
  *
  * @param config
- * @param inputs
+ * @param inputs - jQuery elements
  * @returns {undefined}
  */
-function syncStoreToForm(config, inputs) {
-  // for all inputs, based on their type, update their attributes accordingly
+function updateUiFromConfig(config, inputs, body) {
+  // update all form input states
   inputs.each(function() {
     const value = config[this.name];
     switch (this.type) {
-    case 'radio':
-      this.checked = value === this.value;
-      break;
-    case 'checkbox':
-      this.checked = !!value;
-      break;
-    case 'range':
-      this.value = value;
-      $('label[for="' + this.name + '"]').text(value + 'px');
-      break;
+      case 'radio':
+        this.checked = value === this.value;
+        break;
+      case 'checkbox':
+        this.checked = !!value;
+        break;
+      case 'range':
+        this.value = value;
+        break;
+    }
+  });
+
+  // toggle font
+  removeClassStartsWith(body, FONT_CLASS_PREFIX);
+  body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
+
+  // toggle visible sections
+  const visibleSections = $('[data-show-when]');
+  visibleSections.each(function() {
+    const elem = $(this);
+    const showWhen = elem.data('show-when');
+    if (config[showWhen]) {
+      elem.show();
+    } else {
+      elem.hide();
     }
   });
 }
@@ -98,30 +75,44 @@ window.onload = function() {
   $(document).ready(function() {
     const inputs = $('#configForm input');
     const form = $('#configForm');
+    const ruler = $('#dyslexia-friendly-ruler');
+    const rulerRangeSlider = $('#ruler-size-range');
+    const configForm = $('#configForm');
+    const body = $('body');
 
-    // listen on changes on any form elements,
-    // submit form and update all configs
+    // form is submitted on any input change
     inputs.change(function() {
-      if (this.type === 'range') {
-        $('label[for="' + this.name + '"]').text(this.value + 'px');
-      }
       form.submit();
     });
 
-    // save form data to store
-    $('#configForm').submit(function(e) {
-      syncFormToStore($(this), updateUI);
+    // submitting the form saves the new config and updates the UI
+    configForm.submit(function(e) {
+      saveFormStateToStore($(this), config => {
+        updateUiFromConfig(config, inputs, body);
+      });
       e.preventDefault();
     });
 
-    /**
-     * Init
-     */
+    // update ruler size live as the user slides the range
+    rulerRangeSlider.on('input', function() {
+      const value = rulerRangeSlider.val();
+      updateRulerSize(ruler, value);
+    });
 
-    chrome.runtime.sendMessage({ message: 'init' }, config => {
-      // load stored config data and update form and UI to reflect
-      syncStoreToForm(config, inputs);
-      updateUI(config);
+    // bind ruler to mouse
+    body.mousemove(() => {
+      ruler.css('top', event.pageY);
+    });
+
+    // On popup open, load config from store and update ui,
+    chrome.runtime.sendMessage({ message: 'getConfig' }, config => {
+      updateRulerSize(ruler, config.rulerSize);
+      updateUiFromConfig(config, inputs, body);
     });
   });
+};
+
+const updateRulerSize = function(ruler, value) {
+  ruler.css('height', value);
+  ruler.css('marginTop', -value / 2);
 };

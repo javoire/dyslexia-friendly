@@ -1,68 +1,56 @@
+/* eslint-disable no-console */
 'use strict';
 
 import $ from 'jquery';
 
-const ruler = document.createElement('div');
-ruler.setAttribute('id', 'dyslexia-friendly-ruler');
+import { removeClassStartsWith } from './lib/util';
+import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts';
 
-const cssNamespace = 'dyslexia-friendly';
-const fontClassPrefix = 'dyslexia-friendly-font-';
+const ruler = $(`<div id="${RULER_ID}"></div>`);
 
-function getRulerStyle(height) {
-  return 'height:' + height + 'px;';
-}
+$(document).ready(function() {
+  $('body').append(ruler);
+  $('body').mousemove(function(event) {
+    ruler.css('top', event.pageY);
+  });
 
-// TODO: structure better. This is too messy
-function applyConfig(config) {
-  console.log('applying config in contentscript', config);
+  function applyConfig(config) {
+    console.log(
+      '[Dyslexia Friendly] applying user settings to webpage',
+      config
+    );
+    const body = $('body');
 
-  if (config.enabled) {
-    $(document).ready(function() {
+    if (config.extensionEnabled) {
       // apply base CSS
-      document.body.classList.add(cssNamespace);
+      body.addClass(CSS_NAMESPACE);
 
-      // find previous font class and remove
-      document.body.classList.forEach(function(classname) {
-        if (classname.startsWith(fontClassPrefix)) {
-          document.body.classList.remove(classname);
-        }
-      });
-      document.body.classList.add(fontClassPrefix + config.font);
-    });
+      // remove previous font class
+      removeClassStartsWith(body, FONT_CLASS_PREFIX);
+      if (config.fontEnabled) {
+        body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
+      }
 
-    // enable ruler
-    // set ruler width
-    if (config.rulerEnabled) {
-      $(document).ready(function() {
-        document.body.appendChild(ruler);
-        $('body').mousemove(function(event) {
-          $(ruler).css('top', event.pageY - config.rulerWidth / 2);
-        });
-      });
+      ruler.css('marginTop', -config.rulerSize / 2);
+      ruler.css('height', config.rulerSize);
+      if (config.rulerEnabled) {
+        ruler.show();
+      } else {
+        ruler.hide();
+      }
     } else {
-      $(document).ready(function() {
-        try {
-          document.body.removeChild(ruler);
-        } catch (e) {}
-      });
+      // remove main class to disable all modifications
+      body.removeClass(CSS_NAMESPACE);
+      ruler.hide();
     }
-
-    ruler.setAttribute('style', getRulerStyle(config.rulerWidth));
-  } else {
-    // remove css and ruler
-    $(document).ready(function() {
-      document.body.classList.remove(cssNamespace);
-      try {
-        document.body.removeChild(ruler);
-      } catch (e) {}
-    });
   }
-}
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-  switch (request.message) {
-  case 'applyConfigInContentScript':
-    applyConfig(request.config);
-    break;
-  }
+  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
+    switch (request.message) {
+      case 'applyConfigInContentScript':
+        applyConfig(request.config);
+        break;
+    }
+    sendResponse(true);
+  });
 });

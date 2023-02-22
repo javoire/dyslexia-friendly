@@ -9,11 +9,11 @@ it can be useful to increase readability for anyone
 else                                                 */
 
 body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i) {
-  font-family: "opendyslexic" !important;
+  font-family: 'opendyslexic' !important;
 }
 
 body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i) {
-  font-family: "Comic Sans MS" !important;
+  font-family: 'Comic Sans MS' !important;
 }
 
 /* Use an off-white background. Some users need high
@@ -30,7 +30,7 @@ body.dyslexia-friendly {
   background: snow;
   margin: auto 0;
   padding: 0;
-  color: #1A0033;
+  color: #1a0033;
 }
 
 /* the highlight class is being used in conjuction
@@ -55,28 +55,26 @@ subtle so it is not annoying, but it still
 helps.                                       */
 body.dyslexia-friendly p:nth-child(even),
 body.dyslexia-friendly li:nth-child(even) {
-  background-color: rgba(0,0,0, 0.06);
+  background-color: rgba(0, 0, 0, 0.06);
 }
-
 
 /* highlight text under cursor helps users focus
 on what they are currently reading. This shading
 is darker than the alt-paragraph shading.        */
 body.dyslexia-friendly p:hover,
 body.dyslexia-friendly li:hover {
-  background-color: rgba(0,0,0, 0.1) !important;
+  background-color: rgba(0, 0, 0, 0.1) !important;
 }
 
 /* Ruler */
 
 #dyslexia-friendly-ruler {
   height: 1.6em;
-  background-color: rgba(0,0,0,.1);
+  background-color: rgba(0, 0, 0, 0.1);
   position: absolute;
   left: 0;
   right: 0;
-  top:100px;
+  top: -1000px;
   pointer-events: none;
   z-index: 10000000000;
 }
-

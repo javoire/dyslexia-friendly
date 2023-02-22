@@ -4,32 +4,41 @@
   "description": "Increases readability of web pages by changing fonts, contrast and adding a reading ruler",
   "dependencies": {
     "jquery": "^3.5.0",
-    "materialize-css": "^1.0.0-rc.2"
+    "materialize-css": "^1.0.0-rc.2",
+    "string-replace-loader": "^3.1.0"
   },
   "scripts": {
-    "build": "NODE_ENV=none node utils/build.js",
-    "start": "NODE_ENV=none node utils/webserver.js",
+    "build": "NODE_ENV=production node utils/build.js",
+    "start": "NODE_ENV=development node utils/webserver.js",
     "test": "jest",
-    "lint": "eslint .",
-    "format": "prettier-eslint **/*.js"
+    "lint": "eslint src",
+    "format": "prettier-eslint src/**/*.js"
   },
   "devDependencies": {
-    "clean-webpack-plugin": "^1.0.0",
-    "copy-webpack-plugin": "^4.6.0",
-    "css-loader": "2.1.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^11.0.0",
+    "css-loader": "^6.7.3",
     "eslint": "^5.13.0",
-    "file-loader": "3.0.1",
+    "eslint-config-prettier": "^8.6.0",
+    "eslint-plugin-jest": "^27.2.1",
+    "file-loader": "^6.2.0",
     "fs-extra": "7.0.1",
-    "html-loader": "0.5.5",
-    "html-webpack-plugin": "3.2.0",
+    "html-loader": "^4.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "jest": "^29.4.2",
+    "mini-css-extract-plugin": "^2.7.2",
+    "postcss": "^8.4.21",
+    "postcss-loader": "^7.0.2",
+    "postcss-preset-env": "^8.0.1",
     "prettier-eslint": "^8.8.2",
     "prettier-eslint-cli": "^4.7.1",
-    "style-loader": "^0.23.1",
-    "webpack": "4.28.4",
-    "webpack-cli": "^3.2.1",
-    "webpack-dev-server": "3.1.14",
-    "write-file-webpack-plugin": "4.5.0"
+    "style-loader": "^3.3.1",
+    "tailwindcss": "^3.2.6",
+    "tw-elements": "^1.0.0-alpha13",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1",
+    "webpack-dev-server": "^4.11.1",
+    "write-file-webpack-plugin": "^4.5.1"
   },
   "prettier": {
     "singleQuote": true
