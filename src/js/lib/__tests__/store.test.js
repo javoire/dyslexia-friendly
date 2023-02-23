@@ -5,7 +5,7 @@ const {
 } = require('../store');
 
 describe('store', () => {
-  test('getAll() returns default config if none already exists', () => {
+  test('getAll() returns default config if none already exists', done => {
     global.chrome = {
       storage: {
         sync: {
@@ -16,10 +16,15 @@ describe('store', () => {
       }
     };
     store.getAll(function(config) {
-      expect(config).toEqual(DEFAULT_CONFIG);
+      try {
+        expect(config).toEqual(DEFAULT_CONFIG);
+        done();
+      } catch (error) {
+        done(error);
+      }
     });
   });
-  test('getAll() returns saved config in chrome.storage', () => {
+  test('getAll() returns saved config in chrome.storage', done => {
     const mockConfig = { somevalue: 1 };
     global.chrome = {
       storage: {
@@ -31,10 +36,15 @@ describe('store', () => {
       }
     };
     store.getAll(function(config) {
-      expect(config).toEqual(mockConfig);
+      try {
+        expect(config).toEqual(mockConfig);
+        done();
+      } catch (error) {
+        done(error);
+      }
     });
   });
-  test('get() returns the value', () => {
+  test('get() returns the value', done => {
     const mockConfig = { somevalue: 1 };
     global.chrome = {
       storage: {
@@ -46,10 +56,15 @@ describe('store', () => {
       }
     };
     store.get('somevalue', function(value) {
-      expect(value).toEqual(1);
+      try {
+        expect(value).toEqual(1);
+        done();
+      } catch (error) {
+        done(error);
+      }
     });
   });
-  test('update() returns updated config', () => {
+  test('update() returns updated config', done => {
     const mockConfig = { somevalue: 1 };
     const mockNewConfigValues = { anewvalue: 2 };
     const mockUpdatedConfig = { somevalue: 1, anewvalue: 2 };
@@ -66,7 +81,12 @@ describe('store', () => {
       }
     };
     store.update(mockNewConfigValues, function(config) {
-      expect(config).toEqual(mockUpdatedConfig);
+      try {
+        expect(config).toEqual(mockUpdatedConfig);
+        done();
+      } catch (error) {
+        done(error);
+      }
     });
   });
   test('updateChangedConfigValue() updates correct values', () => {

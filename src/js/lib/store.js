@@ -74,7 +74,7 @@ const store = {
       // this is a failsafe in case the config doesn't
       // exist in storage, shouldn't happen..
       if (!config) {
-        return DEFAULT_CONFIG;
+        return cb(DEFAULT_CONFIG);
       }
       return cb(config);
     });
