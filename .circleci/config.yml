@@ -20,7 +20,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: node:16
+      - image: node:20
     environment:
       - PACKAGE_NAME: dyslexia-friendly.zip
     steps:
@@ -50,7 +50,7 @@ jobs:
             - utils/publish.sh
   publish:
     docker:
-      - image: node:11
+      - image: node:20
     environment:
       - APP_ID: miepjgfkkommhllbbjaedffcpkncboeo
       - PACKAGE_NAME: dyslexia-friendly.zip
