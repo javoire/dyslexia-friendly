@@ -11,8 +11,8 @@ workflows:
             - build
           filters:
             # ensure publish only runs on pushed tags
-            branches:
-              ignore: /.*/
+#            branches:
+#              ignore: /.*/
             tags:
               only: /.*/
 
