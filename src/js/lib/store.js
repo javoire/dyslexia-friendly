@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 // default user config
+const { debug } = require('./util');
 var DEFAULT_CONFIG = {
   // inputs:
   // these are the `name="something-checkbox"` etc,
@@ -37,7 +38,7 @@ const store = {
         newConfigValues
       );
       chrome.storage.sync.set({ config: updatedConfig }, function() {
-        console.log('saved updated config', updatedConfig);
+        debug('saved updated config', updatedConfig);
 
         // notify subscribers
         subscribers.forEach(function(subscriber) {
@@ -72,7 +73,7 @@ const store = {
     chrome.storage.sync.get('config', function(store) {
       const config = store.config;
       // this is a failsafe in case the config doesn't
-      // exist in storage, shouldn't happen..
+      // exist in storage, shouldn't happen...
       if (!config) {
         return cb(DEFAULT_CONFIG);
       }

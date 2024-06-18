@@ -7,7 +7,7 @@ import '../css/fonts.css';
 import '../css/tailwind.css';
 import '../css/popup.css';
 
-import { removeClassStartsWith, arrayToConfigMap } from './lib/util';
+import { removeClassStartsWith, arrayToConfigMap, debug } from './lib/util';
 import { FONT_CLASS_PREFIX } from './lib/consts';
 
 /*
@@ -19,7 +19,7 @@ import { FONT_CLASS_PREFIX } from './lib/consts';
 function saveFormStateToStore(form, callback) {
   const formState = arrayToConfigMap(form.serializeArray());
 
-  console.log('sending to background script:', formState);
+  debug('sending to background script:', formState);
   // pass new config to background script for saving
   chrome.runtime.sendMessage(
     {
@@ -62,8 +62,17 @@ function updateUiFromConfig(config, inputs, body) {
   const visibleSections = $('[data-show-when]');
   visibleSections.each(function() {
     const elem = $(this);
-    const showWhen = elem.data('show-when');
-    if (config[showWhen]) {
+
+    // grab the data attr that controls when to show this element
+    const showWhen = elem
+      .data('show-when')
+      // very rudimentary support for and operator...
+      .split('&&')
+      .map(s => s.trim());
+
+    const show = showWhen.map(s => config[s]).every(Boolean);
+
+    if (show) {
       elem.show();
     } else {
       elem.hide();
@@ -74,7 +83,6 @@ function updateUiFromConfig(config, inputs, body) {
 window.onload = function() {
   $(document).ready(function() {
     const inputs = $('#configForm input');
-    const form = $('#configForm');
     const ruler = $('#dyslexia-friendly-ruler');
     const rulerRangeSlider = $('#ruler-size-range');
     const configForm = $('#configForm');
@@ -82,7 +90,7 @@ window.onload = function() {
 
     // form is submitted on any input change
     inputs.change(function() {
-      form.submit();
+      configForm.submit();
     });
 
     // submitting the form saves the new config and updates the UI

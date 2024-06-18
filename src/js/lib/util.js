@@ -18,7 +18,17 @@ const arrayToConfigMap = array => {
   return obj;
 };
 
+const debug = (msg, ...args) => {
+  // TODO: only log in dev mode, how to control environment in a chrome extension?
+  const isDev = false; // tmp set to true for local dev
+  if (isDev) {
+    // eslint-disable-next-line no-console
+    console.log(`%c[DyslexiaFriendly] ${msg}`, 'color: #00f', ...args);
+  }
+};
+
 module.exports = {
   removeClassStartsWith,
-  arrayToConfigMap
+  arrayToConfigMap,
+  debug
 };
