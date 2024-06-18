@@ -30,7 +30,6 @@ body.dyslexia-friendly {
   background: snow;
   margin: auto 0;
   padding: 0;
-  color: #1a0033;
 }
 
 /* the highlight class is being used in conjuction
@@ -43,7 +42,6 @@ body.dyslexia-friendly h3,
 body.dyslexia-friendly h4,
 body.dyslexia-friendly .highlight {
   font-style: bold;
-  color: black;
 }
 body.dyslexia-friendly .highlight {
   font-size: 125%;
