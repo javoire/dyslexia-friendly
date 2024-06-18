@@ -10,9 +10,9 @@ workflows:
           requires:
             - build
           filters:
-            # ensure publish only runs on pushed tags
-            branches:
-              ignore: /.*/
+#            # ensure publish only runs on pushed tags
+#            branches:
+#              ignore: /.*/
             tags:
               only: /.*/
 
@@ -64,4 +64,5 @@ jobs:
             apt-get -y install curl jq
       - run:
           name: 'Publish'
-          command: utils/publish.sh
+          command: echo hello
+#          command: utils/publish.sh
