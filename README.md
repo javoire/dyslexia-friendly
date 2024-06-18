@@ -28,7 +28,7 @@ $ yarn start
 
 ### Full extension
 
-Do once: 
+Do once:
 
 1. Run `yarn build`
 1. Navigate to `chrome://extensions` in Chrome
@@ -53,6 +53,14 @@ After a PR is merged to master:
 ### Design
 
 CSS and UI elements are from https://tailwind-elements.com/
+
+### Tips
+
+To inspect the local storage object, go to `chrome://extensions` and click on the "background page" link for this extension and paste this in the console:
+
+```ts
+chrome.storage.sync.get(console.log)
+```
 
 Roadmap
 -------

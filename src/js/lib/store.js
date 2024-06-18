@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 // default user config
 const { debug } = require('./util');
-var DEFAULT_CONFIG = {
+const DEFAULT_CONFIG = {
   // inputs:
   // these are the `name="something-checkbox"` etc,
   // names need to be manually in sync...
