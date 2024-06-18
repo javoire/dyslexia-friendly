@@ -3,25 +3,24 @@
 
 import $ from 'jquery';
 
-import { removeClassStartsWith } from './lib/util';
+import { debug, removeClassStartsWith } from './lib/util';
 import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts';
 
 const ruler = $(`<div id="${RULER_ID}"></div>`);
 
 $(document).ready(function() {
-  $('body').append(ruler);
-  $('body').mousemove(function(event) {
+  const body = $('body');
+  body.append(ruler);
+  body.mousemove(function(event) {
     ruler.css('top', event.pageY);
   });
 
+  // Apply user settings to webpage
   function applyConfig(config) {
-    console.log(
-      '[Dyslexia Friendly] applying user settings to webpage',
-      config
-    );
-    const body = $('body');
+    debug('applying user settings to webpage', config);
 
     if (config.extensionEnabled) {
+      debug('extension enabled');
       // apply base CSS
       body.addClass(CSS_NAMESPACE);
 
@@ -39,6 +38,7 @@ $(document).ready(function() {
         ruler.hide();
       }
     } else {
+      debug('extension disabled');
       // remove main class to disable all modifications
       body.removeClass(CSS_NAMESPACE);
       ruler.hide();
