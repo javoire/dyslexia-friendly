@@ -1,5 +1,5 @@
-/* 
- * copied from contentscript.css 
+/*
+ * copied from contentscript.css
  * TODO: reuse css
  * */
 #dyslexia-friendly-ruler {
@@ -16,8 +16,24 @@ body.dyslexia-friendly-font-opendyslexic {
   font-family: 'opendyslexic' !important;
 }
 
+body.dyslexia-friendly-font-opendyslexicmono {
+  font-family: 'opendyslexicmono' !important;
+}
+
 body.dyslexia-friendly-font-comicsans {
   font-family: 'Comic Sans MS' !important;
+}
+
+label[for="font-comicsans-radio"] {
+  font-family: 'Comic Sans MS' !important;
+}
+
+label[for="font-opendyslexic-radio"] {
+  font-family: 'opendyslexic' !important;
+}
+
+label[for="font-opendyslexicmono-radio"] {
+  font-family: 'opendyslexicmono' !important;
 }
 
 #popup-wrapper {
