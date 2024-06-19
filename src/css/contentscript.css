@@ -12,6 +12,10 @@ body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i) {
   font-family: 'opendyslexic' !important;
 }
 
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *:not(i) {
+  font-family: 'opendyslexicmono' !important;
+}
+
 body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i) {
   font-family: 'Comic Sans MS' !important;
 }
