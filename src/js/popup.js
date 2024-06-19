@@ -64,13 +64,13 @@ function updateUiFromConfig(config, inputs, body) {
     const elem = $(this);
 
     // grab the data attr that controls when to show this element
-    const showWhen = elem
-      .data('show-when')
-      // very rudimentary support for and operator...
-      .split('&&')
-      .map(s => s.trim());
+    const showWhen = elem.data('show-when');
 
-    const show = showWhen.map(s => config[s]).every(Boolean);
+    // very rudimentary support for and operator...
+    const show = showWhen
+      .split('&&')
+      .map(s => config[s.trim()])
+      .every(Boolean);
 
     if (show) {
       elem.show();
