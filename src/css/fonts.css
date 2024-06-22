@@ -45,7 +45,7 @@
   url('chrome-extension://__MSG_@@extension_id__/fonts/open-dyslexic-2/opendyslexic-bold-webfont.woff') format('woff'),
   url('chrome-extension://__MSG_@@extension_id__/fonts/open-dyslexic-2/opendyslexic-bold-webfont.ttf') format('truetype'),
   url('chrome-extension://__MSG_@@extension_id__/fonts/open-dyslexic-2/opendyslexic-bold-webfont.svg#opendyslexicbold') format('svg');
-  font-weight: 700;
+  font-weight: bold;
   font-style: normal;
 
 }
@@ -57,6 +57,6 @@
   url('chrome-extension://__MSG_@@extension_id__/fonts/open-dyslexic-2/opendyslexic-bolditalic-webfont.woff') format('woff'),
   url('chrome-extension://__MSG_@@extension_id__/fonts/open-dyslexic-2/opendyslexic-bolditalic-webfont.ttf') format('truetype'),
   url('chrome-extension://__MSG_@@extension_id__/fonts/open-dyslexic-2/opendyslexic-bolditalic-webfont.svg#opendyslexicbold_italic') format('svg');
-  font-weight: 700;
+  font-weight: bold;
   font-style: italic;
 }
