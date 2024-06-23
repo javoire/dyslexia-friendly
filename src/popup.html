@@ -111,8 +111,37 @@
             <div class="popup-section-body" data-show-when="rulerEnabled">
               <div class="relative">
                 <label
+                  for="ruler-color"
+                  class="form-label"
+                  style="display: block"
+                >Color:</label
+                >
+                <input
+                  type="color"
+                  name="rulerColor"
+                  id="ruler-color"
+                />
+              </div>
+              <div class="relative">
+                <label
+                  for="ruler-opacity-range"
+                  class="form-label"
+                >Opacity:</label
+                >
+                <input
+                  type="range"
+                  class="form-range appearance-none w-full p-0 bg-transparent focus:outline-none focus:ring-0 focus:shadow-none"
+                  name="rulerOpacity"
+                  id="ruler-opacity-range"
+                  min=".05"
+                  max=".7"
+                  step=".01"
+                />
+              </div>
+              <div class="relative">
+                <label
                   for="ruler-size-range"
-                  class="form-label ruler-size-label"
+                  class="form-label"
                   >Size:</label
                 >
                 <input
@@ -126,6 +155,17 @@
               </div>
             </div>
           </div>
+<!--          <div class="popup-section">-->
+<!--            <div class="popup-section-header">-->
+<!--              <h2>Colors</h2>-->
+<!--            </div>-->
+<!--            <div class="popup-section-body">-->
+<!--              <ul>-->
+<!--                <li>Paragraphs: <input type="color"></li>-->
+
+<!--              </ul>-->
+<!--            </div>-->
+<!--          </div>-->
         </div>
       </form>
     </div>

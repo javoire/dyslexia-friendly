@@ -23,7 +23,7 @@ const debug = (msg, ...args) => {
   const isDev = false; // tmp set to true for local dev
   if (isDev) {
     // eslint-disable-next-line no-console
-    console.log(`%c[DyslexiaFriendly] ${msg}`, 'color: #00f', ...args);
+    console.log(`%c[DyslexiaFriendly] ${msg}`, 'color: #0af', ...args);
   }
 };
 

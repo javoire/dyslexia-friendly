@@ -7,7 +7,7 @@ import '../css/fonts.css';
 import '../css/tailwind.css';
 import '../css/popup.css';
 
-import { removeClassStartsWith, arrayToConfigMap, debug } from './lib/util';
+import { arrayToConfigMap, debug, removeClassStartsWith } from './lib/util';
 import { FONT_CLASS_PREFIX } from './lib/consts';
 
 /*
@@ -37,7 +37,9 @@ function saveFormStateToStore(form, callback) {
  * @param inputs - jQuery elements
  * @returns {undefined}
  */
-function updateUiFromConfig(config, inputs, body) {
+function updateUiFromConfig(config, inputs, body, ruler) {
+  debug('Updating popup UI with config:', config);
+
   // update all form input states
   inputs.each(function() {
     const value = config[this.name];
@@ -48,11 +50,16 @@ function updateUiFromConfig(config, inputs, body) {
       case 'checkbox':
         this.checked = !!value;
         break;
-      case 'range':
+      default:
         this.value = value;
         break;
     }
   });
+
+  // update ruler
+  updateRulerSize(ruler, config.rulerSize);
+  updateRulerOpacity(ruler, config.rulerOpacity);
+  updateRulerColor(ruler, config.rulerColor);
 
   // toggle font
   removeClassStartsWith(body, FONT_CLASS_PREFIX);
@@ -66,7 +73,7 @@ function updateUiFromConfig(config, inputs, body) {
     // grab the data attr that controls when to show this element
     const showWhen = elem.data('show-when');
 
-    // very rudimentary support for and operator...
+    // very rudimentary support for and-operator...
     const show = showWhen
       .split('&&')
       .map(s => config[s.trim()])
@@ -84,27 +91,20 @@ window.onload = function() {
   $(document).ready(function() {
     const inputs = $('#configForm input');
     const ruler = $('#dyslexia-friendly-ruler');
-    const rulerRangeSlider = $('#ruler-size-range');
     const configForm = $('#configForm');
     const body = $('body');
 
-    // form is submitted on any input change
-    inputs.change(function() {
+    // form is submitted on any input change, so changes are
+    // reflected live on the page as the user modifies inputs
+    // (I don't know if this could have negative performance implications on slow devices...)
+    inputs.on('input', function() {
       configForm.submit();
     });
-
-    // submitting the form saves the new config and updates the UI
     configForm.submit(function(e) {
       saveFormStateToStore($(this), config => {
-        updateUiFromConfig(config, inputs, body);
+        updateUiFromConfig(config, inputs, body, ruler);
       });
       e.preventDefault();
-    });
-
-    // update ruler size live as the user slides the range
-    rulerRangeSlider.on('input', function() {
-      const value = rulerRangeSlider.val();
-      updateRulerSize(ruler, value);
     });
 
     // bind ruler to mouse
@@ -114,8 +114,7 @@ window.onload = function() {
 
     // On popup open, load config from store and update ui,
     chrome.runtime.sendMessage({ message: 'getConfig' }, config => {
-      updateRulerSize(ruler, config.rulerSize);
-      updateUiFromConfig(config, inputs, body);
+      updateUiFromConfig(config, inputs, body, ruler);
     });
   });
 };
@@ -123,4 +122,12 @@ window.onload = function() {
 const updateRulerSize = function(ruler, value) {
   ruler.css('height', value);
   ruler.css('marginTop', -value / 2);
+};
+
+const updateRulerOpacity = function(ruler, value) {
+  ruler.css('opacity', value);
+};
+
+const updateRulerColor = function(ruler, value) {
+  ruler.css('background-color', value);
 };

@@ -9,6 +9,8 @@ const DEFAULT_CONFIG = {
   fontEnabled: true,
   rulerEnabled: true,
   rulerSize: 30,
+  rulerColor: '#000000',
+  rulerOpacity: 0.1,
   fontChoice: 'opendyslexic'
 };
 
