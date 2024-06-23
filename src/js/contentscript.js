@@ -30,6 +30,9 @@ $(document).ready(function() {
         body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
       }
 
+      // ruler
+      ruler.css('background-color', config.rulerColor);
+      ruler.css('opacity', config.rulerOpacity);
       ruler.css('marginTop', -config.rulerSize / 2);
       ruler.css('height', config.rulerSize);
       if (config.rulerEnabled) {

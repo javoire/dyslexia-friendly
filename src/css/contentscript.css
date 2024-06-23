@@ -45,7 +45,7 @@ body.dyslexia-friendly h2,
 body.dyslexia-friendly h3,
 body.dyslexia-friendly h4,
 body.dyslexia-friendly .highlight {
-  font-style: bold;
+  font-weight: bold;
 }
 body.dyslexia-friendly .highlight {
   font-size: 125%;
@@ -72,7 +72,9 @@ body.dyslexia-friendly li:hover {
 
 #dyslexia-friendly-ruler {
   height: 1.6em;
-  background-color: rgba(0, 0, 0, 0.1);
+  /* ideally keep in sync with default config */
+  background-color: black;
+  opacity: .1;
   position: absolute;
   left: 0;
   right: 0;

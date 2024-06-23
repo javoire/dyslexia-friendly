@@ -12,6 +12,7 @@
   pointer-events: none;
   z-index: 10000000000;
 }
+
 body.dyslexia-friendly-font-opendyslexic {
   font-family: 'opendyslexic' !important;
 }
@@ -46,6 +47,7 @@ label[for="font-opendyslexicmono-radio"] {
 #popup-wrapper .show-when-enabled {
   display: none;
 }
+
 #popup-wrapper .show-when-ruler {
   display: none;
 }
@@ -68,68 +70,69 @@ label[for="font-opendyslexicmono-radio"] {
   /* changes color to theme blue */
   background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27%230d6efd%27/%3e%3c/svg%3e")
 }
+
 #popup-wrapper .header input#master-switch-checkbox:checked {
   background-color: whitesmoke;
 }
 
 #popup-wrapper .form-check-label {
-font-size: 14px;
-line-height: 150%;
+  font-size: 14px;
+  line-height: 150%;
 }
 
 #popup-wrapper .header h1 {
-font-weight: 700;
-font-size: 20px;
-line-height: 150%;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 150%;
 }
 
 #popup-wrapper .active-switch {
-display: flex;
-justify-content: flex-end;
-align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 #popup-wrapper .active-switch label {
-font-size: 14px;
-margin-left: 5px;
-line-height: 150%;
-margin-top: 3px;
+  font-size: 14px;
+  margin-left: 5px;
+  line-height: 150%;
+  margin-top: 3px;
 }
 
 #popup-wrapper .popup-section {
-margin: 10px;
-padding: 14px 21px;
-background: #f5f5f5;
-border-radius: 5px;
+  margin: 10px;
+  padding: 14px 21px;
+  background: #f5f5f5;
+  border-radius: 5px;
 }
 
 #popup-wrapper .popup-section .popup-section-header {
-justify-content: space-between;
-display: flex;
-flex-direction: row;
-align-items: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 #popup-wrapper .popup-section .popup-section-body {
-margin-top: 5px;
-margin-bottom: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
 }
 
 #popup-wrapper .popup-section h2 {
-font-weight: 700;
-font-size: 18px;
-line-height: 150%;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 150%;
 }
 
 #popup-wrapper .example-ruler-width {
-height: 40px;
-display: flex;
-flex-direction: row;
-align-items: center;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
-#popup-wrapper .ruler-size-label {
-font-weight: 700;
-font-size: 14px;
-line-height: 150%;
+#popup-wrapper .form-label {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 150%;
 }

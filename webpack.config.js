@@ -9,11 +9,11 @@ const WriteFilePlugin = require('write-file-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 // load the secrets
-var alias = {};
+const alias = {};
 
-var secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
+const secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
 
-var fileExtensions = [
+const fileExtensions = [
   'eot',
   'otf',
   'ttf',
@@ -32,7 +32,7 @@ if (fileSystem.existsSync(secretsPath)) {
 
 const isDev = env.NODE_ENV === 'development';
 
-var options = {
+const options = {
   mode: env.NODE_ENV,
   entry: {
     popup: path.join(__dirname, 'src', 'js', 'popup.js'),
