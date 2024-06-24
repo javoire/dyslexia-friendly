@@ -33,7 +33,7 @@ const store = {
    * Interpolate form data with what's in the store, in case values are missing from the form
    * then save.
    */
-  update: function(newConfigValues, cb) {
+  update: function(newConfigValues, callback) {
     chrome.storage.sync.get('config', function(store) {
       const updatedConfig = updateChangedConfigValues(
         store.config,
@@ -46,47 +46,47 @@ const store = {
         subscribers.forEach(function(subscriber) {
           subscriber(updatedConfig);
         });
-        return cb ? cb(updatedConfig) : true;
+        return callback ? callback(updatedConfig) : true;
       });
     });
   },
 
-  set: function(config, cb) {
+  set: function(config, callback) {
     chrome.storage.sync.set({ config }, function() {
       chrome.storage.sync.get('config', function(store) {
-        return cb ? cb(store.config) : true;
+        return callback ? callback(store.config) : true;
       });
     });
   },
 
-  get: function(key, cb) {
+  get: function(key, callback) {
     chrome.storage.sync.get('config', function(store) {
       const config = store.config;
       // this is a failsafe in case the config doesn't
       // exist in storage, shouldn't happen..
       if (!config) {
-        return cb(DEFAULT_CONFIG[key]);
+        return callback(DEFAULT_CONFIG[key]);
       }
-      return cb(config[key]);
+      return callback(config[key]);
     });
   },
 
-  getAll: function(cb) {
+  getAll: function(callback) {
     chrome.storage.sync.get('config', function(store) {
       const config = store.config;
       // this is a failsafe in case the config doesn't
       // exist in storage, shouldn't happen...
       if (!config) {
-        return cb(DEFAULT_CONFIG);
+        return callback(DEFAULT_CONFIG);
       }
-      return cb(config);
+      return callback(config);
     });
   },
 
   // subscribe to changes in store
-  subscribe: function(cb) {
-    subscribers.push(cb);
-    cb(store);
+  subscribe: function(callback) {
+    subscribers.push(callback);
+    callback(store);
   }
 };
 

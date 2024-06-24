@@ -1,7 +1,7 @@
 {
   "name": "Dyslexia Friendly",
-  "version": "2.2.0",
-  "manifest_version": 2,
+  "version": "3.0.0",
+  "manifest_version": 3,
   "description": "Increases readability of websites by changing to easier-to-read fonts and adding visual enhancements",
   "icons": {
     "16": "img/icon-16.png",
@@ -9,9 +9,9 @@
   },
   "default_locale": "en",
   "background": {
-    "scripts": ["background.js"]
+    "service_worker": "serviceWorker.js"
   },
-  "browser_action": {
+  "action": {
     "default_icon": {
       "19": "img/icon-19.png",
       "38": "img/icon-38.png"
@@ -29,29 +29,24 @@
       "all_frames": false
     }
   ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; img-src 'self' data: w3.org/svg/2000"
+  },
   "permissions": [
     "background",
-    "http://*/*",
-    "https://*/*",
     "storage",
     "webNavigation"
   ],
-  "web_accessible_resources": [
-    "fonts/opendyslexic-regular-webfont.eot",
-    "fonts/opendyslexic-regular-webfont.woff",
-    "fonts/opendyslexic-regular-webfont.ttf",
-    "fonts/opendyslexic-regular-webfont.svg",
-    "fonts/opendyslexic-italic-webfont.eot",
-    "fonts/opendyslexic-italic-webfont.woff",
-    "fonts/opendyslexic-italic-webfont.ttf",
-    "fonts/opendyslexic-italic-webfont.svg",
-    "fonts/opendyslexic-bold-webfont.eot",
-    "fonts/opendyslexic-bold-webfont.woff",
-    "fonts/opendyslexic-bold-webfont.ttf",
-    "fonts/opendyslexic-bold-webfont.svg",
-    "fonts/opendyslexic-bolditalic-webfont.eot",
-    "fonts/opendyslexic-bolditalic-webfont.woff",
-    "fonts/opendyslexic-bolditalic-webfont.ttf",
-    "fonts/opendyslexic-bolditalic-webfont.svg"
-  ]
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "fonts/*"
+    ],
+    "matches": [
+      "*://*/*"
+    ]
+  }]
 }

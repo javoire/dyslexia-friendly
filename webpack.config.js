@@ -37,7 +37,7 @@ const options = {
   entry: {
     popup: path.join(__dirname, 'src', 'js', 'popup.js'),
     options: path.join(__dirname, 'src', 'js', 'options.js'),
-    background: path.join(__dirname, 'src', 'js', 'background.js'),
+    serviceWorker: path.join(__dirname, 'src', 'js', 'serviceWorker.js'),
     contentscript: path.join(__dirname, 'src', 'js', 'contentscript.js')
   },
   output: {
