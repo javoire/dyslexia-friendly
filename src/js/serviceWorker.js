@@ -4,9 +4,6 @@
 const { store, DEFAULT_CONFIG } = require('./lib/store');
 const { debug } = require('./lib/util');
 
-/*
- * Send form to background store for saving
- */
 function notifyContentScript(config) {
   debug('notifying contentscript', config);
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(tabs) {
