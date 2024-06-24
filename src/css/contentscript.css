@@ -8,15 +8,15 @@ This one is designed for dyslexic readers, though
 it can be useful to increase readability for anyone
 else                                                 */
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i, em) {
   font-family: 'opendyslexic' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *:not(i) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *:not(i, em) {
   font-family: 'opendyslexicmono' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i) {
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i, em) {
   font-family: 'Comic Sans MS' !important;
 }
 
@@ -34,6 +34,11 @@ body.dyslexia-friendly {
   margin: auto 0;
   padding: 0;
 }
+/*
+Setting bg color is tricky, since some websites switch between dark/light mode and some don't.
+So at least we might have to also control the text color in accordance to the background color.
+But for now, let's skip bg color so at least websites are readable in both modes.
+ */
 /*@media (prefers-color-scheme: dark) {*/
 /*  body.dyslexia-friendly {*/
 /*    background: rgb(0, 5, 5);*/
@@ -46,10 +51,10 @@ body.dyslexia-friendly {
 /*  }*/
 /*}*/
 
-/* the highlight class is being used in conjuction
+/* the highlight class is being used in conjunction
 with a script that results in symbols being colored
 differently. This helps comprehension by making them
-subtly more visable.                                 */
+subtly more visible.                                 */
 body.dyslexia-friendly h1,
 body.dyslexia-friendly h2,
 body.dyslexia-friendly h3,
