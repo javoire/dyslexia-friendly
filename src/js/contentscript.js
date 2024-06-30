@@ -16,7 +16,7 @@ $(document).ready(function() {
   });
 
   // Apply user settings to webpage
-  function applyConfig(config) {
+  function applyConfigOnPage(config) {
     debug('applying user settings to webpage', config);
 
     if (config.extensionEnabled) {
@@ -50,8 +50,8 @@ $(document).ready(function() {
 
   chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch (request.message) {
-      case 'applyConfigInContentScript':
-        applyConfig(request.config);
+      case 'applyConfigOnPage':
+        applyConfigOnPage(request.config);
         break;
     }
     sendResponse(true);

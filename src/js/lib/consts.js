@@ -6,9 +6,9 @@ export const env = {
   IS_DEV: process.env.NODE_ENV !== 'production',
   LOG_LEVEL: process.env.LOG_LEVEL || 'error',
   logLevel: {
-    debug: process.env.LOG_LEVEL === 'debug',
-    info: ['info', 'debug'].includes(process.env.LOG_LEVEL),
-    warn: ['warn', 'info', 'debug'].includes(process.env.LOG_LEVEL),
-    error: ['error', 'warn', 'info', 'debug'].includes(process.env.LOG_LEVEL)
+    debug: ['debug'].includes(process.env.LOG_LEVEL),
+    info: ['debug', 'info'].includes(process.env.LOG_LEVEL),
+    warn: ['debug', 'info', 'warn'].includes(process.env.LOG_LEVEL),
+    error: ['debug', 'info', 'warn', 'error'].includes(process.env.LOG_LEVEL)
   }
 };
