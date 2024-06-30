@@ -8,15 +8,15 @@ This one is designed for dyslexic readers, though
 it can be useful to increase readability for anyone
 else                                                 */
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i, em) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i, em, mat-icon) {
   font-family: 'opendyslexic' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *:not(i, em) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *:not(i, em, mat-icon) {
   font-family: 'opendyslexicmono' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i, em) {
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i, em, mat-icon) {
   font-family: 'Comic Sans MS' !important;
 }
 
