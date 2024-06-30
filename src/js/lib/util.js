@@ -1,4 +1,6 @@
-const removeClassStartsWith = (elem, classStartsWith) => {
+import { env } from './consts.js';
+
+export const removeClassStartsWith = (elem, classStartsWith) => {
   elem
     .attr('class')
     .split(' ')
@@ -9,26 +11,26 @@ const removeClassStartsWith = (elem, classStartsWith) => {
     });
 };
 
-const arrayToConfigMap = array => {
+export const formToConfig = form => {
+  const serializedForm = form.serializeArray();
   const obj = {};
-  array.forEach(item => {
+  serializedForm.forEach(item => {
     // the serialized form has "on" as checkbox values, convert to boolean instead
     obj[item.name] = item.value === 'on' ? true : item.value;
   });
   return obj;
 };
 
-const debug = (msg, ...args) => {
-  // TODO: only log in dev mode, how to control environment in a chrome extension?
-  const isDev = false; // tmp set to true for local dev
-  if (isDev) {
+export const debug = (msg, ...args) => {
+  if (env.logLevel.debug) {
     // eslint-disable-next-line no-console
     console.log(`%c[DyslexiaFriendly] ${msg}`, 'color: #0af', ...args);
   }
 };
 
-module.exports = {
-  removeClassStartsWith,
-  arrayToConfigMap,
-  debug
+export const error = (msg, ...args) => {
+  if (env.logLevel.error) {
+    // eslint-disable-next-line no-console
+    console.error(`%c[DyslexiaFriendly] ${msg}`, 'color: #fa0', ...args);
+  }
 };

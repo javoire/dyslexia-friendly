@@ -37,10 +37,6 @@
     "storage",
     "webNavigation"
   ],
-  "host_permissions": [
-    "http://*/*",
-    "https://*/*"
-  ],
   "web_accessible_resources": [{
     "resources": [
       "fonts/*"

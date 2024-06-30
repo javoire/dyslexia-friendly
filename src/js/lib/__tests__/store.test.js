@@ -1,8 +1,4 @@
-const {
-  store,
-  DEFAULT_CONFIG,
-  updateChangedConfigValues
-} = require('../store');
+import { DEFAULT_CONFIG, store, updateChangedConfigValues } from '../store';
 
 describe('store', () => {
   test('getAll() returns default config if none already exists', done => {

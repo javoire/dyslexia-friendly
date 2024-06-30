@@ -1,30 +1,29 @@
-const WebpackDevServer = require('webpack-dev-server');
-const webpack = require('webpack');
-const config = require('../webpack.config');
-const env = require('./env');
-const path = require('path');
+import WebpackDevServer from 'webpack-dev-server';
+import webpack from 'webpack';
+import { options } from '../webpack.config.js';
+import env from './env.js';
 
-var options = config.chromeExtensionBoilerplate || {};
-var excludeEntriesToHotReload = options.notHotReload || [];
+const extOptions = options.chromeExtensionBoilerplate || {};
+const excludeEntriesToHotReload = extOptions.notHotReload || [];
 
-for (var entryName in config.entry) {
+for (let entryName in options.entry) {
   if (excludeEntriesToHotReload.indexOf(entryName) === -1) {
-    config.entry[entryName] = [
+    options.entry[entryName] = [
       'webpack-dev-server/client?http://localhost:' + env.PORT,
       'webpack/hot/dev-server'
-    ].concat(config.entry[entryName]);
+    ].concat(options.entry[entryName]);
   }
 }
 
-config.plugins = [new webpack.HotModuleReplacementPlugin()].concat(
-  config.plugins || []
+options.plugins = [new webpack.HotModuleReplacementPlugin()].concat(
+  options.plugins || []
 );
 
-delete config.chromeExtensionBoilerplate;
+delete options.chromeExtensionBoilerplate;
 
-var compiler = webpack(config);
+const compiler = webpack(options);
 
-var server = new WebpackDevServer(compiler, {
+const server = new WebpackDevServer(compiler, {
   hot: true,
   headers: { 'Access-Control-Allow-Origin': '*' }
 });

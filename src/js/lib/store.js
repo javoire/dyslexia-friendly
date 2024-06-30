@@ -1,7 +1,7 @@
-/* eslint-disable no-console */
+import { debug } from './util.js';
+
 // default user config
-const { debug } = require('./util');
-const DEFAULT_CONFIG = {
+export const DEFAULT_CONFIG = {
   // inputs:
   // these are the `name="something-checkbox"` etc,
   // names need to be manually in sync...
@@ -14,7 +14,7 @@ const DEFAULT_CONFIG = {
   fontChoice: 'opendyslexic'
 };
 
-const updateChangedConfigValues = (config, newConfigValues) => {
+export const updateChangedConfigValues = (config, newConfigValues) => {
   for (const key in config) {
     if (typeof config[key] === 'boolean') {
       // checkboxes that are off will be missing in the
@@ -28,7 +28,7 @@ const updateChangedConfigValues = (config, newConfigValues) => {
 };
 
 const subscribers = [];
-const store = {
+export const store = {
   /**
    * Interpolate form data with what's in the store, in case values are missing from the form
    * then save.
@@ -88,10 +88,4 @@ const store = {
     subscribers.push(callback);
     callback(store);
   }
-};
-
-module.exports = {
-  store,
-  DEFAULT_CONFIG,
-  updateChangedConfigValues // for testing only
 };

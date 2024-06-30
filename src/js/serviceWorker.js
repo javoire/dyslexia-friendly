@@ -1,15 +1,19 @@
 /* eslint-disable no-console */
 'use strict';
 
-const { store, DEFAULT_CONFIG } = require('./lib/store');
-const { debug } = require('./lib/util');
+import { debug, error } from './lib/util.js';
+import { DEFAULT_CONFIG, store } from './lib/store.js';
 
-function notifyContentScript(config) {
+function sendConfigToActiveTab(config) {
   debug('notifying contentscript', config);
-  chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(tabs) {
+  chrome.tabs.query({ active: true, lastFocusedWindow: true }, function([tab]) {
+    if (!tab) {
+      error('no active tab found, can not send message to contentscript');
+      return;
+    }
     chrome.tabs.sendMessage(
-      tabs[0].id, // TODO: null check
-      { message: 'applyConfigInContentScript', config },
+      tab.id,
+      { message: 'applyConfigOnPage', config },
       function(ok) {
         if (ok) {
           debug('contentscript OK reply');
@@ -54,6 +58,9 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
   } else if (request.message === 'getConfig') {
     debug('getConfig event');
     store.getAll(sendResponse);
+  } else if (request.message === 'sendConfigToActiveTab') {
+    debug('sendConfigToActiveTab event');
+    sendConfigToActiveTab(request.data);
   }
   return true; // so sendResponse can be called async
 });
@@ -62,7 +69,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 chrome.webNavigation.onDOMContentLoaded.addListener(function() {
   // onDOMContentLoaded means contentscript.js is alive
   debug('onDOMContentLoaded');
-  store.getAll(notifyContentScript);
+  store.getAll(sendConfigToActiveTab);
 });
 
 // 2) apply config on tab switch
@@ -70,8 +77,8 @@ chrome.webNavigation.onDOMContentLoaded.addListener(function() {
 // bc otherwise content.js does not exist on the page to react to the message)
 chrome.tabs.onActivated.addListener(function() {
   debug('tabs.onActivated');
-  store.getAll(notifyContentScript);
+  store.getAll(sendConfigToActiveTab);
 });
 
 // 3) apply config on store change
-store.subscribe(notifyContentScript);
+store.subscribe(sendConfigToActiveTab);

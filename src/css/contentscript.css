@@ -8,15 +8,15 @@ This one is designed for dyslexic readers, though
 it can be useful to increase readability for anyone
 else                                                 */
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i, em) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i, em, mat-icon, [aria-hidden="true"], [class*="icon"]) {
   font-family: 'opendyslexic' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *:not(i, em) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *:not(i, em, mat-icon, [aria-hidden="true"], [class*="icon"]) {
   font-family: 'opendyslexicmono' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i, em) {
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i, em, mat-icon, [aria-hidden="true"], [class*="icon"]) {
   font-family: 'Comic Sans MS' !important;
 }
 
@@ -31,8 +31,6 @@ out.                                                  */
 body.dyslexia-friendly {
   font-size: 14px;
   line-height: 200%;
-  margin: auto 0;
-  padding: 0;
 }
 /*
 Setting bg color is tricky, since some websites switch between dark/light mode and some don't.

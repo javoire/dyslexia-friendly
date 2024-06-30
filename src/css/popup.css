@@ -118,6 +118,10 @@ label[for="font-opendyslexicmono-radio"] {
   margin-bottom: 5px;
 }
 
+.popup-section-body .form-label {
+  display: block;
+}
+
 #popup-wrapper .popup-section h2 {
   font-weight: 700;
   font-size: 18px;

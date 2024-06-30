@@ -7,8 +7,8 @@ import '../css/fonts.css';
 import '../css/tailwind.css';
 import '../css/popup.css';
 
-import { arrayToConfigMap, debug, removeClassStartsWith } from './lib/util';
-import { FONT_CLASS_PREFIX } from './lib/consts';
+import { formToConfig, debug, removeClassStartsWith } from './lib/util.js';
+import { FONT_CLASS_PREFIX } from './lib/consts.js';
 
 /*
  * Send form to background store for saving
@@ -17,14 +17,14 @@ import { FONT_CLASS_PREFIX } from './lib/consts';
  * @param callback - gets new config as param
  */
 function saveFormStateToStore(form, callback) {
-  const formState = arrayToConfigMap(form.serializeArray());
+  const config = formToConfig(form);
 
-  debug('sending to background script:', formState);
+  debug('sending to service worker:', config);
   // pass new config to background script for saving
   chrome.runtime.sendMessage(
     {
       message: 'updateConfig',
-      data: formState
+      data: config
     },
     callback
   );
@@ -94,12 +94,28 @@ window.onload = function() {
     const configForm = $('#configForm');
     const body = $('body');
 
-    // form is submitted on any input change, so changes are
-    // reflected live on the page as the user modifies inputs
-    // (I don't know if this could have negative performance implications on slow devices...)
     inputs.on('input', function() {
+      // update changes live in the popup
+      updateUiFromConfig(formToConfig(configForm), inputs, body, ruler);
+      // update changes live on the page for immediate feedback
+      // this sends directly to the active tab, not via storage, to not spam the storage
+      // there's a rate limit https://developer.chrome.com/docs/extensions/reference/api/storage
+      // MAX_WRITE_OPERATIONS_PER_MINUTE
+      const config = formToConfig(configForm);
+      debug('sending config to active tab', config);
+      requestAnimationFrame(() => {
+        chrome.runtime.sendMessage({
+          message: 'sendConfigToActiveTab',
+          data: config
+        });
+      });
+    });
+
+    // submitting form  on input value changes (not live)
+    inputs.change(function() {
       configForm.submit();
     });
+
     configForm.submit(function(e) {
       saveFormStateToStore($(this), config => {
         updateUiFromConfig(config, inputs, body, ruler);
