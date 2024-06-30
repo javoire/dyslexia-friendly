@@ -1,17 +1,16 @@
-const { formToConfig } = require('../util');
+import $ from 'jquery';
+import { formToConfig } from '../util';
 
 describe('util', () => {
-  test('arrayToConfigMap() creates correct map', () => {
-    const formArray = [
-      { name: 'rulerEnabled', value: 'on' },
-      { name: 'rulerSize', value: 30 },
-      { name: 'fontChoice', value: 'opendyslexic' }
-    ];
+  test('formToConfig() creates config obj from form element', () => {
+    const form = $(
+      '<form><input type="checkbox" name="rulerEnabled" checked><input type="number" name="rulerSize" value="30"><input type="radio" name="fontChoice" value="opendyslexic" checked></form>'
+    );
     const configMap = {
       rulerEnabled: true,
-      rulerSize: 30,
+      rulerSize: '30',
       fontChoice: 'opendyslexic'
     };
-    expect(formToConfig(formArray)).toEqual(configMap);
+    expect(formToConfig(form)).toEqual(configMap);
   });
 });

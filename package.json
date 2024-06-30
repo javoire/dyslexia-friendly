@@ -2,6 +2,7 @@
   "name": "dyslexia-friendly",
   "version": "1.0.0",
   "description": "Increases readability of web pages by changing fonts, contrast and adding a reading ruler",
+  "type": "module",
   "dependencies": {
     "jquery": "^3.5.0",
     "materialize-css": "^1.0.0-rc.2",
@@ -10,11 +11,12 @@
   "scripts": {
     "build": "NODE_ENV=production node utils/build.js",
     "start": "NODE_ENV=development node utils/webserver.js",
-    "test": "jest",
+    "test": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "lint": "eslint src",
     "format": "prettier-eslint src/**/*.js"
   },
   "devDependencies": {
+    "@jest/globals": "^29.7.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.3",
@@ -26,6 +28,7 @@
     "html-loader": "^4.2.0",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^29.4.2",
+    "jest-environment-jsdom": "^29.7.0",
     "mini-css-extract-plugin": "^2.7.2",
     "postcss": "^8.4.31",
     "postcss-loader": "^7.0.2",
