@@ -1,4 +1,4 @@
-import { debug } from './util';
+import { debug } from './util.js';
 
 // default user config
 export const DEFAULT_CONFIG = {

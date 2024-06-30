@@ -1,17 +1,16 @@
-const webpack = require('webpack');
-const path = require('path');
-const fileSystem = require('fs');
-const env = require('./utils/env');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const WriteFilePlugin = require('write-file-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+import webpack from 'webpack';
+import path from 'path';
+import env from './utils/env.js';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import CopyWebpackPlugin from 'copy-webpack-plugin';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import WriteFilePlugin from 'write-file-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
-// load the secrets
-const alias = {};
-
-const secretsPath = path.join(__dirname, 'secrets.' + env.NODE_ENV + '.js');
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const fileExtensions = [
   'eot',
@@ -26,11 +25,7 @@ const fileExtensions = [
   'svg'
 ];
 
-if (fileSystem.existsSync(secretsPath)) {
-  alias['secrets'] = secretsPath;
-}
-
-const options = {
+export const options = {
   mode: env.NODE_ENV,
   entry: {
     popup: path.join(__dirname, 'src', 'js', 'popup.js'),
@@ -76,9 +71,6 @@ const options = {
         ]
       }
     ]
-  },
-  resolve: {
-    alias: alias
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -155,5 +147,3 @@ if (env.IS_DEV) {
 } else {
   options.devtool = false;
 }
-
-module.exports = options;

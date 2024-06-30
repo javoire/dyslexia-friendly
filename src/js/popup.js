@@ -7,8 +7,8 @@ import '../css/fonts.css';
 import '../css/tailwind.css';
 import '../css/popup.css';
 
-import { formToConfig, debug, removeClassStartsWith } from './lib/util';
-import { FONT_CLASS_PREFIX } from './lib/consts';
+import { formToConfig, debug, removeClassStartsWith } from './lib/util.js';
+import { FONT_CLASS_PREFIX } from './lib/consts.js';
 
 /*
  * Send form to background store for saving

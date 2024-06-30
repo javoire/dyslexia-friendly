@@ -1,8 +1,8 @@
-const webpack = require('webpack');
-const config = require('../webpack.config');
+import webpack from 'webpack';
+import { options } from '../webpack.config.js';
 
-delete config.chromeExtensionBoilerplate;
+delete options.chromeExtensionBoilerplate;
 
-webpack(config, function(err) {
+webpack(options, function(err) {
   if (err) throw err;
 });

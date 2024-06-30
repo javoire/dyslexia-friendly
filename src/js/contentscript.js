@@ -3,8 +3,8 @@
 
 import $ from 'jquery';
 
-import { debug, removeClassStartsWith } from './lib/util';
-import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts';
+import { debug, removeClassStartsWith } from './lib/util.js';
+import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts.js';
 
 const ruler = $(`<div id="${RULER_ID}"></div>`);
 

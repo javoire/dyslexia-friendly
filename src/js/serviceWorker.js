@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 'use strict';
 
-import { debug, error } from './lib/util';
-import { DEFAULT_CONFIG, store } from './lib/store';
+import { debug, error } from './lib/util.js';
+import { DEFAULT_CONFIG, store } from './lib/store.js';
 
 function sendConfigToActiveTab(config) {
   debug('notifying contentscript', config);

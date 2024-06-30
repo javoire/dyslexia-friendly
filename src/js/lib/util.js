@@ -1,4 +1,4 @@
-import { env } from './consts';
+import { env } from './consts.js';
 
 export const removeClassStartsWith = (elem, classStartsWith) => {
   elem
