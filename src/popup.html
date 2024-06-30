@@ -1,14 +1,16 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <title>Dyslexia Friendly Popup</title>
   </head>
 
   <body class="dyslexia-friendly-font-opendyslexic">
-    <div id="dyslexia-friendly-ruler" data-show-when="rulerEnabled && extensionEnabled"></div>
+    <div
+      id="dyslexia-friendly-ruler"
+      data-show-when="rulerEnabled && extensionEnabled"
+    ></div>
     <div id="popup-wrapper">
       <form id="configForm" name="configForm">
-
         <div class="header">
           <h1>Dyslexia Friendly</h1>
           <div class="form-check form-switch active-switch" id="master-switch">
@@ -110,22 +112,12 @@
 
             <div class="popup-section-body" data-show-when="rulerEnabled">
               <div class="relative">
-                <label
-                  for="ruler-color"
-                  class="form-label"
-                >Color:</label
-                >
-                <input
-                  type="color"
-                  name="rulerColor"
-                  id="ruler-color"
-                />
+                <label for="ruler-color" class="form-label">Color:</label>
+                <input type="color" name="rulerColor" id="ruler-color" />
               </div>
               <div class="relative">
-                <label
-                  for="ruler-opacity-range"
-                  class="form-label"
-                >Opacity:</label
+                <label for="ruler-opacity-range" class="form-label"
+                  >Opacity:</label
                 >
                 <input
                   type="range"
@@ -138,11 +130,7 @@
                 />
               </div>
               <div class="relative">
-                <label
-                  for="ruler-size-range"
-                  class="form-label"
-                  >Size:</label
-                >
+                <label for="ruler-size-range" class="form-label">Size:</label>
                 <input
                   type="range"
                   class="form-range appearance-none w-full p-0 bg-transparent focus:outline-none focus:ring-0 focus:shadow-none"
@@ -154,17 +142,17 @@
               </div>
             </div>
           </div>
-<!--          <div class="popup-section">-->
-<!--            <div class="popup-section-header">-->
-<!--              <h2>Colors</h2>-->
-<!--            </div>-->
-<!--            <div class="popup-section-body">-->
-<!--              <ul>-->
-<!--                <li>Paragraphs: <input type="color"></li>-->
+          <!--          <div class="popup-section">-->
+          <!--            <div class="popup-section-header">-->
+          <!--              <h2>Colors</h2>-->
+          <!--            </div>-->
+          <!--            <div class="popup-section-body">-->
+          <!--              <ul>-->
+          <!--                <li>Paragraphs: <input type="color"></li>-->
 
-<!--              </ul>-->
-<!--            </div>-->
-<!--          </div>-->
+          <!--              </ul>-->
+          <!--            </div>-->
+          <!--          </div>-->
         </div>
       </form>
     </div>

@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 'use strict';
 
 import $ from 'jquery';
@@ -8,10 +7,10 @@ import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts.js';
 
 const ruler = $(`<div id="${RULER_ID}"></div>`);
 
-$(document).ready(function() {
+$(document).ready(function () {
   const body = $('body');
   body.append(ruler);
-  body.mousemove(function(event) {
+  body.mousemove(function (event) {
     ruler.css('top', event.pageY);
   });
 
@@ -48,12 +47,14 @@ $(document).ready(function() {
     }
   }
 
-  chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    switch (request.message) {
-      case 'applyConfigOnPage':
-        applyConfigOnPage(request.config);
-        break;
-    }
-    sendResponse(true);
-  });
+  chrome.runtime.onMessage.addListener(
+    function (request, sender, sendResponse) {
+      switch (request.message) {
+        case 'applyConfigOnPage':
+          applyConfigOnPage(request.config);
+          break;
+      }
+      sendResponse(true);
+    },
+  );
 });

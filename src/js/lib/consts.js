@@ -9,6 +9,6 @@ export const env = {
     debug: ['debug'].includes(process.env.LOG_LEVEL),
     info: ['debug', 'info'].includes(process.env.LOG_LEVEL),
     warn: ['debug', 'info', 'warn'].includes(process.env.LOG_LEVEL),
-    error: ['debug', 'info', 'warn', 'error'].includes(process.env.LOG_LEVEL)
-  }
+    error: ['debug', 'info', 'warn', 'error'].includes(process.env.LOG_LEVEL),
+  },
 };

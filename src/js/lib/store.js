@@ -11,7 +11,7 @@ export const DEFAULT_CONFIG = {
   rulerSize: 30,
   rulerColor: '#000000',
   rulerOpacity: 0.1,
-  fontChoice: 'opendyslexic'
+  fontChoice: 'opendyslexic',
 };
 
 export const updateChangedConfigValues = (config, newConfigValues) => {
@@ -33,17 +33,17 @@ export const store = {
    * Interpolate form data with what's in the store, in case values are missing from the form
    * then save.
    */
-  update: function(newConfigValues, callback) {
-    chrome.storage.sync.get('config', function(store) {
+  update: function (newConfigValues, callback) {
+    chrome.storage.sync.get('config', function (store) {
       const updatedConfig = updateChangedConfigValues(
         store.config,
-        newConfigValues
+        newConfigValues,
       );
-      chrome.storage.sync.set({ config: updatedConfig }, function() {
+      chrome.storage.sync.set({ config: updatedConfig }, function () {
         debug('saved updated config', updatedConfig);
 
         // notify subscribers
-        subscribers.forEach(function(subscriber) {
+        subscribers.forEach(function (subscriber) {
           subscriber(updatedConfig);
         });
         return callback ? callback(updatedConfig) : true;
@@ -51,16 +51,16 @@ export const store = {
     });
   },
 
-  set: function(config, callback) {
-    chrome.storage.sync.set({ config }, function() {
-      chrome.storage.sync.get('config', function(store) {
+  set: function (config, callback) {
+    chrome.storage.sync.set({ config }, function () {
+      chrome.storage.sync.get('config', function (store) {
         return callback ? callback(store.config) : true;
       });
     });
   },
 
-  get: function(key, callback) {
-    chrome.storage.sync.get('config', function(store) {
+  get: function (key, callback) {
+    chrome.storage.sync.get('config', function (store) {
       const config = store.config;
       // this is a failsafe in case the config doesn't
       // exist in storage, shouldn't happen..
@@ -71,8 +71,8 @@ export const store = {
     });
   },
 
-  getAll: function(callback) {
-    chrome.storage.sync.get('config', function(store) {
+  getAll: function (callback) {
+    chrome.storage.sync.get('config', function (store) {
       const config = store.config;
       // this is a failsafe in case the config doesn't
       // exist in storage, shouldn't happen...
@@ -84,8 +84,8 @@ export const store = {
   },
 
   // subscribe to changes in store
-  subscribe: function(callback) {
+  subscribe: function (callback) {
     subscribers.push(callback);
     callback(store);
-  }
+  },
 };
