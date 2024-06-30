@@ -31,8 +31,6 @@ out.                                                  */
 body.dyslexia-friendly {
   font-size: 14px;
   line-height: 200%;
-  margin: auto 0;
-  padding: 0;
 }
 /*
 Setting bg color is tricky, since some websites switch between dark/light mode and some don't.
