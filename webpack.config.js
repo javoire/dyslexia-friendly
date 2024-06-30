@@ -30,8 +30,6 @@ if (fileSystem.existsSync(secretsPath)) {
   alias['secrets'] = secretsPath;
 }
 
-const isDev = env.NODE_ENV === 'development';
-
 const options = {
   mode: env.NODE_ENV,
   entry: {
@@ -83,6 +81,12 @@ const options = {
     alias: alias
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)
+    }),
+    new webpack.DefinePlugin({
+      'process.env.LOG_LEVEL': JSON.stringify(env.LOG_LEVEL)
+    }),
     // clean the build folder
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['build']
@@ -146,7 +150,7 @@ const options = {
   ]
 };
 
-if (isDev) {
+if (env.IS_DEV) {
   options.devtool = 'eval-cheap-module-source-map';
 } else {
   options.devtool = false;

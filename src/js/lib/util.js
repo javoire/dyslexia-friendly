@@ -1,3 +1,5 @@
+import { env } from './consts';
+
 export const removeClassStartsWith = (elem, classStartsWith) => {
   elem
     .attr('class')
@@ -19,14 +21,15 @@ export const arrayToConfigMap = array => {
 };
 
 export const debug = (msg, ...args) => {
-  // TODO: only log in dev mode, how to control environment in a chrome extension?
-  const isDev = false; // tmp set to true for local dev
-  if (isDev) {
+  if (env.logLevel.debug) {
     // eslint-disable-next-line no-console
     console.log(`%c[DyslexiaFriendly] ${msg}`, 'color: #0af', ...args);
   }
 };
 
-export const env = {
-  isDev: false
+export const error = (msg, ...args) => {
+  if (env.logLevel.error) {
+    // eslint-disable-next-line no-console
+    console.error(`%c[DyslexiaFriendly] ${msg}`, 'color: #fa0', ...args);
+  }
 };
