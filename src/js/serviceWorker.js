@@ -1,10 +1,11 @@
 /* eslint-disable no-console */
 'use strict';
 
-const { store, DEFAULT_CONFIG } = require('./lib/store');
-const { debug } = require('./lib/util');
+import { debug, env } from './lib/util';
+import { DEFAULT_CONFIG, store } from './lib/store';
 
 function notifyContentScript(config) {
+  console.log(env);
   debug('notifying contentscript', config);
   chrome.tabs.query({ active: true, lastFocusedWindow: true }, function(tabs) {
     chrome.tabs.sendMessage(

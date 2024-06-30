@@ -1,4 +1,4 @@
-const removeClassStartsWith = (elem, classStartsWith) => {
+export const removeClassStartsWith = (elem, classStartsWith) => {
   elem
     .attr('class')
     .split(' ')
@@ -9,7 +9,7 @@ const removeClassStartsWith = (elem, classStartsWith) => {
     });
 };
 
-const arrayToConfigMap = array => {
+export const arrayToConfigMap = array => {
   const obj = {};
   array.forEach(item => {
     // the serialized form has "on" as checkbox values, convert to boolean instead
@@ -18,7 +18,7 @@ const arrayToConfigMap = array => {
   return obj;
 };
 
-const debug = (msg, ...args) => {
+export const debug = (msg, ...args) => {
   // TODO: only log in dev mode, how to control environment in a chrome extension?
   const isDev = false; // tmp set to true for local dev
   if (isDev) {
@@ -27,8 +27,6 @@ const debug = (msg, ...args) => {
   }
 };
 
-module.exports = {
-  removeClassStartsWith,
-  arrayToConfigMap,
-  debug
+export const env = {
+  isDev: false
 };
