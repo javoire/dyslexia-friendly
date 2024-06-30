@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import 'tw-elements';
 import 'jquery';
 import $ from 'jquery';
@@ -24,9 +23,9 @@ function saveFormStateToStore(form, callback) {
   chrome.runtime.sendMessage(
     {
       message: 'updateConfig',
-      data: config
+      data: config,
     },
-    callback
+    callback,
   );
 }
 
@@ -35,13 +34,15 @@ function saveFormStateToStore(form, callback) {
  *
  * @param config
  * @param inputs - jQuery elements
+ * @param body - jQuery element
+ * @param ruler - jQuery element
  * @returns {undefined}
  */
 function updateUiFromConfig(config, inputs, body, ruler) {
   debug('Updating popup UI with config:', config);
 
   // update all form input states
-  inputs.each(function() {
+  inputs.each(function () {
     const value = config[this.name];
     switch (this.type) {
       case 'radio':
@@ -67,7 +68,7 @@ function updateUiFromConfig(config, inputs, body, ruler) {
 
   // toggle visible sections
   const visibleSections = $('[data-show-when]');
-  visibleSections.each(function() {
+  visibleSections.each(function () {
     const elem = $(this);
 
     // grab the data attr that controls when to show this element
@@ -76,7 +77,7 @@ function updateUiFromConfig(config, inputs, body, ruler) {
     // very rudimentary support for and-operator...
     const show = showWhen
       .split('&&')
-      .map(s => config[s.trim()])
+      .map((s) => config[s.trim()])
       .every(Boolean);
 
     if (show) {
@@ -87,14 +88,14 @@ function updateUiFromConfig(config, inputs, body, ruler) {
   });
 }
 
-window.onload = function() {
-  $(document).ready(function() {
+window.onload = function () {
+  $(document).ready(function () {
     const inputs = $('#configForm input');
     const ruler = $('#dyslexia-friendly-ruler');
     const configForm = $('#configForm');
     const body = $('body');
 
-    inputs.on('input', function() {
+    inputs.on('input', function () {
       // update changes live in the popup
       updateUiFromConfig(formToConfig(configForm), inputs, body, ruler);
       // update changes live on the page for immediate feedback
@@ -106,18 +107,18 @@ window.onload = function() {
       requestAnimationFrame(() => {
         chrome.runtime.sendMessage({
           message: 'sendConfigToActiveTab',
-          data: config
+          data: config,
         });
       });
     });
 
     // submitting form  on input value changes (not live)
-    inputs.change(function() {
+    inputs.change(function () {
       configForm.submit();
     });
 
-    configForm.submit(function(e) {
-      saveFormStateToStore($(this), config => {
+    configForm.submit(function (e) {
+      saveFormStateToStore($(this), (config) => {
         updateUiFromConfig(config, inputs, body, ruler);
       });
       e.preventDefault();
@@ -129,21 +130,21 @@ window.onload = function() {
     });
 
     // On popup open, load config from store and update ui,
-    chrome.runtime.sendMessage({ message: 'getConfig' }, config => {
+    chrome.runtime.sendMessage({ message: 'getConfig' }, (config) => {
       updateUiFromConfig(config, inputs, body, ruler);
     });
   });
 };
 
-const updateRulerSize = function(ruler, value) {
+const updateRulerSize = function (ruler, value) {
   ruler.css('height', value);
   ruler.css('marginTop', -value / 2);
 };
 
-const updateRulerOpacity = function(ruler, value) {
+const updateRulerOpacity = function (ruler, value) {
   ruler.css('opacity', value);
 };
 
-const updateRulerColor = function(ruler, value) {
+const updateRulerColor = function (ruler, value) {
   ruler.css('background-color', value);
 };

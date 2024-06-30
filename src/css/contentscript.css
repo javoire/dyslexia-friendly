@@ -8,15 +8,18 @@ This one is designed for dyslexic readers, though
 it can be useful to increase readability for anyone
 else                                                 */
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *:not(i, em, mat-icon, [aria-hidden="true"], [class*="icon"]) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic
+  *:not(i, em, mat-icon, [aria-hidden='true'], [class*='icon']) {
   font-family: 'opendyslexic' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *:not(i, em, mat-icon, [aria-hidden="true"], [class*="icon"]) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono
+  *:not(i, em, mat-icon, [aria-hidden='true'], [class*='icon']) {
   font-family: 'opendyslexicmono' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-comicsans *:not(i, em, mat-icon, [aria-hidden="true"], [class*="icon"]) {
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans
+  *:not(i, em, mat-icon, [aria-hidden='true'], [class*='icon']) {
   font-family: 'Comic Sans MS' !important;
 }
 
@@ -87,7 +90,7 @@ body.dyslexia-friendly li:hover {
   height: 1.6em;
   /* ideally keep in sync with default config */
   background-color: black;
-  opacity: .1;
+  opacity: 0.1;
   position: absolute;
   left: 0;
   right: 0;

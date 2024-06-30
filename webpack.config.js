@@ -22,7 +22,7 @@ const fileExtensions = [
   'jpeg',
   'png',
   'gif',
-  'svg'
+  'svg',
 ];
 
 export const options = {
@@ -31,11 +31,11 @@ export const options = {
     popup: path.join(__dirname, 'src', 'js', 'popup.js'),
     options: path.join(__dirname, 'src', 'js', 'options.js'),
     serviceWorker: path.join(__dirname, 'src', 'js', 'serviceWorker.js'),
-    contentscript: path.join(__dirname, 'src', 'js', 'contentscript.js')
+    contentscript: path.join(__dirname, 'src', 'js', 'contentscript.js'),
   },
   output: {
     path: path.join(__dirname, 'build'),
-    filename: '[name].js'
+    filename: '[name].js',
   },
   module: {
     rules: [
@@ -45,13 +45,13 @@ export const options = {
         type: 'asset/resource',
         exclude: /node_modules/,
         generator: {
-          filename: 'fonts/[name][ext]'
-        }
+          filename: 'fonts/[name][ext]',
+        },
       },
       {
         test: /\.html$/,
         use: ['html-loader'],
-        exclude: /node_modules/
+        exclude: /node_modules/,
       },
       {
         test: /\.css$/,
@@ -65,23 +65,23 @@ export const options = {
             options: {
               search: 'chrome-extension://__MSG_@@extension_id__',
               replace: '..',
-              flags: 'g'
-            }
-          }
-        ]
-      }
-    ]
+              flags: 'g',
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV)
+      'process.env.NODE_ENV': JSON.stringify(env.NODE_ENV),
     }),
     new webpack.DefinePlugin({
-      'process.env.LOG_LEVEL': JSON.stringify(env.LOG_LEVEL)
+      'process.env.LOG_LEVEL': JSON.stringify(env.LOG_LEVEL),
     }),
     // clean the build folder
     new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ['build']
+      cleanAfterEveryBuildPatterns: ['build'],
     }),
     // expose and write the allowed env vars on the compiled bundle
     //new webpack.EnvironmentPlugin(['NODE_ENV']),
@@ -89,57 +89,57 @@ export const options = {
       patterns: [
         {
           from: 'src/manifest.json',
-          transform: function(content) {
-            // generates the manifest file using the package.json informations
+          transform: function (content) {
+            // generates the manifest file using the package.json information
             return Buffer.from(
               // this doesn't work? fix
               JSON.stringify({
                 description: process.env.npm_package_description,
                 version: process.env.npm_package_version,
-                ...JSON.parse(content.toString())
-              })
+                ...JSON.parse(content.toString()),
+              }),
             );
-          }
+          },
         },
         // These files are for injection into websites,
         // so they need to be copied as is to the build folder.
         // used by eg contentscript
         {
           from: 'src/css/contentscript.css',
-          to: 'css/contentscript.css'
+          to: 'css/contentscript.css',
         },
         {
           from: 'src/css/fonts.css',
-          to: 'css/fonts.css'
+          to: 'css/fonts.css',
         },
         {
           from: 'src/fonts',
-          to: 'fonts'
+          to: 'fonts',
         },
         {
           from: 'src/img',
-          to: 'img'
+          to: 'img',
         },
         {
           from: 'src/_locales',
-          to: '_locales'
-        }
-      ]
+          to: '_locales',
+        },
+      ],
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'popup.html'),
       filename: 'popup.html',
-      chunks: ['popup']
+      chunks: ['popup'],
     }),
     new HtmlWebpackPlugin({
       template: path.join(__dirname, 'src', 'options.html'),
       filename: 'options.html',
-      chunks: ['options']
+      chunks: ['options'],
     }),
     new WriteFilePlugin(),
     // don't inline css in html...
-    new MiniCssExtractPlugin()
-  ]
+    new MiniCssExtractPlugin(),
+  ],
 };
 
 if (env.IS_DEV) {

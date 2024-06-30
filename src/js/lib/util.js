@@ -4,17 +4,17 @@ export const removeClassStartsWith = (elem, classStartsWith) => {
   elem
     .attr('class')
     .split(' ')
-    .forEach(classname => {
+    .forEach((classname) => {
       if (classname.startsWith(classStartsWith)) {
         elem.removeClass(classname);
       }
     });
 };
 
-export const formToConfig = form => {
+export const formToConfig = (form) => {
   const serializedForm = form.serializeArray();
   const obj = {};
-  serializedForm.forEach(item => {
+  serializedForm.forEach((item) => {
     // the serialized form has "on" as checkbox values, convert to boolean instead
     obj[item.name] = item.value === 'on' ? true : item.value;
   });

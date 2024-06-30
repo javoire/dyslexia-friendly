@@ -25,15 +25,15 @@ body.dyslexia-friendly-font-comicsans {
   font-family: 'Comic Sans MS' !important;
 }
 
-label[for="font-comicsans-radio"] {
+label[for='font-comicsans-radio'] {
   font-family: 'Comic Sans MS' !important;
 }
 
-label[for="font-opendyslexic-radio"] {
+label[for='font-opendyslexic-radio'] {
   font-family: 'opendyslexic' !important;
 }
 
-label[for="font-opendyslexicmono-radio"] {
+label[for='font-opendyslexicmono-radio'] {
   font-family: 'opendyslexicmono' !important;
 }
 
@@ -68,7 +68,7 @@ label[for="font-opendyslexicmono-radio"] {
 #popup-wrapper .header input#master-switch-checkbox {
   /* copied from browser inspector: */
   /* changes color to theme blue */
-  background-image: url("data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27%230d6efd%27/%3e%3c/svg%3e")
+  background-image: url('data:image/svg+xml,%3csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%27-4 -4 8 8%27%3e%3ccircle r=%273%27 fill=%27%230d6efd%27/%3e%3c/svg%3e');
 }
 
 #popup-wrapper .header input#master-switch-checkbox:checked {
