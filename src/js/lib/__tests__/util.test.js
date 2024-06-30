@@ -1,4 +1,4 @@
-const { arrayToConfigMap } = require('../util');
+const { formToConfig } = require('../util');
 
 describe('util', () => {
   test('arrayToConfigMap() creates correct map', () => {
@@ -12,6 +12,6 @@ describe('util', () => {
       rulerSize: 30,
       fontChoice: 'opendyslexic'
     };
-    expect(arrayToConfigMap(formArray)).toEqual(configMap);
+    expect(formToConfig(formArray)).toEqual(configMap);
   });
 });

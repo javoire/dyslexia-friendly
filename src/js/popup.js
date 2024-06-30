@@ -7,7 +7,7 @@ import '../css/fonts.css';
 import '../css/tailwind.css';
 import '../css/popup.css';
 
-import { arrayToConfigMap, debug, removeClassStartsWith } from './lib/util';
+import { formToConfig, debug, removeClassStartsWith } from './lib/util';
 import { FONT_CLASS_PREFIX } from './lib/consts';
 
 /*
@@ -17,14 +17,14 @@ import { FONT_CLASS_PREFIX } from './lib/consts';
  * @param callback - gets new config as param
  */
 function saveFormStateToStore(form, callback) {
-  const formState = arrayToConfigMap(form.serializeArray());
+  const config = formToConfig(form);
 
-  debug('sending to background script:', formState);
+  debug('sending to service worker:', config);
   // pass new config to background script for saving
   chrome.runtime.sendMessage(
     {
       message: 'updateConfig',
-      data: formState
+      data: config
     },
     callback
   );

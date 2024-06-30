@@ -11,9 +11,10 @@ export const removeClassStartsWith = (elem, classStartsWith) => {
     });
 };
 
-export const arrayToConfigMap = array => {
+export const formToConfig = form => {
+  const serializedForm = form.serializeArray();
   const obj = {};
-  array.forEach(item => {
+  serializedForm.forEach(item => {
     // the serialized form has "on" as checkbox values, convert to boolean instead
     obj[item.name] = item.value === 'on' ? true : item.value;
   });
