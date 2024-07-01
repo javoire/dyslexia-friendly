@@ -9,8 +9,11 @@
     "string-replace-loader": "^3.1.0"
   },
   "scripts": {
-    "build": "NODE_ENV=production node utils/build.js",
+    "build": "NODE_ENV=production webpack",
+    "build-dev": "NODE_ENV=development webpack",
+    "package": "./utils/package.sh",
     "start": "NODE_ENV=development node utils/webserver.js",
+    "start-website": "NODE_ENV=development node utils/webserver.js website",
     "test": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "lint": "eslint src",
     "format": "prettier --write src/**/*.js"

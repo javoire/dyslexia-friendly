@@ -1,8 +1,16 @@
 import webpack from 'webpack';
-import { options } from '../webpack.config.js';
+import { extensionConfig, websiteConfig } from '../webpack.config.js';
 
-delete options.chromeExtensionBoilerplate;
-
-webpack(options, function(err) {
-  if (err) throw err;
+webpack(extensionConfig, function (err) {
+  if (err) {
+    console.log(err);
+    throw err;
+  }
 });
+
+// webpack(websiteConfig, function (err) {
+//   if (err) {
+//     console.log(err);
+//     // throw err;
+//   }
+// });

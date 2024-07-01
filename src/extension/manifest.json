@@ -23,7 +23,7 @@
   "content_scripts": [
     {
       "matches": ["http://*/*", "https://*/*"],
-      "css": ["css/fonts.css", "css/contentscript.css"],
+      "css": ["fonts.css", "contentscript.css"],
       "js": ["contentscript.js"],
       "run_at": "document_start",
       "all_frames": false

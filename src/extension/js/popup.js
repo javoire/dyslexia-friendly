@@ -2,8 +2,9 @@ import 'tw-elements';
 import 'jquery';
 import $ from 'jquery';
 
+import '../../shared/css/tailwind.css';
+
 import '../css/fonts.css';
-import '../css/tailwind.css';
 import '../css/popup.css';
 
 import { formToConfig, debug, removeClassStartsWith } from './lib/util.js';
