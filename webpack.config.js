@@ -22,6 +22,7 @@ const websiteOutPath = path.join(__dirname, 'build/website');
 
 const sharedConfig = {
   stats: 'errors-warn',
+  name: 'extension',
   mode: env.NODE_ENV,
   module: {
     rules: [
@@ -81,6 +82,12 @@ const sharedConfig = {
 const extensionConfig = {
   ...sharedConfig,
   context: extensionSrcPath,
+  devServer: {
+    devMiddleware: {
+      index: 'popup.html',
+    },
+    port: 3001,
+  },
   entry: {
     popup: path.join(extensionSrcPath, 'js', 'popup.js'),
     options: path.join(extensionSrcPath, 'js', 'options.js'),
@@ -102,6 +109,7 @@ const extensionConfig = {
           replacements: [
             {
               pattern: './fonts',
+              // contentscripts need to load fonts from the extension protocol
               replacement: 'chrome-extension://__MSG_@@extension_id__/fonts',
             },
           ],
@@ -130,6 +138,10 @@ const extensionConfig = {
 
 const websiteConfig = {
   ...sharedConfig,
+  name: 'website',
+  devServer: {
+    port: 3000,
+  },
   context: websiteSrcPath,
   plugins: [
     ...sharedConfig.plugins,
