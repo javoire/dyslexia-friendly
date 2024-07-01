@@ -12,8 +12,9 @@
     "build": "NODE_ENV=production webpack",
     "build-dev": "NODE_ENV=development webpack",
     "package": "./utils/package.sh",
-    "start": "NODE_ENV=development node utils/webserver.js",
-    "start-website": "NODE_ENV=development node utils/webserver.js website",
+    "start": "yarn start-website",
+    "start-website": "NODE_ENV=development webpack-dev-server --config-name='website'",
+    "start-extension": "NODE_ENV=development webpack-dev-server --config-name='extension'",
     "test": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "lint": "eslint src",
     "format": "prettier --write src/**/*.js"
