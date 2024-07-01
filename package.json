@@ -47,6 +47,7 @@
     "webpack": "^5.76.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1",
+    "webpack-string-replacer": "^0.0.20",
     "write-file-webpack-plugin": "^4.5.1"
   },
   "prettier": {
