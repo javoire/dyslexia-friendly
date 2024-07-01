@@ -53,7 +53,7 @@ jobs:
       - image: node:20
     environment:
       - APP_ID: miepjgfkkommhllbbjaedffcpkncboeo
-      - PACKAGE_NAME: dyslexia-friendly.zip
+      - PACKAGE_PATH: build/dyslexia-friendly.zip
     steps:
       - attach_workspace:
           at: /root/project

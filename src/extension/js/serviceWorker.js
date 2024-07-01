@@ -1,5 +1,3 @@
-'use strict';
-
 import { debug, error } from './lib/util.js';
 import { DEFAULT_CONFIG, store } from './lib/store.js';
 
