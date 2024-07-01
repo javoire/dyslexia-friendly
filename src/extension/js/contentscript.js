@@ -2,6 +2,9 @@
 
 import $ from 'jquery';
 
+import '../../shared/css/fonts.css';
+import '../css/contentscript.css';
+
 import { debug, removeClassStartsWith } from './lib/util.js';
 import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts.js';
 
