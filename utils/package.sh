@@ -3,5 +3,6 @@
 set -e
 
 package_name="${PACKAGE_NAME:-dyslexia-friendly.zip}"
-cd build
-zip -r ../"${package_name}" *
+
+cd build/extension
+zip -r ../"${package_name}" ./*

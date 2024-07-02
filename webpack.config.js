@@ -1,51 +1,42 @@
 import webpack from 'webpack';
 import path from 'path';
-import env from './utils/env.js';
-import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import WriteFilePlugin from 'write-file-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import { CleanWebpackPlugin } from 'clean-webpack-plugin';
+import WebpackStringReplacer from 'webpack-string-replacer';
+
+import env from './utils/env.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-const fileExtensions = [
-  'eot',
-  'otf',
-  'ttf',
-  'woff',
-  'woff2',
-  'jpg',
-  'jpeg',
-  'png',
-  'gif',
-  'svg',
-];
+const sharedSrcPath = path.join(__dirname, 'src/shared');
+const extensionSrcPath = path.join(__dirname, 'src/extension');
+const extensionOutPath = path.join(__dirname, 'build/extension');
+const websiteSrcPath = path.join(__dirname, 'src/website');
+const websiteOutPath = path.join(__dirname, 'build/website');
 
-export const options = {
+const sharedConfig = {
+  stats: 'errors-warn',
+  name: 'extension',
   mode: env.NODE_ENV,
-  entry: {
-    popup: path.join(__dirname, 'src', 'js', 'popup.js'),
-    options: path.join(__dirname, 'src', 'js', 'options.js'),
-    serviceWorker: path.join(__dirname, 'src', 'js', 'serviceWorker.js'),
-    contentscript: path.join(__dirname, 'src', 'js', 'contentscript.js'),
-  },
-  output: {
-    path: path.join(__dirname, 'build'),
-    filename: '[name].js',
+  devServer: {
+    devMiddleware: {
+      writeToDisk: true,
+    },
   },
   module: {
     rules: [
-      // this is for bundling fonts for the popup
       {
-        test: new RegExp('.(' + fileExtensions.join('|') + ')$'),
+        test: new RegExp('/fonts/'),
         type: 'asset/resource',
         exclude: /node_modules/,
         generator: {
-          filename: 'fonts/[name][ext]',
+          filename: './fonts/[name][ext]',
         },
       },
       {
@@ -55,20 +46,7 @@ export const options = {
       },
       {
         test: /\.css$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader',
-          'postcss-loader',
-          // need relative asset links in the popup:
-          {
-            loader: 'string-replace-loader',
-            options: {
-              search: 'chrome-extension://__MSG_@@extension_id__',
-              replace: '..',
-              flags: 'g',
-            },
-          },
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
     ],
   },
@@ -79,61 +57,25 @@ export const options = {
     new webpack.DefinePlugin({
       'process.env.LOG_LEVEL': JSON.stringify(env.LOG_LEVEL),
     }),
-    // clean the build folder
-    new CleanWebpackPlugin({
-      cleanAfterEveryBuildPatterns: ['build'],
-    }),
-    // expose and write the allowed env vars on the compiled bundle
-    //new webpack.EnvironmentPlugin(['NODE_ENV']),
     new CopyWebpackPlugin({
       patterns: [
+        // copy static files that are not already automatically copied by being imported in the js files
         {
-          from: 'src/manifest.json',
-          transform: function (content) {
-            // generates the manifest file using the package.json information
-            return Buffer.from(
-              // this doesn't work? fix
-              JSON.stringify({
-                description: process.env.npm_package_description,
-                version: process.env.npm_package_version,
-                ...JSON.parse(content.toString()),
-              }),
-            );
-          },
-        },
-        // These files are for injection into websites,
-        // so they need to be copied as is to the build folder.
-        // used by eg contentscript
-        {
-          from: 'src/css/contentscript.css',
-          to: 'css/contentscript.css',
-        },
-        {
-          from: 'src/css/fonts.css',
-          to: 'css/fonts.css',
-        },
-        {
-          from: 'src/fonts',
-          to: 'fonts',
-        },
-        {
-          from: 'src/img',
+          from: sharedSrcPath + '/img',
           to: 'img',
         },
-        {
-          from: 'src/_locales',
-          to: '_locales',
-        },
+        // we don't need to copy fonts over bc they are copied via webpack
+        // resolving the font.css and the font files from e.g. popup.js
       ],
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'popup.html'),
-      filename: 'popup.html',
+      template: path.join(extensionSrcPath, 'popup.html'),
+      filename: extensionOutPath + '/popup.html',
       chunks: ['popup'],
     }),
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, 'src', 'options.html'),
-      filename: 'options.html',
+      template: path.join(extensionSrcPath, 'options.html'),
+      filename: extensionOutPath + '/options.html',
       chunks: ['options'],
     }),
     new WriteFilePlugin(),
@@ -142,8 +84,95 @@ export const options = {
   ],
 };
 
+const extensionConfig = {
+  ...sharedConfig,
+  context: extensionSrcPath,
+  devServer: {
+    devMiddleware: {
+      index: 'popup.html',
+    },
+    port: 3001,
+  },
+  entry: {
+    popup: path.join(extensionSrcPath, 'js', 'popup.js'),
+    options: path.join(extensionSrcPath, 'js', 'options.js'),
+    serviceWorker: path.join(extensionSrcPath, 'js', 'serviceWorker.js'),
+    contentscript: path.join(extensionSrcPath, 'js', 'contentscript.js'),
+  },
+  output: {
+    path: extensionOutPath,
+    filename: '[name].js',
+  },
+  plugins: [
+    ...sharedConfig.plugins,
+    new WebpackStringReplacer({
+      rules: [
+        {
+          // this stage name triggers a deprecated warning in webpack, but it works
+          applyStage: 'optimizeChunkAssets',
+          outputFileInclude: 'contentscript.css',
+          replacements: [
+            {
+              pattern: './fonts',
+              // contentscripts need to load fonts from the extension protocol
+              replacement: 'chrome-extension://__MSG_@@extension_id__/fonts',
+            },
+          ],
+        },
+      ],
+    }),
+    new CleanWebpackPlugin({
+      cleanAfterEveryBuildPatterns: ['extension'],
+    }),
+    // copy static files that aren't imported anywhere
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: extensionSrcPath + '/manifest.json',
+          // TODO: use package.json version and copy it to manifest.json?
+        },
+        {
+          // needed by the manifest.json
+          from: extensionSrcPath + '/_locales',
+          to: '_locales',
+        },
+      ],
+    }),
+  ],
+};
+
+const websiteConfig = {
+  ...sharedConfig,
+  name: 'website',
+  devServer: {
+    ...sharedConfig.devServer,
+    port: 3000,
+  },
+  context: websiteSrcPath,
+  plugins: [
+    ...sharedConfig.plugins,
+    new CleanWebpackPlugin({
+      cleanAfterEveryBuildPatterns: ['website'],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(websiteSrcPath, 'index.html'),
+      filename: websiteOutPath + '/index.html',
+      chunks: ['index'],
+    }),
+  ],
+  entry: {
+    index: path.join(websiteSrcPath, 'js', 'index.js'),
+  },
+  output: {
+    path: websiteOutPath,
+    filename: '[name]-[chunkhash].js',
+  },
+};
+
 if (env.IS_DEV) {
-  options.devtool = 'eval-cheap-module-source-map';
+  sharedConfig.devtool = 'eval-cheap-module-source-map';
 } else {
-  options.devtool = false;
+  sharedConfig.devtool = false;
 }
+
+export default [extensionConfig, websiteConfig];
