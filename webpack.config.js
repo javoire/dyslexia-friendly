@@ -24,6 +24,11 @@ const sharedConfig = {
   stats: 'errors-warn',
   name: 'extension',
   mode: env.NODE_ENV,
+  devServer: {
+    devMiddleware: {
+      writeToDisk: true,
+    },
+  },
   module: {
     rules: [
       {
@@ -140,6 +145,7 @@ const websiteConfig = {
   ...sharedConfig,
   name: 'website',
   devServer: {
+    ...sharedConfig.devServer,
     port: 3000,
   },
   context: websiteSrcPath,
