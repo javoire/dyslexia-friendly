@@ -54,6 +54,7 @@ jobs:
           paths:
             - dyslexia-friendly.zip
             - utils/publish.sh
+            - build/website
   publish:
     docker:
       - image: node:20
@@ -75,6 +76,11 @@ jobs:
     docker:
       - image: node:20
     steps:
+      - attach_workspace:
+          at: /root/project
+      - run:
+          name: 'Dependencies'
+          command: npm i -g firebase-tools
       - run:
           name: 'Deploy'
-          command: yarn deploy --token "$FIREBASE_TOKEN" --project "$FIREBASE_PROJECT"
+          command: firebase deploy --token "$FIREBASE_TOKEN" --project "$FIREBASE_PROJECT"
