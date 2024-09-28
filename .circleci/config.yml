@@ -55,6 +55,7 @@ jobs:
             - dyslexia-friendly.zip
             - utils/publish.sh
             - build/website
+            - firebase.json
   publish:
     docker:
       - image: node:20
