@@ -71,10 +71,10 @@ jobs:
       - run:
           name: 'Publish'
           command: utils/publish.sh
-    deploy:
-      docker:
-        - image: node:20
-      steps:
-        - run:
-            name: 'Deploy'
-            command: yarn deploy --token "$FIREBASE_TOKEN"
+  deploy:
+    docker:
+      - image: node:20
+    steps:
+      - run:
+          name: 'Deploy'
+          command: yarn deploy --token "$FIREBASE_TOKEN"
