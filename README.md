@@ -18,12 +18,18 @@ The features listed here are also implemented: http://antijingoist.github.io/web
 Develop
 -----
 
-### Popup only
+### Website
 
-Run the devserver. However, any messages to background or content scripts will not be sent (as those scripts don't exist in this mode). The devserver is useful for tweaking layout and styling of the popup.
+```shell
+$ yarn start
+```
+
+### Extension Popup
+
+Run the popup of the extension only. However, any messages to background or content scripts will not be sent (as those scripts don't exist in this mode). This devserver is useful for quicker tweaking and styling the popup.
 
 ```
-$ yarn start
+$ yarn start-extension
 ```
 
 ### Full extension
@@ -52,6 +58,10 @@ After a PR is merged to master:
 
 Note: The publish-pipeline may fail if another version was recently published, since the past version will still be
 stuck in the review process. The review process is usually ~1 day.
+
+### Deploy
+
+The website is deployed on all merges to master in CI.
 
 ### Design
 

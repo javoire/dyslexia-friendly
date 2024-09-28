@@ -5,3 +5,5 @@ build/
 dist/
 build.zip
 .idea/
+.firebaserc
+.firebase

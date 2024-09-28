@@ -6,6 +6,12 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
       - publish:
           requires:
             - build
@@ -53,7 +59,7 @@ jobs:
       - image: node:20
     environment:
       - APP_ID: miepjgfkkommhllbbjaedffcpkncboeo
-      - PACKAGE_NAME: dyslexia-friendly.zip
+      - PACKAGE_PATH: build/dyslexia-friendly.zip
     steps:
       - attach_workspace:
           at: /root/project
@@ -65,3 +71,10 @@ jobs:
       - run:
           name: 'Publish'
           command: utils/publish.sh
+  deploy:
+    docker:
+      - image: node:20
+    steps:
+      - run:
+          name: 'Deploy'
+          command: yarn deploy --token "$FIREBASE_TOKEN"

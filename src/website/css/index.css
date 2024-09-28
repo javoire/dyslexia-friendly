@@ -1,0 +1,152 @@
+body {
+  font-family: 'opendyslexic', sans-serif;
+  background-color: #f2f2f2;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /*padding-top: 32px;*/
+  /*padding-bottom: 32px;*/
+  padding-top: 12px;
+  padding-bottom: 12px;
+  background-color: #f2f2f2;
+}
+
+main {
+  /* todo: header height */
+  padding-top: 58px;
+}
+
+main, header, footer {
+  /*padding-left: 44px;*/
+  /*padding-right: 44px;*/
+  padding-left: 16px;
+  padding-right: 16px;
+  max-width: 1440px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-weight: bold;
+  /*font-size: 25px;*/
+}
+.header-title img {
+  max-height: 30px;
+}
+.header-title h2 {
+  margin-left: 10px;
+}
+
+.get-extension {
+  background-color: #1A56DB;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 10px;
+  text-align: center;
+  display: inline;
+}
+
+.hero .get-extension {
+  background-color: #1A56DB;
+  color: white;
+  padding: 12px 12px;
+  border-radius: 10px;
+  text-align: center;
+  display: block;
+}
+
+.hero h1 {
+  margin-top: 40px;
+  margin-bottom: 30px;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.hero p {
+  margin-top: 12px;
+  margin-bottom: 12px;
+}
+
+footer {
+  margin-top: 40px;
+  margin-bottom: 20px;
+}
+
+.popup-image {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.popup-image.non-mobile {
+  display: none;
+}
+.wiki-screenie {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+@media (min-width: 768px) {
+  main {
+    padding-top: 90px;
+  }
+  .hero {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+  }
+  .hero h1 {
+    font-size: 70px;
+    margin: 0 0 30px;
+    /*margin-top: 80px;*/
+  }
+
+  .hero .hero-text {
+    max-width: 700px;
+    margin-left: 40px;
+    margin-right: 40px;
+  }
+  header .get-extension {
+    padding: 10px 30px;
+  }
+  .hero .get-extension {
+    margin-top: 20px;
+    padding: 12px 30px;
+    font-size: 1.3em;
+    display: inline-block;
+  }
+  .hero .popup-image.non-mobile {
+    max-height: 570px;
+  }
+  .hero p {
+    font-size: 1.2em;
+  }
+  header {
+    padding: 20px 24px;
+  }
+  .header-title h2 {
+    font-size: 1.4em;
+    margin-left: 20px;
+  }
+  .header-title img {
+    max-height: 50px;
+  }
+
+  .popup-image.mobile {
+    display: none;
+  }
+  .popup-image.non-mobile {
+    display: block;
+  }
+}
