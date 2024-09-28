@@ -1,6 +1,6 @@
 body {
   font-family: 'opendyslexic', sans-serif;
-  background-color: snow;
+  background-color: #f2f2f2;
 }
 
 header {
@@ -15,7 +15,7 @@ header {
   /*padding-bottom: 32px;*/
   padding-top: 12px;
   padding-bottom: 12px;
-  background-color: snow;
+  background-color: #f2f2f2;
 }
 
 main {

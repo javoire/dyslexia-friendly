@@ -9,6 +9,5 @@ ACCESS_TOKEN=$(curl --fail "https://accounts.google.com/o/oauth2/token" -d "clie
 echo "------- Upload -------"
 curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -X PUT -T "${PACKAGE_PATH}" "https://www.googleapis.com/upload/chromewebstore/v1.1/items/${APP_ID}"
 echo "------- Publish -------"
-# will fail and return 400 if the extension was recently published and is still stuck in review
-#curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}/publish"
-
+# this last call will fail and return 400 if the extension was recently published and is still stuck in review:
+curl --fail -H "Authorization: Bearer ${ACCESS_TOKEN}" -H "x-goog-api-version: 2" -H "Content-Length: 0" -X POST "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}/publish"

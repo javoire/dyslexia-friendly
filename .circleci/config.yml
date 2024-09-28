@@ -6,6 +6,12 @@ workflows:
           filters:
             tags:
               only: /.*/
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master
       - publish:
           requires:
             - build
@@ -65,3 +71,10 @@ jobs:
       - run:
           name: 'Publish'
           command: utils/publish.sh
+    deploy:
+      docker:
+        - image: node:20
+      steps:
+        - run:
+            name: 'Deploy'
+            command: yarn deploy --token "$FIREBASE_TOKEN"
