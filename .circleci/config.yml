@@ -77,4 +77,4 @@ jobs:
     steps:
       - run:
           name: 'Deploy'
-          command: yarn deploy --token "$FIREBASE_TOKEN"
+          command: yarn deploy --token "$FIREBASE_TOKEN" --project "$FIREBASE_PROJECT"
