@@ -47,7 +47,7 @@
     "style-loader": "^3.3.1",
     "tailwindcss": "^3.4.4",
     "tw-elements": "^1.0.0-alpha13",
-    "webpack": "^5.76.0",
+    "webpack": "^5.94.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1",
     "webpack-string-replacer": "^0.0.20",
