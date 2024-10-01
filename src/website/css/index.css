@@ -23,7 +23,9 @@ main {
   padding-top: 58px;
 }
 
-main, header, footer {
+main,
+header,
+footer {
   /*padding-left: 44px;*/
   /*padding-right: 44px;*/
   padding-left: 16px;
@@ -48,7 +50,7 @@ main, header, footer {
 }
 
 .get-extension {
-  background-color: #1A56DB;
+  background-color: #1a56db;
   color: white;
   padding: 5px 12px;
   border-radius: 10px;
@@ -57,7 +59,7 @@ main, header, footer {
 }
 
 .hero .get-extension {
-  background-color: #1A56DB;
+  background-color: #1a56db;
   color: white;
   padding: 12px 12px;
   border-radius: 10px;
