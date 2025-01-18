@@ -8,6 +8,9 @@
     "materialize-css": "^1.0.0-rc.2",
     "string-replace-loader": "^3.1.0"
   },
+  "engines": {
+    "node": "20.x"
+  },
   "scripts": {
     "build": "NODE_ENV=production webpack",
     "build-dev": "NODE_ENV=development webpack",
