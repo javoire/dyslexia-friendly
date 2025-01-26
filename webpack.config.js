@@ -117,6 +117,11 @@ const extensionConfig = {
       chunks: ['popup'],
     }),
     new HtmlWebpackPlugin({
+      template: path.join(extensionSrcPath, 'about.html'),
+      filename: extensionOutPath + '/about.html',
+      chunks: ['popup'],
+    }),
+    new HtmlWebpackPlugin({
       template: path.join(extensionSrcPath, 'options.html'),
       filename: extensionOutPath + '/options.html',
       chunks: ['options'],
