@@ -57,12 +57,11 @@ label[for='font-opendyslexicmono-radio'] {
 }
 
 #popup-wrapper .header {
-  color: whitesmoke;
   padding: 12px 20px 12px 32px;
-  background-color: #0d6efd; /* theme */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 8px;
 }
 
 #popup-wrapper .form-check-label {
