@@ -95,9 +95,15 @@ window.onload = function () {
     const configForm = $('#configForm');
     const body = $('body');
 
+    // initially hide ruler, it'll be temporarily shown
+    // when related inputs are being changed
+    ruler.hide();
+
+    // continuous (live) event handler on input change
     inputs.on('input', function () {
       // update changes live in the popup
       updateUiFromConfig(formToConfig(configForm), inputs, body, ruler);
+
       // update changes live on the page for immediate feedback
       // this sends directly to the active tab, not via storage, to not spam the storage
       // there's a rate limit https://developer.chrome.com/docs/extensions/reference/api/storage
@@ -110,11 +116,24 @@ window.onload = function () {
           data: config,
         });
       });
+
+      // if we're changing ruler settings, make the ruler
+      // temporarily visible to reflect the changes live
+      if (
+        this.name === 'rulerSize' ||
+        this.name === 'rulerOpacity' ||
+        this.name === 'rulerColor'
+      ) {
+        ruler.show();
+      }
     });
 
     // submitting form  on input value changes (not live)
     inputs.change(function () {
       configForm.submit();
+
+      // ruler may have been shown while changing a ruler related input
+      ruler.hide();
     });
 
     configForm.submit(function (e) {
