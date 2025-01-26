@@ -37,6 +37,14 @@ label[for='font-opendyslexicmono-radio'] {
   font-family: 'opendyslexicmono' !important;
 }
 
+p {
+  margin: 10px 0;
+}
+
+a {
+  font-weight: bold;
+}
+
 #popup-wrapper {
   min-width: 350px;
   font-size: 1rem;
@@ -57,11 +65,24 @@ label[for='font-opendyslexicmono-radio'] {
 }
 
 #popup-wrapper .header {
-  padding: 12px 20px 12px 32px;
+  padding: 12px 32px 12px 32px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-top: 8px;
+}
+
+#popup-wrapper #about-link {
+  width: 30px;
+}
+
+#popup-wrapper #back-link {
+  display: flex;
+}
+
+#popup-wrapper #back-link svg {
+  width: 20px;
+  margin-right: 10px;
 }
 
 #popup-wrapper .form-check-label {
