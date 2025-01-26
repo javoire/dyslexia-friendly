@@ -8,6 +8,18 @@ import '../css/popup.css';
 
 import { formToConfig, debug, removeClassStartsWith } from './lib/util.js';
 import { FONT_CLASS_PREFIX } from './lib/consts.js';
+import { DEFAULT_CONFIG } from './lib/store.js';
+
+// crude way to guess we're in webpack devserver
+// todo: can we inject this from webpack instead?
+const isDevServer = !chrome.runtime;
+if (!chrome.runtime) {
+  chrome.runtime = {
+    sendMessage: () => {
+      debug('mocking sendMessage');
+    },
+  };
+}
 
 /*
  * Send form to background store for saving
@@ -94,6 +106,11 @@ window.onload = function () {
     const ruler = $('#dyslexia-friendly-ruler');
     const configForm = $('#configForm');
     const body = $('body');
+
+    // set UI state once on startup if webpack devserver
+    if (isDevServer) {
+      updateUiFromConfig(DEFAULT_CONFIG, inputs, body, ruler);
+    }
 
     // initially hide ruler, it'll be temporarily shown
     // when related inputs are being changed

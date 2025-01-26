@@ -52,15 +52,19 @@ chrome.runtime.onInstalled.addListener(function () {
 
 // listen for messages from popup
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (request.message === 'updateConfig') {
-    debug('updateConfig event', request.data);
-    store.update(request.data, sendResponse);
-  } else if (request.message === 'getConfig') {
-    debug('getConfig event');
-    store.getAll(sendResponse);
-  } else if (request.message === 'sendConfigToActiveTab') {
-    debug('sendConfigToActiveTab event');
-    sendConfigToActiveTab(request.data);
+  switch (request.message) {
+    case 'updateConfig':
+      debug('updateConfig event', request.data);
+      store.update(request.data, sendResponse);
+      break;
+    case 'getConfig':
+      debug('getConfig event');
+      store.getAll(sendResponse);
+      break;
+    case 'sendConfigToActiveTab':
+      debug('sendConfigToActiveTab event');
+      sendConfigToActiveTab(request.data);
+      break;
   }
   return true; // so sendResponse can be called async
 });
