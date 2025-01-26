@@ -68,16 +68,6 @@ const sharedConfig = {
         // resolving the font.css and the font files from e.g. popup.js
       ],
     }),
-    new HtmlWebpackPlugin({
-      template: path.join(extensionSrcPath, 'popup.html'),
-      filename: extensionOutPath + '/popup.html',
-      chunks: ['popup'],
-    }),
-    new HtmlWebpackPlugin({
-      template: path.join(extensionSrcPath, 'options.html'),
-      filename: extensionOutPath + '/options.html',
-      chunks: ['options'],
-    }),
     new WriteFilePlugin(),
     // don't inline css in html...
     new MiniCssExtractPlugin(),
@@ -120,6 +110,16 @@ const extensionConfig = {
           ],
         },
       ],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(extensionSrcPath, 'popup.html'),
+      filename: extensionOutPath + '/popup.html',
+      chunks: ['popup'],
+    }),
+    new HtmlWebpackPlugin({
+      template: path.join(extensionSrcPath, 'options.html'),
+      filename: extensionOutPath + '/options.html',
+      chunks: ['options'],
     }),
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['extension'],

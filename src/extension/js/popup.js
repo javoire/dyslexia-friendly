@@ -1,4 +1,3 @@
-import 'tw-elements';
 import 'jquery';
 import $ from 'jquery';
 
