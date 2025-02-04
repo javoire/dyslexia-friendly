@@ -37,7 +37,7 @@
     "firebase-tools": "^13.20.1",
     "fs-extra": "7.0.1",
     "globals": "^15.7.0",
-    "html-loader": "^4.2.0",
+    "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.5.0",
     "jest": "^29.4.2",
     "jest-environment-jsdom": "^29.7.0",
