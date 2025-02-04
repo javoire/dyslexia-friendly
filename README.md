@@ -53,7 +53,7 @@ The CI pipeline triggers publish on new git tags.
 
 After a PR is merged to master:
 
-1. Update the version number in `src/manifest.json` on master
+1. Update the version number in `src/extension/manifest.json` on master
 1. Create a new Release (and tag) for that version and the publish-pipeline will be triggered
 
 Note: The publish-pipeline may fail if another version was recently published, since the past version will still be
