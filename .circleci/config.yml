@@ -52,9 +52,9 @@ jobs:
       - persist_to_workspace:
           root: /root/project
           paths:
-            - dyslexia-friendly.zip
-            - utils/publish.sh
+            - build/dyslexia-friendly.zip
             - build/website
+            - utils/publish.sh
             - firebase.json
   publish:
     docker:

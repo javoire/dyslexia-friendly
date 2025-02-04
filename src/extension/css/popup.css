@@ -76,6 +76,11 @@ a {
   width: 30px;
 }
 
+#popup-wrapper #about-link svg {
+  width: 30px;
+  height: 30px;
+}
+
 #popup-wrapper #back-link {
   display: flex;
 }
