@@ -29,7 +29,7 @@
     "@tailwindcss/postcss": "^4.0.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^12.0.2",
-    "css-loader": "^6.7.3",
+    "css-loader": "^7.1.2",
     "eslint": "^9.19.0",
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-jest": "^27.2.1",
