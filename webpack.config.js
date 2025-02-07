@@ -164,6 +164,11 @@ const websiteConfig = {
       filename: websiteOutPath + '/index.html',
       chunks: ['index'],
     }),
+    new HtmlWebpackPlugin({
+      template: path.join(websiteSrcPath, 'privacy-policy.html'),
+      filename: websiteOutPath + '/privacy-policy.html',
+      chunks: ['index'],
+    }),
   ],
   entry: {
     index: path.join(websiteSrcPath, 'js', 'index.js'),
