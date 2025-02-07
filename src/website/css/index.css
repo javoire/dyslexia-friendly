@@ -101,6 +101,10 @@ footer {
   margin-bottom: 40px;
 }
 
+.copyright {
+  float: right;
+}
+
 @media (min-width: 768px) {
   main {
     padding-top: 90px;
