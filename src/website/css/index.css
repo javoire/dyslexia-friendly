@@ -1,6 +1,6 @@
-body {
-  font-family: 'opendyslexic', sans-serif;
+html {
   background-color: #f2f2f2;
+  font-family: 'opendyslexic', sans-serif;
 }
 
 header {
@@ -21,6 +21,10 @@ header {
 main {
   /* todo: header height */
   padding-top: 58px;
+}
+
+a {
+  font-weight: bold;
 }
 
 main,
@@ -81,7 +85,7 @@ footer {
 
 footer {
   margin-top: 40px;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 .popup-image {
