@@ -24,7 +24,7 @@
     "deploy": "firebase deploy"
   },
   "devDependencies": {
-    "@eslint/js": "^9.6.0",
+    "@eslint/js": "^9.21.0",
     "@jest/globals": "^29.7.0",
     "@tailwindcss/postcss": "^4.0.0",
     "clean-webpack-plugin": "^4.0.0",
