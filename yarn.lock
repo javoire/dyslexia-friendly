@@ -702,10 +702,15 @@
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.57.1.tgz#de633db3ec2ef6a3c89e2f19038063e8a122e2c2"
   integrity sha512-d9zaMRSTIKDLhctzH12MtXvJKSSUhaHcjV+2Z+GK+EEY7XKpP5yR4x+N3TAcHTcu963nIr+TMcCb4DBCYX1z6Q==
 
-"@eslint/js@9.19.0", "@eslint/js@^9.6.0":
+"@eslint/js@9.19.0":
   version "9.19.0"
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.19.0.tgz#51dbb140ed6b49d05adc0b171c41e1a8713b7789"
   integrity sha512-rbq9/g38qjfqFLOVPvwjIvFFdNziEC5S65jmjPw5r6A//QH+W91akh9irMwjDN8zKUTak6W9EsAv4m/7Wnw0UQ==
+
+"@eslint/js@^9.26.0":
+  version "9.26.0"
+  resolved "https://registry.yarnpkg.com/@eslint/js/-/js-9.26.0.tgz#1e13126b67a3db15111d2dcc61f69a2acff70bd5"
+  integrity sha512-I9XlJawFdSMvWjDt6wksMCrgns5ggLNfFwFvnShsleWruvXM514Qxk8V246efTw+eo9JABvVz+u3q2RiAowKxQ==
 
 "@eslint/object-schema@^2.1.5":
   version "2.1.5"
