@@ -32,6 +32,11 @@ const sharedConfig = {
   module: {
     rules: [
       {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
+      {
         test: new RegExp('/fonts/'),
         type: 'asset/resource',
         exclude: /node_modules/,
@@ -49,6 +54,9 @@ const sharedConfig = {
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
     ],
+  },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js'],
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -84,10 +92,10 @@ const extensionConfig = {
     port: 3001,
   },
   entry: {
-    popup: path.join(extensionSrcPath, 'js', 'popup.js'),
-    options: path.join(extensionSrcPath, 'js', 'options.js'),
-    serviceWorker: path.join(extensionSrcPath, 'js', 'serviceWorker.js'),
-    contentscript: path.join(extensionSrcPath, 'js', 'contentscript.js'),
+    popup: path.join(extensionSrcPath, 'js', 'popup.ts'),
+    options: path.join(extensionSrcPath, 'js', 'options.ts'),
+    serviceWorker: path.join(extensionSrcPath, 'js', 'serviceWorker.ts'),
+    contentscript: path.join(extensionSrcPath, 'js', 'contentscript.ts'),
   },
   output: {
     path: extensionOutPath,
@@ -171,7 +179,7 @@ const websiteConfig = {
     }),
   ],
   entry: {
-    index: path.join(websiteSrcPath, 'js', 'index.js'),
+    index: path.join(websiteSrcPath, 'js', 'index.ts'),
   },
   output: {
     path: websiteOutPath,

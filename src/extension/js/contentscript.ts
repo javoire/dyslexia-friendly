@@ -5,20 +5,26 @@ import $ from 'jquery';
 import '../../shared/css/fonts.css';
 import '../css/contentscript.css';
 
-import { debug, removeClassStartsWith } from './lib/util.js';
-import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts.js';
+import { debug, removeClassStartsWith } from './lib/util';
+import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts';
+import { UserConfig } from './lib/store';
+
+interface RuntimeMessage {
+  message: string;
+  config?: UserConfig;
+}
 
 const ruler = $(`<div id="${RULER_ID}"></div>`);
 
 $(document).ready(function () {
   const body = $('body');
   body.append(ruler);
-  body.mousemove(function (event) {
+  body.mousemove(function (event: JQuery.MouseMoveEvent) {
     ruler.css('top', event.pageY);
   });
 
   // Apply user settings to webpage
-  function applyConfigOnPage(config) {
+  function applyConfigOnPage(config: UserConfig): void {
     debug('applying user settings to webpage', config);
 
     if (config.extensionEnabled) {
@@ -51,10 +57,16 @@ $(document).ready(function () {
   }
 
   chrome.runtime.onMessage.addListener(
-    function (request, sender, sendResponse) {
+    function (
+      request: RuntimeMessage,
+      sender: chrome.runtime.MessageSender,
+      sendResponse: (response?: any) => void
+    ) {
       switch (request.message) {
         case 'applyConfigOnPage':
-          applyConfigOnPage(request.config);
+          if (request.config) {
+            applyConfigOnPage(request.config);
+          }
           break;
       }
       sendResponse(true);

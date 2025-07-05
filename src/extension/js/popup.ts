@@ -6,28 +6,34 @@ import '../../shared/css/fonts.css';
 
 import '../css/popup.css';
 
-import { formToConfig, debug, removeClassStartsWith } from './lib/util.js';
-import { FONT_CLASS_PREFIX } from './lib/consts.js';
-import { DEFAULT_CONFIG } from './lib/store.js';
+import { formToConfig, debug, removeClassStartsWith } from './lib/util';
+import { FONT_CLASS_PREFIX } from './lib/consts';
+import { DEFAULT_CONFIG, UserConfig } from './lib/store';
+
+// Mock chrome runtime for development
+declare global {
+  interface Window {
+    chrome: typeof chrome;
+  }
+}
 
 // crude way to guess we're in webpack devserver
 // todo: can we inject this from webpack instead?
-const isDevServer = !chrome.runtime;
+const isDevServer = !(window as any).chrome?.runtime;
 if (!chrome.runtime) {
-  chrome.runtime = {
-    sendMessage: () => {
-      debug('mocking sendMessage');
+  (window as any).chrome = {
+    runtime: {
+      sendMessage: () => {
+        debug('mocking sendMessage');
+      },
     },
   };
 }
 
 /*
  * Send form to background store for saving
- *
- * @param form - jQuery form object
- * @param callback - gets new config as param
  */
-function saveFormStateToStore(form, callback) {
+function saveFormStateToStore(form: JQuery, callback?: (config: UserConfig) => void): void {
   const config = formToConfig(form);
 
   debug('sending to service worker:', config);
@@ -43,19 +49,13 @@ function saveFormStateToStore(form, callback) {
 
 /**
  * Update UI state from config
- *
- * @param config
- * @param inputs - jQuery elements
- * @param body - jQuery element
- * @param ruler - jQuery element
- * @returns {undefined}
  */
-function updateUiFromConfig(config, inputs, body, ruler) {
+function updateUiFromConfig(config: UserConfig, inputs: JQuery, body: JQuery, ruler: JQuery): void {
   debug('Updating popup UI with config:', config);
 
   // update all form input states
-  inputs.each(function () {
-    const value = config[this.name];
+  inputs.each(function (this: HTMLInputElement) {
+    const value = config[this.name as keyof UserConfig];
     switch (this.type) {
       case 'radio':
         this.checked = value === this.value;
@@ -64,7 +64,7 @@ function updateUiFromConfig(config, inputs, body, ruler) {
         this.checked = !!value;
         break;
       default:
-        this.value = value;
+        this.value = String(value);
         break;
     }
   });
@@ -80,16 +80,16 @@ function updateUiFromConfig(config, inputs, body, ruler) {
 
   // toggle visible sections
   const visibleSections = $('[data-show-when]');
-  visibleSections.each(function () {
+  visibleSections.each(function (this: HTMLElement) {
     const elem = $(this);
 
     // grab the data attr that controls when to show this element
-    const showWhen = elem.data('show-when');
+    const showWhen = elem.data('show-when') as string;
 
     // very rudimentary support for and-operator...
     const show = showWhen
       .split('&&')
-      .map((s) => config[s.trim()])
+      .map((s: string) => config[s.trim() as keyof UserConfig])
       .every(Boolean);
 
     if (show) {
@@ -172,15 +172,15 @@ window.onload = function () {
   });
 };
 
-const updateRulerSize = function (ruler, value) {
+const updateRulerSize = function (ruler: JQuery, value: number): void {
   ruler.css('height', value);
   ruler.css('marginTop', -value / 2);
 };
 
-const updateRulerOpacity = function (ruler, value) {
+const updateRulerOpacity = function (ruler: JQuery, value: number): void {
   ruler.css('opacity', value);
 };
 
-const updateRulerColor = function (ruler, value) {
+const updateRulerColor = function (ruler: JQuery, value: string): void {
   ruler.css('background-color', value);
 };
