@@ -1,4 +1,4 @@
-import { DEFAULT_CONFIG, store, updateChangedConfigValues, UserConfig } from '../store';
+import { DEFAULT_CONFIG, store, updateChangedConfigValues } from '../store';
 import { describe, expect, test } from '@jest/globals';
 
 describe('store', () => {

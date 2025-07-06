@@ -45,7 +45,9 @@ function sendConfigToActiveTab(config: UserConfig): void {
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onInstalled
 // fires when the extension is first installed, updated, or Chrome is updated.
 // So we'll always write the default config to the store on install/update
-chrome.runtime.onInstalled.addListener(function (details: chrome.runtime.InstalledDetails) {
+chrome.runtime.onInstalled.addListener(function (
+  details: chrome.runtime.InstalledDetails,
+) {
   debug('installed', details);
   store.set(DEFAULT_CONFIG, (config: UserConfig) => {
     debug('default config created', config);
@@ -59,8 +61,8 @@ chrome.runtime.onInstalled.addListener(function (details: chrome.runtime.Install
 // listen for messages from popup
 chrome.runtime.onMessage.addListener(function (
   request: RuntimeMessage,
-  sender: chrome.runtime.MessageSender,
-  sendResponse: (response?: any) => void
+  _sender: chrome.runtime.MessageSender,
+  sendResponse: (response?: any) => void,
 ) {
   switch (request.message) {
     case 'updateConfig':
@@ -84,7 +86,9 @@ chrome.runtime.onMessage.addListener(function (
 });
 
 // 1) apply config on navigation / page reload
-chrome.webNavigation.onDOMContentLoaded.addListener(function (details: chrome.webNavigation.WebNavigationFramedCallbackDetails) {
+chrome.webNavigation.onDOMContentLoaded.addListener(function (
+  details: chrome.webNavigation.WebNavigationFramedCallbackDetails,
+) {
   // onDOMContentLoaded means contentscript.js is alive
   debug('onDOMContentLoaded', details);
   store.getAll(sendConfigToActiveTab);
@@ -93,7 +97,9 @@ chrome.webNavigation.onDOMContentLoaded.addListener(function (details: chrome.we
 // 2) apply config on tab switch
 // (only works for tabs opened after the extenion has been installed,
 // bc otherwise content.js does not exist on the page to react to the message)
-chrome.tabs.onActivated.addListener(function (activeInfo: chrome.tabs.TabActiveInfo) {
+chrome.tabs.onActivated.addListener(function (
+  activeInfo: chrome.tabs.TabActiveInfo,
+) {
   debug('tabs.onActivated', activeInfo);
   store.getAll(sendConfigToActiveTab);
 });

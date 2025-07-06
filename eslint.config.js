@@ -37,6 +37,8 @@ export default [
         ...globals.node,
         console: true,
         chrome: true,
+        JQuery: true,
+        $: true,
       },
     },
     rules: {

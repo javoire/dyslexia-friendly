@@ -1,5 +1,6 @@
 'use strict';
 
+import 'jquery';
 import $ from 'jquery';
 
 import '../../shared/css/fonts.css';
@@ -56,20 +57,18 @@ $(document).ready(function () {
     }
   }
 
-  chrome.runtime.onMessage.addListener(
-    function (
-      request: RuntimeMessage,
-      sender: chrome.runtime.MessageSender,
-      sendResponse: (response?: any) => void
-    ) {
-      switch (request.message) {
-        case 'applyConfigOnPage':
-          if (request.config) {
-            applyConfigOnPage(request.config);
-          }
-          break;
-      }
-      sendResponse(true);
-    },
-  );
+  chrome.runtime.onMessage.addListener(function (
+    request: RuntimeMessage,
+    _sender: chrome.runtime.MessageSender,
+    sendResponse: (response?: any) => void,
+  ) {
+    switch (request.message) {
+      case 'applyConfigOnPage':
+        if (request.config) {
+          applyConfigOnPage(request.config);
+        }
+        break;
+    }
+    sendResponse(true);
+  });
 });

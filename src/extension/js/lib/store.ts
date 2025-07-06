@@ -29,7 +29,7 @@ export const DEFAULT_CONFIG: UserConfig = {
 
 export const updateChangedConfigValues = (
   config: UserConfig,
-  newConfigValues: Partial<UserConfig>
+  newConfigValues: Partial<UserConfig>,
 ): UserConfig => {
   for (const key in config) {
     if (typeof config[key as ConfigKey] === 'boolean') {
@@ -49,7 +49,10 @@ type ValueCallback = (value: ConfigValue) => void;
 const subscribers: ConfigCallback[] = [];
 
 export interface Store {
-  update: (newConfigValues: Partial<UserConfig>, callback?: ConfigCallback) => void;
+  update: (
+    newConfigValues: Partial<UserConfig>,
+    callback?: ConfigCallback,
+  ) => void;
   set: (config: UserConfig, callback?: ConfigCallback) => void;
   get: (key: ConfigKey, callback: ValueCallback) => void;
   getAll: (callback: ConfigCallback) => void;
@@ -61,58 +64,73 @@ export const store: Store = {
    * Interpolate form data with what's in the store, in case values are missing from the form
    * then save.
    */
-  update: function (newConfigValues: Partial<UserConfig>, callback?: ConfigCallback): void {
-    chrome.storage.sync.get('config', function (storageData: { config?: UserConfig }) {
-      const updatedConfig = updateChangedConfigValues(
-        storageData.config || DEFAULT_CONFIG,
-        newConfigValues,
-      );
-      chrome.storage.sync.set({ config: updatedConfig }, function () {
-        debug('saved updated config', updatedConfig);
+  update: function (
+    newConfigValues: Partial<UserConfig>,
+    callback?: ConfigCallback,
+  ): void {
+    chrome.storage.sync.get(
+      'config',
+      function (storageData: { config?: UserConfig }) {
+        const updatedConfig = updateChangedConfigValues(
+          storageData.config || DEFAULT_CONFIG,
+          newConfigValues,
+        );
+        chrome.storage.sync.set({ config: updatedConfig }, function () {
+          debug('saved updated config', updatedConfig);
 
-        // notify subscribers
-        subscribers.forEach(function (subscriber) {
-          subscriber(updatedConfig);
+          // notify subscribers
+          subscribers.forEach(function (subscriber) {
+            subscriber(updatedConfig);
+          });
+          if (callback) {
+            callback(updatedConfig);
+          }
         });
-        if (callback) {
-          callback(updatedConfig);
-        }
-      });
-    });
+      },
+    );
   },
 
   set: function (config: UserConfig, callback?: ConfigCallback): void {
     chrome.storage.sync.set({ config }, function () {
-      chrome.storage.sync.get('config', function (storageData: { config: UserConfig }) {
-        if (callback) {
-          callback(storageData.config);
-        }
-      });
+      chrome.storage.sync.get(
+        'config',
+        function (storageData: { [key: string]: any }) {
+          if (callback) {
+            callback(storageData.config as UserConfig);
+          }
+        },
+      );
     });
   },
 
   get: function (key: ConfigKey, callback: ValueCallback): void {
-    chrome.storage.sync.get('config', function (storageData: { config?: UserConfig }) {
-      const config = storageData.config;
-      // this is a failsafe in case the config doesn't
-      // exist in storage, shouldn't happen..
-      if (!config) {
-        return callback(DEFAULT_CONFIG[key]);
-      }
-      return callback(config[key]);
-    });
+    chrome.storage.sync.get(
+      'config',
+      function (storageData: { config?: UserConfig }) {
+        const config = storageData.config;
+        // this is a failsafe in case the config doesn't
+        // exist in storage, shouldn't happen..
+        if (!config) {
+          return callback(DEFAULT_CONFIG[key]);
+        }
+        return callback(config[key]);
+      },
+    );
   },
 
   getAll: function (callback: ConfigCallback): void {
-    chrome.storage.sync.get('config', function (storageData: { config?: UserConfig }) {
-      const config = storageData.config;
-      // this is a failsafe in case the config doesn't
-      // exist in storage, shouldn't happen...
-      if (!config) {
-        return callback(DEFAULT_CONFIG);
-      }
-      return callback(config);
-    });
+    chrome.storage.sync.get(
+      'config',
+      function (storageData: { config?: UserConfig }) {
+        const config = storageData.config;
+        // this is a failsafe in case the config doesn't
+        // exist in storage, shouldn't happen...
+        if (!config) {
+          return callback(DEFAULT_CONFIG);
+        }
+        return callback(config);
+      },
+    );
   },
 
   // subscribe to changes in store

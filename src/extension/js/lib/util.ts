@@ -1,3 +1,4 @@
+import 'jquery';
 import { env } from './consts';
 
 export interface ConfigItem {
@@ -9,7 +10,10 @@ export interface Config {
   [key: string]: string | boolean;
 }
 
-export const removeClassStartsWith = (elem: JQuery, classStartsWith: string): void => {
+export const removeClassStartsWith = (
+  elem: JQuery<HTMLElement>,
+  classStartsWith: string,
+): void => {
   const classAttr = elem.attr('class');
   if (classAttr) {
     classAttr.split(' ').forEach((classname) => {
@@ -20,7 +24,7 @@ export const removeClassStartsWith = (elem: JQuery, classStartsWith: string): vo
   }
 };
 
-export const formToConfig = (form: JQuery): Config => {
+export const formToConfig = (form: JQuery<HTMLElement>): Config => {
   const serializedForm = form.serializeArray() as ConfigItem[];
   const obj: Config = {};
   serializedForm.forEach((item) => {

@@ -33,7 +33,10 @@ if (!chrome.runtime) {
 /*
  * Send form to background store for saving
  */
-function saveFormStateToStore(form: JQuery, callback?: (config: UserConfig) => void): void {
+function saveFormStateToStore(
+  form: JQuery<HTMLElement>,
+  callback?: (config: UserConfig) => void,
+): void {
   const config = formToConfig(form);
 
   debug('sending to service worker:', config);
@@ -43,28 +46,34 @@ function saveFormStateToStore(form: JQuery, callback?: (config: UserConfig) => v
       message: 'updateConfig',
       data: config,
     },
-    callback,
+    callback || (() => {}),
   );
 }
 
 /**
  * Update UI state from config
  */
-function updateUiFromConfig(config: UserConfig, inputs: JQuery, body: JQuery, ruler: JQuery): void {
+function updateUiFromConfig(
+  config: UserConfig,
+  inputs: JQuery<HTMLElement>,
+  body: JQuery<HTMLElement>,
+  ruler: JQuery<HTMLElement>,
+): void {
   debug('Updating popup UI with config:', config);
 
   // update all form input states
-  inputs.each(function (this: HTMLInputElement) {
-    const value = config[this.name as keyof UserConfig];
-    switch (this.type) {
+  inputs.each(function (this: HTMLElement) {
+    const inputElement = this as HTMLInputElement;
+    const value = config[inputElement.name as keyof UserConfig];
+    switch (inputElement.type) {
       case 'radio':
-        this.checked = value === this.value;
+        inputElement.checked = value === inputElement.value;
         break;
       case 'checkbox':
-        this.checked = !!value;
+        inputElement.checked = !!value;
         break;
       default:
-        this.value = String(value);
+        inputElement.value = String(value);
         break;
     }
   });
@@ -119,7 +128,12 @@ window.onload = function () {
     // continuous (live) event handler on input change
     inputs.on('input', function () {
       // update changes live in the popup
-      updateUiFromConfig(formToConfig(configForm), inputs, body, ruler);
+      updateUiFromConfig(
+        { ...DEFAULT_CONFIG, ...formToConfig(configForm) } as UserConfig,
+        inputs,
+        body,
+        ruler,
+      );
 
       // update changes live on the page for immediate feedback
       // this sends directly to the active tab, not via storage, to not spam the storage
@@ -136,10 +150,11 @@ window.onload = function () {
 
       // if we're changing ruler settings, make the ruler
       // temporarily visible to reflect the changes live
+      const inputElement = this as HTMLInputElement;
       if (
-        this.name === 'rulerSize' ||
-        this.name === 'rulerOpacity' ||
-        this.name === 'rulerColor'
+        inputElement.name === 'rulerSize' ||
+        inputElement.name === 'rulerOpacity' ||
+        inputElement.name === 'rulerColor'
       ) {
         ruler.show();
       }
@@ -161,7 +176,7 @@ window.onload = function () {
     });
 
     // bind ruler to mouse
-    body.mousemove(() => {
+    body.mousemove((event: JQuery.MouseMoveEvent) => {
       ruler.css('top', event.pageY);
     });
 
@@ -172,15 +187,24 @@ window.onload = function () {
   });
 };
 
-const updateRulerSize = function (ruler: JQuery, value: number): void {
+const updateRulerSize = function (
+  ruler: JQuery<HTMLElement>,
+  value: number,
+): void {
   ruler.css('height', value);
   ruler.css('marginTop', -value / 2);
 };
 
-const updateRulerOpacity = function (ruler: JQuery, value: number): void {
+const updateRulerOpacity = function (
+  ruler: JQuery<HTMLElement>,
+  value: number,
+): void {
   ruler.css('opacity', value);
 };
 
-const updateRulerColor = function (ruler: JQuery, value: string): void {
+const updateRulerColor = function (
+  ruler: JQuery<HTMLElement>,
+  value: string,
+): void {
   ruler.css('background-color', value);
 };
