@@ -19,7 +19,7 @@ function sendConfigToActiveTab(config: UserConfig): void {
       chrome.tabs.sendMessage(
         tab.id,
         { message: 'applyConfigOnPage', config },
-        function (response?: any) {
+        function (response?: unknown) {
           if (response) {
             debug('contentscript OK reply');
           } else {
@@ -41,17 +41,23 @@ function sendConfigToActiveTab(config: UserConfig): void {
  * Installed
  */
 
-// Save default config to store
+// Save default config to store only on first install
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime/onInstalled
 // fires when the extension is first installed, updated, or Chrome is updated.
-// So we'll always write the default config to the store on install/update
+// We only want to set defaults on first install, not on updates
 chrome.runtime.onInstalled.addListener(function (
   details: chrome.runtime.InstalledDetails,
 ) {
   debug('installed', details);
-  store.set(DEFAULT_CONFIG, (config: UserConfig) => {
-    debug('default config created', config);
-  });
+
+  // Only set defaults on fresh install, not on updates or Chrome updates
+  if (details.reason === 'install') {
+    store.set(DEFAULT_CONFIG, (config: UserConfig) => {
+      debug('default config created for new install', config);
+    });
+  } else {
+    debug('extension updated or Chrome updated, preserving existing config');
+  }
 });
 
 /**
@@ -62,7 +68,7 @@ chrome.runtime.onInstalled.addListener(function (
 chrome.runtime.onMessage.addListener(function (
   request: RuntimeMessage,
   _sender: chrome.runtime.MessageSender,
-  sendResponse: (response?: any) => void,
+  sendResponse: (response?: unknown) => void,
 ) {
   switch (request.message) {
     case 'updateConfig':

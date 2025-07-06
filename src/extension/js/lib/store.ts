@@ -37,7 +37,7 @@ export const updateChangedConfigValues = (
       // form payload, so we set all checkboxes to off here,
       // and then below the ones that are checked will be
       // set to (back) on
-      (config as any)[key] = false;
+      (config as unknown as Record<string, ConfigValue>)[key] = false;
     }
   }
   return Object.assign(config, newConfigValues);
@@ -94,7 +94,7 @@ export const store: Store = {
     chrome.storage.sync.set({ config }, function () {
       chrome.storage.sync.get(
         'config',
-        function (storageData: { [key: string]: any }) {
+        function (storageData: { config?: UserConfig }) {
           if (callback) {
             callback(storageData.config as UserConfig);
           }
