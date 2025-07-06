@@ -60,7 +60,7 @@ $(document).ready(function () {
   chrome.runtime.onMessage.addListener(function (
     request: RuntimeMessage,
     _sender: chrome.runtime.MessageSender,
-    sendResponse: (response?: any) => void,
+    sendResponse: (response?: unknown) => void,
   ) {
     switch (request.message) {
       case 'applyConfigOnPage':

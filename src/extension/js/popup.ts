@@ -19,13 +19,16 @@ declare global {
 
 // crude way to guess we're in webpack devserver
 // todo: can we inject this from webpack instead?
-const isDevServer = !(window as any).chrome?.runtime;
+const isDevServer = !(window as unknown as { chrome?: typeof chrome }).chrome
+  ?.runtime;
 if (!chrome.runtime) {
-  (window as any).chrome = {
+  (
+    window as unknown as {
+      chrome: { runtime: { sendMessage: () => Promise<void> } };
+    }
+  ).chrome = {
     runtime: {
-      sendMessage: () => {
-        debug('mocking sendMessage');
-      },
+      sendMessage: () => Promise.resolve(),
     },
   };
 }

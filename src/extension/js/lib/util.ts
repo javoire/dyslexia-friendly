@@ -34,14 +34,14 @@ export const formToConfig = (form: JQuery<HTMLElement>): Config => {
   return obj;
 };
 
-export const debug = (msg: string, ...args: any[]): void => {
+export const debug = (msg: string, ...args: unknown[]): void => {
   if (env.logLevel.debug) {
     // eslint-disable-next-line no-console
     console.log(`%c[DyslexiaFriendly] ${msg}`, 'color: #0af', ...args);
   }
 };
 
-export const error = (msg: string, ...args: any[]): void => {
+export const error = (msg: string, ...args: unknown[]): void => {
   if (env.logLevel.error) {
     // eslint-disable-next-line no-console
     console.error(`%c[DyslexiaFriendly] ${msg}`, 'color: #fa0', ...args);
