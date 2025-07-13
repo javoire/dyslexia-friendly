@@ -33,25 +33,29 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y zip xvfb
 
-      - name: Install Chrome
-        run: |
-          wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
-          sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
-          sudo apt-get update
-          sudo apt-get install -y google-chrome-stable
+      # - name: Install Chrome
+      #   run: |
+      #     wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+      #     sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
+      #     sudo apt-get update
+      #     sudo apt-get install -y google-chrome-stable
+
+      - name: Build
+        run: yarn build
 
       - name: Lint
         run: yarn lint
 
       - name: Test
         run: |
-          export DISPLAY=:99
-          Xvfb :99 -screen 0 1024x768x24 &
-          sleep 3
+          # # Set display environment variable for GUI applications
+          # export DISPLAY=:99
+          # # Start virtual framebuffer for headless GUI testing (1024x768 resolution, 24-bit color)
+          # Xvfb :99 -screen 0 1024x768x24 &
+          # # Wait for Xvfb to fully initialize
+          # sleep 3
+          # # Run tests with virtual display available
           yarn test
-
-      - name: Build
-        run: yarn build
 
       - name: Package
         run: yarn package
