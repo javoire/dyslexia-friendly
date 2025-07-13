@@ -1,5 +1,5 @@
 ---
-alwaysApply: false
+alwaysApply: true
 ---
 
 This file provides guidance when working with code in this repository.
