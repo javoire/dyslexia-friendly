@@ -27,10 +27,21 @@ export const removeClassStartsWith = (
 export const formToConfig = (form: JQuery<HTMLElement>): Config => {
   const serializedForm = form.serializeArray() as ConfigItem[];
   const obj: Config = {};
+
+  // Process serialized form data
   serializedForm.forEach((item) => {
     // the serialized form has "on" as checkbox values, convert to boolean instead
     obj[item.name] = item.value === 'on' ? true : item.value;
   });
+
+  // Handle unchecked checkboxes - they don't appear in serializeArray()
+  form.find('input[type="checkbox"]').each(function () {
+    const checkbox = this as HTMLInputElement;
+    if (!obj.hasOwnProperty(checkbox.name)) {
+      obj[checkbox.name] = false;
+    }
+  });
+
   return obj;
 };
 

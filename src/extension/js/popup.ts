@@ -172,7 +172,14 @@ window.onload = function () {
     });
 
     configForm.submit(function (e) {
+      // Update UI immediately with current form state
+      const formConfig = formToConfig($(this));
+      const currentConfig = { ...DEFAULT_CONFIG, ...formConfig } as UserConfig;
+      updateUiFromConfig(currentConfig, inputs, body, ruler);
+
+      // Then save to storage
       saveFormStateToStore($(this), (config) => {
+        // Update UI again with the saved config in case there were any changes
         updateUiFromConfig(config, inputs, body, ruler);
       });
       e.preventDefault();

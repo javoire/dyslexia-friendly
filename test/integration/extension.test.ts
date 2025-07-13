@@ -300,15 +300,8 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
       // Toggle the disable button
       await disableButton!.click();
 
-      // Add debugging to see what happened
-      const stateAfterClick = await popupPage.evaluate(
-        (el) => (el as HTMLInputElement).checked,
-        disableButton,
-      );
-      console.log('State after click:', stateAfterClick);
-
       // Wait for the change to propagate and form to be submitted
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       // Verify the button state changed
       const newState = await popupPage.evaluate(
@@ -397,7 +390,7 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
 
       const disableButton = await popupPage.$('#master-switch-checkbox');
       await disableButton!.click();
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 2000));
 
       await popupPage.close();
 
