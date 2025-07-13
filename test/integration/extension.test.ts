@@ -17,15 +17,17 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
   let context: ExtensionTestContext;
 
   beforeAll(async () => {
-    // Increase timeout for integration tests
-    jest.setTimeout(60000);
-
     // Load the extension in browser
-    context = await loadExtensionInBrowser();
+    try {
+      context = await loadExtensionInBrowser();
+    } catch (error) {
+      console.error('Failed to load extension:', error);
+      throw error;
+    }
   });
 
   afterAll(async () => {
-    if (context.browser) {
+    if (context?.browser) {
       await context.browser.close();
     }
   });
@@ -67,8 +69,10 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
       expect(title).toContain('Dyslexia Friendly');
 
       // Check if essential elements are present
-      const hasMainContent = await popupPage.$('#main-content');
-      expect(hasMainContent).toBeTruthy();
+      const hasPopupWrapper = await popupPage.$('#popup-wrapper');
+      const hasConfigForm = await popupPage.$('#configForm');
+      expect(hasPopupWrapper).toBeTruthy();
+      expect(hasConfigForm).toBeTruthy();
 
       await popupPage.close();
     });

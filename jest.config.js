@@ -58,6 +58,7 @@ export default {
         '^(\\.{1,2}/.*)\\.js$': '$1',
       },
       setupFilesAfterEnv: ['<rootDir>/test/integration/setup.ts'],
+      testTimeout: 60000,
     },
   ],
 };
