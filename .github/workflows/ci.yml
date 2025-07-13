@@ -33,14 +33,15 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y zip
 
+      - name: Build
+        run: yarn build
+
       - name: Lint
         run: yarn lint
 
       - name: Test
-        run: yarn test
-
-      - name: Build
-        run: yarn build
+        run: |
+          yarn test
 
       - name: Package
         run: yarn package

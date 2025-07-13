@@ -1,22 +1,18 @@
-DyslexiaFriendly
-================
+# DyslexiaFriendly
 
 #### [Install from Chrome Web Store](https://chrome.google.com/webstore/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo)
 
-Description
------------
+## Description
 
 DyslexiaFriendly is a Google Chrome extension that increases readabilty of web pages by allowing you to switch to a dyslexia friendlier font and providing some extra tools to facilitate the reading.
 
-Features
---------
+## Features
 
 You can change the font on all websites to either Open Dyslexic or Comic Sans. The visual appearance of all web sites is also enhanced with odd/even background shading of paragraphs and a vertical ruler that follows the mouse cursor.
 
 The features listed here are also implemented: http://antijingoist.github.io/web-accessibility/
 
-Develop
------
+## Develop
 
 ### Website
 
@@ -47,6 +43,15 @@ Do on changes to source files:
 1. Navigate to `chrome://extensions` in Chrome
 1. Click the reload button on the extension card (circular arrow icon)
 
+### Testing
+
+```bash
+yarn test # runs all tests
+yarn test:integration # runs integration tests
+yarn test:unit # runs unit tests
+yarn verify # verify all
+```
+
 ### Publish
 
 The CI pipeline triggers publish on new git tags.
@@ -72,18 +77,16 @@ CSS and UI elements are from https://tailwind-elements.com/
 To inspect the local storage object, go to `chrome://extensions` and click on the "background page" link for this extension and paste this in the console:
 
 ```ts
-chrome.storage.sync.get(console.log)
+chrome.storage.sync.get(console.log);
 ```
 
-Roadmap
--------
+## Roadmap
 
 Further customization of fonts and colors
 
-Attributions
---------
+## Attributions
 
 This extension is based on resources and ideas from:
 
-* http://antijingoist.github.io/web-accessibility/
-* http://opendyslexic.org/
+- http://antijingoist.github.io/web-accessibility/
+- http://opendyslexic.org/

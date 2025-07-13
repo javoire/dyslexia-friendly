@@ -3,6 +3,7 @@
   "version": "2.5.1",
   "manifest_version": 3,
   "description": "Increases readability of websites by changing to easier-to-read fonts and adding visual enhancements",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkd+xau6IvVWeEMGB155ZuLIrcaGA3zDVm1tqGMJ2Ne5rA7ecY5ve4sAAerQRCJI9Up1oInrqjbx9nUQq6YfQPFpwXT6u8Dru+MsJ7bUFbxQTHn7xYypxNDAucIXkjRuy/9y+gIl1IMif062IK6AW3i6dtq21UirPURxQ00YTFBnepORSta2iSby+i6wITL5etTW5d7bFkxGSehiv4Qlubg8X47PkB5c3XIFiL8KK+5GdqxpSvTpKinDaB3VkhQ+525exe1RBRLWr1iZzgRXRUqAGWT5o4Fr9FOAkVvV0096zSfwNiuknARJGCh0kj7th2o3l7kQC8OghAnzJsfsn8QIDAQAB",
   "icons": {
     "16": "img/icon-16.png",
     "128": "img/icon-128.png"
