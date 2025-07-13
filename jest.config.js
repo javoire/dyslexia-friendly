@@ -2,6 +2,7 @@ export default {
   preset: 'ts-jest/presets/default-esm',
   extensionsToTreatAsEsm: ['.ts'],
   testEnvironment: 'jest-environment-jsdom',
+  testTimeout: 60000,
   transform: {
     '^.+\\.ts$': [
       'ts-jest',
@@ -57,8 +58,6 @@ export default {
       moduleNameMapper: {
         '^(\\.{1,2}/.*)\\.js$': '$1',
       },
-      setupFilesAfterEnv: ['<rootDir>/test/integration/setup.ts'],
-      testTimeout: 60000,
     },
   ],
 };
