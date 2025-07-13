@@ -43,7 +43,6 @@ export default {
       extensionsToTreatAsEsm: ['.ts'],
       testMatch: ['**/integration/**/*.test.ts'],
       testEnvironment: 'node',
-      testTimeout: 120000, // 2 minutes timeout for integration tests
       transform: {
         '^.+\\.ts$': [
           'ts-jest',

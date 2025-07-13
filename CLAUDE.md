@@ -5,36 +5,42 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Development Commands
 
 ### Build and Development
+
 - `yarn build` - Production build for both extension and website
-- `yarn build-dev` - Development build 
+- `yarn build-dev` - Development build
 - `yarn website` - Start development server for website (port 3000)
 - `yarn extension` - Start development server for extension popup only (port 3001)
 
 ### Testing
+
 - `yarn test` - Run all tests (unit + integration)
 - `yarn test:unit` - Run unit tests only (Jest with jsdom)
-- `yarn test:integration` - Run integration tests with Puppeteer
-- `yarn verify` - Run lint + build + all tests (full verification)
+- `yarn test:integration` - Run integration tests with Puppeteer in headless mode
 
 ### Code Quality
+
 - `yarn lint` - ESLint with TypeScript support
 - `yarn format` - Prettier formatting
 - `yarn type-check` - TypeScript type checking without emitting files
 
 ### Extension Development
+
 - `yarn package` - Create extension ZIP file for Chrome Web Store
 - Load unpacked extension: build the extension, then in Chrome go to `chrome://extensions`, enable Developer mode, and load the `build/extension` folder
 
 ## Project Architecture
 
 ### Dual-Target Webpack Build
+
 This project builds two separate outputs from a shared codebase:
+
 1. **Chrome Extension** (`src/extension/`) - manifest v3 extension with popup, options, content script, and service worker
 2. **Marketing Website** (`src/website/`) - static site deployed to Firebase
 
 Both share resources from `src/shared/` including fonts and CSS.
 
 ### Extension Architecture
+
 - **popup.ts** - Extension popup UI with live preview using jQuery and Tailwind
 - **contentscript.ts** - Injected into web pages, applies font changes and reading ruler
 - **serviceWorker.ts** - Background script managing storage sync and tab communication
@@ -42,17 +48,20 @@ Both share resources from `src/shared/` including fonts and CSS.
 - **store.ts** - Chrome storage sync wrapper with subscriber pattern
 
 ### Key Extension Features
+
 - Font replacement (OpenDyslexic, Comic Sans) applied via CSS classes
 - Reading ruler that follows mouse cursor
 - Configuration synced across devices via `chrome.storage.sync`
 - Live preview in popup with immediate feedback to active tab
 
 ### Communication Flow
+
 1. Popup UI changes → serviceWorker.ts → chrome.storage.sync
 2. Storage changes → serviceWorker.ts → contentscript.ts via runtime messaging
 3. Tab navigation/activation → serviceWorker.ts applies current config to new pages
 
 ### Technology Stack
+
 - **TypeScript** with strict configuration
 - **Webpack 5** with dual config for extension and website
 - **Jest** for unit tests, **Puppeteer** for integration testing
@@ -61,6 +70,7 @@ Both share resources from `src/shared/` including fonts and CSS.
 - **Chrome Extension Manifest v3**
 
 ### File Structure Patterns
+
 - Extension components in `src/extension/js/`
 - Shared utilities in `src/extension/js/lib/`
 - Tests colocated in `__tests__/` directories
@@ -68,16 +78,20 @@ Both share resources from `src/shared/` including fonts and CSS.
 - CSS organized by component in respective directories
 
 ### Storage and Configuration
+
 Configuration stored in `chrome.storage.sync` as single `config` object. Default configuration in `store.ts` includes font choice, ruler settings, and feature toggles. Store implements observer pattern for real-time UI updates.
 
 ### Testing Strategy
+
 - Unit tests mock Chrome APIs and use jsdom environment
 - Integration tests use Puppeteer to test actual extension behavior in Chrome
 - Tests run in separate Jest projects with different configurations
 - Integration tests have 2-minute timeout for Chrome startup
 
 ### Build Process
+
 Webpack handles TypeScript compilation, CSS processing with PostCSS/Tailwind, font copying, and HTML generation. Extension fonts are rewritten for chrome-extension:// protocol in content scripts.
 
 ### CI/CD Pipeline
+
 GitHub Actions pipeline runs on pushes/PRs: build → lint → test → package. Website deploys to Firebase on main branch. Extension publishes to Chrome Web Store on git tags using automated publishing scripts.

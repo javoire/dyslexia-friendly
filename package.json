@@ -20,6 +20,7 @@
     "extension": "NODE_ENV=development webpack-dev-server --config-name='extension'",
     "test": "yarn node --experimental-vm-modules $(yarn bin jest)",
     "test:integration": "yarn build && yarn node --experimental-vm-modules $(yarn bin jest) --testPathPattern=integration",
+    "test:integration:no-headless": "yarn build && HEADLESS=false yarn test:integration",
     "test:unit": "yarn node --experimental-vm-modules $(yarn bin jest) --testPathPattern=__tests__",
     "lint": "eslint src",
     "format": "prettier --write src/**/*.{js,ts}",

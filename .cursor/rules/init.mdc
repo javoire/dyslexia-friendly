@@ -17,7 +17,7 @@ This file provides guidance when working with code in this repository.
 
 - `yarn test` - Run all tests (unit + integration)
 - `yarn test:unit` - Run unit tests only (Jest with jsdom)
-- `yarn test:integration` - Run integration tests with Puppeteer
+- `yarn test:integration`
 
 ### Code Quality
 
