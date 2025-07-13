@@ -17,12 +17,25 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
   let context: ExtensionTestContext;
 
   beforeAll(async () => {
-    // Load the extension in browser
-    try {
-      context = await loadExtensionInBrowser();
-    } catch (error) {
-      console.error('Failed to load extension:', error);
-      throw error;
+    // Load the extension in browser with retry logic
+    let attempts = 0;
+    const maxAttempts = 3;
+    
+    while (attempts < maxAttempts) {
+      try {
+        context = await loadExtensionInBrowser();
+        break;
+      } catch (error) {
+        attempts++;
+        console.error(`Failed to load extension (attempt ${attempts}/${maxAttempts}):`, error);
+        
+        if (attempts === maxAttempts) {
+          throw error;
+        }
+        
+        // Wait before retrying
+        await new Promise(resolve => setTimeout(resolve, 2000));
+      }
     }
   });
 
