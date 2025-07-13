@@ -4,9 +4,7 @@ import puppeteer, { Browser } from 'puppeteer';
 let browser: Browser;
 
 beforeAll(async () => {
-  // Increase timeout for browser setup
-  jest.setTimeout(30000);
-
+  // Browser setup for integration tests
   browser = await puppeteer.launch({
     headless: true,
     args: [
