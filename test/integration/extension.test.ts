@@ -20,21 +20,24 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
     // Load the extension in browser with retry logic
     let attempts = 0;
     const maxAttempts = 3;
-    
+
     while (attempts < maxAttempts) {
       try {
         context = await loadExtensionInBrowser();
         break;
       } catch (error) {
         attempts++;
-        console.error(`Failed to load extension (attempt ${attempts}/${maxAttempts}):`, error);
-        
+        console.error(
+          `Failed to load extension (attempt ${attempts}/${maxAttempts}):`,
+          error,
+        );
+
         if (attempts === maxAttempts) {
           throw error;
         }
-        
+
         // Wait before retrying
-        await new Promise(resolve => setTimeout(resolve, 2000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       }
     }
   });
@@ -272,6 +275,156 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
       expect(typeof messageTest).toBe('boolean');
 
       await popupPage.close();
+      await testPage.close();
+    });
+  });
+
+  describe('Extension Disable Button', () => {
+    test('should toggle extension disabled state and persist in storage', async () => {
+      const popupPage = await openExtensionPopup(context);
+
+      // Wait for popup to load
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Find the extension disable button (master switch)
+      const disableButton = await popupPage.$('#master-switch-checkbox');
+      expect(disableButton).toBeTruthy();
+
+      // Check initial state - should be enabled by default
+      const initialState = await popupPage.evaluate(
+        (el) => (el as HTMLInputElement).checked,
+        disableButton,
+      );
+      expect(initialState).toBe(true);
+
+      // Toggle the disable button
+      await disableButton!.click();
+
+      // Add debugging to see what happened
+      const stateAfterClick = await popupPage.evaluate(
+        (el) => (el as HTMLInputElement).checked,
+        disableButton,
+      );
+      console.log('State after click:', stateAfterClick);
+
+      // Wait for the change to propagate and form to be submitted
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Verify the button state changed
+      const newState = await popupPage.evaluate(
+        (el) => (el as HTMLInputElement).checked,
+        disableButton,
+      );
+      expect(newState).toBe(false);
+
+      // Verify that the UI sections are hidden when disabled
+      const fontSection = await popupPage.$(
+        '[data-show-when="extensionEnabled"]',
+      );
+      const isHidden = await popupPage.evaluate(
+        (el) => window.getComputedStyle(el as Element).display === 'none',
+        fontSection,
+      );
+      expect(isHidden).toBe(true);
+
+      await popupPage.close();
+    });
+
+    test('should persist disable state in chrome.storage.sync via service worker', async () => {
+      const popupPage = await openExtensionPopup(context);
+
+      // Wait for popup to load
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Find the extension disable button
+      const disableButton = await popupPage.$('#master-switch-checkbox');
+      expect(disableButton).toBeTruthy();
+
+      // Disable the extension
+      await disableButton!.click();
+
+      // Wait for storage to be updated
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+
+      // Verify the state is stored in chrome.storage.sync
+      const storageState = await popupPage.evaluate(async () => {
+        return new Promise((resolve) => {
+          chrome.storage.sync.get('config', (result) => {
+            resolve(result.config);
+          });
+        });
+      });
+
+      expect(storageState).toBeDefined();
+      expect((storageState as any).extensionEnabled).toBe(false);
+
+      await popupPage.close();
+    });
+
+    test('should persist disable state across popup sessions', async () => {
+      // First session - disable the extension
+      let popupPage = await openExtensionPopup(context);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const disableButton = await popupPage.$('#master-switch-checkbox');
+      await disableButton!.click();
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      await popupPage.close();
+
+      // Second session - verify state is persisted
+      popupPage = await openExtensionPopup(context);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const disableButtonNew = await popupPage.$('#master-switch-checkbox');
+      const persistedState = await popupPage.evaluate(
+        (el) => (el as HTMLInputElement).checked,
+        disableButtonNew,
+      );
+      expect(persistedState).toBe(false);
+
+      // Re-enable for cleanup
+      await disableButtonNew!.click();
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      await popupPage.close();
+    });
+
+    test('should communicate disable state to content script via service worker', async () => {
+      // First, disable the extension
+      const popupPage = await openExtensionPopup(context);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const disableButton = await popupPage.$('#master-switch-checkbox');
+      await disableButton!.click();
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      await popupPage.close();
+
+      // Now test on a web page to see if content script received the update
+      const testPage = await testContentScriptOnPage(
+        context,
+        'https://example.com',
+      );
+
+      // Check if the extension styles are NOT applied when disabled
+      const isExtensionDisabled = await testPage.evaluate(() => {
+        const body = document.body;
+        // The content script should not apply the main dyslexia-friendly class when disabled
+        return !body.classList.contains('dyslexia-friendly');
+      });
+
+      expect(isExtensionDisabled).toBe(true);
+
+      // Clean up - re-enable the extension
+      const popupPageCleanup = await openExtensionPopup(context);
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      const enableButton = await popupPageCleanup.$('#master-switch-checkbox');
+      await enableButton!.click();
+      await new Promise((resolve) => setTimeout(resolve, 500));
+
+      await popupPageCleanup.close();
       await testPage.close();
     });
   });
