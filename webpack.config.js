@@ -99,6 +99,13 @@ const extensionConfig = {
     },
     port: 3001,
   },
+  // Override devtool for extension to never use eval as service worker will complain
+  devtool: false,
+  optimization: {
+    // Ensure no eval is used in extension builds
+    concatenateModules: false,
+    minimize: env.NODE_ENV === 'production',
+  },
   entry: {
     popup: path.join(extensionSrcPath, 'js', 'popup.ts'),
     options: path.join(extensionSrcPath, 'js', 'options.ts'),
@@ -196,7 +203,7 @@ const websiteConfig = {
 };
 
 if (env.IS_DEV) {
-  sharedConfig.devtool = 'eval-cheap-module-source-map';
+  sharedConfig.devtool = 'cheap-module-source-map';
 } else {
   sharedConfig.devtool = false;
 }
