@@ -46,7 +46,6 @@ export default {
       extensionsToTreatAsEsm: ['.ts'],
       testMatch: ['**/integration/**/*.test.ts'],
       testEnvironment: 'node',
-      timeout: 60000,
       transform: {
         '^.+\\.ts$': [
           'ts-jest',
@@ -59,6 +58,7 @@ export default {
         '^(\\.{1,2}/.*)\\.js$': '$1',
       },
       setupFilesAfterEnv: ['<rootDir>/test/integration/setup.ts'],
+      testTimeout: 60000,
     },
   ],
 };

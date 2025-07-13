@@ -69,8 +69,10 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
       expect(title).toContain('Dyslexia Friendly');
 
       // Check if essential elements are present
-      const hasMainContent = await popupPage.$('#main-content');
-      expect(hasMainContent).toBeTruthy();
+      const hasPopupWrapper = await popupPage.$('#popup-wrapper');
+      const hasConfigForm = await popupPage.$('#configForm');
+      expect(hasPopupWrapper).toBeTruthy();
+      expect(hasConfigForm).toBeTruthy();
 
       await popupPage.close();
     });
