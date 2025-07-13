@@ -92,11 +92,14 @@ describe('store', () => {
       extensionEnabled: true,
       fontChoice: 'opendyslexic',
       fontEnabled: false,
+      backgroundEnabled: true,
+      backgroundChoice: 'cream',
     };
 
     const newConfigValues = {
       fontChoice: 'comicsans',
       fontEnabled: true,
+      backgroundChoice: 'softblue',
     };
 
     const updatedConfig = {
@@ -104,10 +107,29 @@ describe('store', () => {
       extensionEnabled: false,
       fontChoice: 'comicsans',
       fontEnabled: true,
+      backgroundEnabled: false,
+      backgroundChoice: 'softblue',
     };
 
     expect(updateChangedConfigValues(storedConfig, newConfigValues)).toEqual(
       updatedConfig,
     );
+  });
+
+  test('default config includes background options', () => {
+    expect(DEFAULT_CONFIG.backgroundEnabled).toBe(false);
+    expect(DEFAULT_CONFIG.backgroundChoice).toBe('none');
+  });
+
+  test('supports all background color options', () => {
+    const supportedBackgrounds = ['none', 'classic', 'cream', 'softblue', 'paleyellow'];
+    
+    // Test that updateChangedConfigValues works with all background options
+    supportedBackgrounds.forEach(background => {
+      const storedConfig = { ...DEFAULT_CONFIG };
+      const newConfigValues = { backgroundChoice: background };
+      const result = updateChangedConfigValues(storedConfig, newConfigValues);
+      expect(result.backgroundChoice).toBe(background);
+    });
   });
 });
