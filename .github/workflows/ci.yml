@@ -31,7 +31,7 @@ jobs:
       - name: Install system dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y zip xvfb
+          sudo apt-get install -y zip
 
       - name: Build
         run: yarn build

@@ -2,7 +2,6 @@ export default {
   preset: 'ts-jest/presets/default-esm',
   extensionsToTreatAsEsm: ['.ts'],
   testEnvironment: 'jest-environment-jsdom',
-  testTimeout: 60000,
   transform: {
     '^.+\\.ts$': [
       'ts-jest',
@@ -16,9 +15,6 @@ export default {
   },
   testMatch: ['**/__tests__/**/*.test.ts', '**/integration/**/*.test.ts'],
   setupFilesAfterEnv: [],
-  globals: {
-    chrome: {},
-  },
   projects: [
     {
       displayName: 'unit',
