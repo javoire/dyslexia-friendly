@@ -23,6 +23,48 @@ body.dyslexia-friendly.dyslexia-friendly-font-comicsans
   font-family: 'Comic Sans MS' !important;
 }
 
+/* Background color options for improved readability */
+body.dyslexia-friendly.dyslexia-friendly-bg-cream {
+  background-color: #fdf6e3 !important;
+  color: #5c4317 !important;
+}
+
+body.dyslexia-friendly.dyslexia-friendly-bg-cream *:not([style*="background"]):not([style*="color"]) {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue {
+  background-color: #f0f8ff !important;
+  color: #2c3e50 !important;
+}
+
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue *:not([style*="background"]):not([style*="color"]) {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow {
+  background-color: #fffacd !important;
+  color: #3c3c3c !important;
+}
+
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow *:not([style*="background"]):not([style*="color"]) {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
+/* Classic background option - original light mode background */
+body.dyslexia-friendly.dyslexia-friendly-bg-classic {
+  background-color: snow !important;
+  color: #2c3e50 !important;
+}
+
+body.dyslexia-friendly.dyslexia-friendly-bg-classic *:not([style*="background"]):not([style*="color"]) {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+
 /* Use an off-white background. Some users need high
 contrast for better reading. Some need low contrast.
 A happy medium would be off white to reduce "glare"
