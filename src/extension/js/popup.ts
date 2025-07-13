@@ -7,7 +7,7 @@ import '../../shared/css/fonts.css';
 import '../css/popup.css';
 
 import { formToConfig, debug, removeClassStartsWith } from './lib/util';
-import { FONT_CLASS_PREFIX } from './lib/consts';
+import { FONT_CLASS_PREFIX, BACKGROUND_CLASS_PREFIX } from './lib/consts';
 import { DEFAULT_CONFIG, UserConfig } from './lib/store';
 
 // Mock chrome runtime for development
@@ -89,6 +89,12 @@ function updateUiFromConfig(
   // toggle font
   removeClassStartsWith(body, FONT_CLASS_PREFIX);
   body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
+
+  // toggle background
+  removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
+  if (config.backgroundEnabled && config.backgroundChoice !== 'none') {
+    body.addClass(BACKGROUND_CLASS_PREFIX + config.backgroundChoice);
+  }
 
   // toggle visible sections
   const visibleSections = $('[data-show-when]');
