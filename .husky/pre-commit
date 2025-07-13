@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "Running pre-commit checks..."
+echo "📋 Running lint..."
+yarn lint
+
+echo "🏗️  Running build..."
+yarn build
+
+echo "✅ Pre-commit checks passed!"

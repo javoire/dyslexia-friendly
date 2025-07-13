@@ -28,8 +28,9 @@ function sendConfigToActiveTab(config: UserConfig): void {
             // another edge case is when the extension is first installed,
             // then existing tabs won't have the contentscript injected, so
             // this will also occur.
-            debug('contentscript no reply');
-            debug('error:', chrome.runtime.lastError);
+            throw new Error(
+              'contentscript no reply: ' + chrome.runtime.lastError?.message,
+            );
           }
         },
       );

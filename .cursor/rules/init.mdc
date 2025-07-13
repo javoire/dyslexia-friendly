@@ -1,6 +1,8 @@
-# CLAUDE.md
+---
+alwaysApply: true
+---
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance when working with code in this repository.
 
 ## Development Commands
 
@@ -15,7 +17,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 - `yarn test` - Run all tests (unit + integration)
 - `yarn test:unit` - Run unit tests only (Jest with jsdom)
-- `yarn test:integration` - Run integration tests with Puppeteer in headless mode
+- `yarn test:integration`
 
 ### Code Quality
 

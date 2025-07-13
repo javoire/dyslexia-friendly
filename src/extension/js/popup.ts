@@ -172,7 +172,9 @@ window.onload = function () {
     });
 
     configForm.submit(function (e) {
+      // save to storage
       saveFormStateToStore($(this), (config) => {
+        // update UI with the saved config
         updateUiFromConfig(config, inputs, body, ruler);
       });
       e.preventDefault();

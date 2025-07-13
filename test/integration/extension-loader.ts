@@ -16,13 +16,16 @@ interface ExtensionTestContext {
 
 // Check if we're running in CI
 const isCI = process.env.CI === 'true' || process.env.GITHUB_ACTIONS === 'true';
+const headless = process.env.HEADLESS !== 'false';
 
 export async function loadExtensionInBrowser(): Promise<ExtensionTestContext> {
   const extensionPath = EXTENSION_PATH;
 
   // Check if extension build directory exists
   if (!existsSync(extensionPath)) {
-    throw new Error(`Extension build directory not found at: ${extensionPath}. Please run 'yarn build' first.`);
+    throw new Error(
+      `Extension build directory not found at: ${extensionPath}. Please run 'yarn build' first.`,
+    );
   }
 
   // Base Chrome arguments for extension testing
@@ -69,13 +72,13 @@ export async function loadExtensionInBrowser(): Promise<ExtensionTestContext> {
       '--disable-plugins',
       '--mute-audio',
       '--single-process',
-      '--remote-debugging-port=9222'
+      '--remote-debugging-port=9222',
     );
   }
 
   try {
     const browser = await puppeteer.launch({
-      headless: isCI ? true : false, // Use headless mode for CI
+      headless: isCI || headless ? true : false, // Use headless mode for CI
       args: chromeArgs,
       timeout: 30000,
       protocolTimeout: 30000,
