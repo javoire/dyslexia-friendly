@@ -32,7 +32,7 @@ The text is colored dark blue to assist with "glare"
 issues, but also to make the black symbols subtly stand
 out.                                                  */
 body.dyslexia-friendly {
-  font-size: 14px;
+  font-size: var(--dyslexia-friendly-font-size, 14px);
   line-height: 200%;
 }
 /*

@@ -8,6 +8,7 @@ export interface UserConfig {
   rulerColor: string;
   rulerOpacity: number;
   fontChoice: string;
+  fontSize: number;
 }
 
 export type ConfigKey = keyof UserConfig;
@@ -25,6 +26,7 @@ export const DEFAULT_CONFIG: UserConfig = {
   rulerColor: '#000000',
   rulerOpacity: 0.1,
   fontChoice: 'opendyslexic',
+  fontSize: 14,
 };
 
 export const updateChangedConfigValues = (

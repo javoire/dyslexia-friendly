@@ -90,6 +90,10 @@ function updateUiFromConfig(
   removeClassStartsWith(body, FONT_CLASS_PREFIX);
   body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
 
+  // update font size preset button states
+  $('.font-size-preset').removeClass('bg-primary text-white').addClass('bg-neutral-200 dark:bg-neutral-700');
+  $(`.font-size-preset[data-size="${config.fontSize}"]`).removeClass('bg-neutral-200 dark:bg-neutral-700').addClass('bg-primary text-white');
+
   // toggle visible sections
   const visibleSections = $('[data-show-when]');
   visibleSections.each(function (this: HTMLElement) {
@@ -180,9 +184,14 @@ window.onload = function () {
       e.preventDefault();
     });
 
-    // bind ruler to mouse
-    body.mousemove((event: JQuery.MouseMoveEvent) => {
-      ruler.css('top', event.pageY);
+    // handle font size preset buttons
+    $('.font-size-preset').on('click', function () {
+      const size = $(this).data('size') as number;
+      $('#font-size-range').val(size).trigger('input');
+      
+      // update button states immediately for better UX
+      $('.font-size-preset').removeClass('bg-primary text-white').addClass('bg-neutral-200 dark:bg-neutral-700');
+      $(this).removeClass('bg-neutral-200 dark:bg-neutral-700').addClass('bg-primary text-white');
     });
 
     // On popup open, load config from store and update ui,

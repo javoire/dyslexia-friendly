@@ -39,6 +39,9 @@ $(document).ready(function () {
         body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
       }
 
+      // apply font size
+      body.css('--dyslexia-friendly-font-size', config.fontSize + 'px');
+
       // ruler
       ruler.css('background-color', config.rulerColor);
       ruler.css('opacity', config.rulerOpacity);

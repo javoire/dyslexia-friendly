@@ -7,7 +7,7 @@ export interface ConfigItem {
 }
 
 export interface Config {
-  [key: string]: string | boolean;
+  [key: string]: string | boolean | number;
 }
 
 export const removeClassStartsWith = (
@@ -31,7 +31,17 @@ export const formToConfig = (form: JQuery<HTMLElement>): Config => {
   // Process serialized form data
   serializedForm.forEach((item) => {
     // the serialized form has "on" as checkbox values, convert to boolean instead
-    obj[item.name] = item.value === 'on' ? true : item.value;
+    if (item.value === 'on') {
+      obj[item.name] = true;
+    } else {
+      // Convert numeric fields to numbers
+      const numericFields = ['rulerSize', 'rulerOpacity', 'fontSize'];
+      if (numericFields.includes(item.name)) {
+        obj[item.name] = parseFloat(item.value);
+      } else {
+        obj[item.name] = item.value;
+      }
+    }
   });
 
   // Handle unchecked checkboxes - they don't appear in serializeArray()

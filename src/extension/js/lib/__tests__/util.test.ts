@@ -9,7 +9,7 @@ describe('util', () => {
     );
     const configMap = {
       rulerEnabled: true,
-      rulerSize: '30',
+      rulerSize: 30,
       fontChoice: 'opendyslexic',
     };
     expect(formToConfig(form)).toEqual(configMap);
