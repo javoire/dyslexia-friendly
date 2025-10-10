@@ -8,18 +8,51 @@ This one is designed for dyslexic readers, though
 it can be useful to increase readability for anyone
 else                                                 */
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic
-  *:not(i, em, mat-icon, [aria-hidden='true'], [class*='icon']) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic article,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic main,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic section,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic div,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic p,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic span,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic h1,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic h2,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic h3,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic h4,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic h5,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic h6 {
   font-family: 'opendyslexic' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono
-  *:not(i, em, mat-icon, [aria-hidden='true'], [class*='icon']) {
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono article,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono main,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono section,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono div,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono p,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono span,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono h1,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono h2,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono h3,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono h4,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono h5,
+body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono h6 {
   font-family: 'opendyslexicmono' !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-font-comicsans
-  *:not(i, em, mat-icon, [aria-hidden='true'], [class*='icon']) {
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans *,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans article,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans main,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans section,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans div,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans p,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans span,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans h1,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans h2,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans h3,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans h4,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans h5,
+body.dyslexia-friendly.dyslexia-friendly-font-comicsans h6 {
   font-family: 'Comic Sans MS' !important;
 }
 
@@ -144,9 +177,22 @@ likely overrides stylesheets.
 The text is colored dark blue to assist with "glare"
 issues, but also to make the black symbols subtly stand
 out.                                                  */
-body.dyslexia-friendly {
-  font-size: var(--dyslexia-friendly-font-size, 14px);
-  line-height: 200%;
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"],
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] *,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] article,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] main,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] section,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] div,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] p,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] span,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h1,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h2,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h3,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h4,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h5,
+body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h6 {
+  font-size: var(--dyslexia-friendly-font-size, 14px) !important;
+  line-height: 200% !important;
 }
 /*
 Setting bg color is tricky, since some websites switch between dark/light mode and some don't.

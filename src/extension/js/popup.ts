@@ -198,6 +198,14 @@ window.onload = function () {
       // update button states immediately for better UX
       $('.font-size-preset').removeClass('bg-primary text-white').addClass('bg-neutral-200 dark:bg-neutral-700');
       $(this).removeClass('bg-neutral-200 dark:bg-neutral-700').addClass('bg-primary text-white');
+      
+      // save the new font size to storage
+      saveFormStateToStore(configForm);
+    });
+
+    // bind ruler to mouse
+    body.mousemove((event: JQuery.MouseMoveEvent) => {
+      ruler.css('top', event.pageY);
     });
 
     // On popup open, load config from store and update ui,

@@ -37,10 +37,10 @@ $(document).ready(function () {
       removeClassStartsWith(body, FONT_CLASS_PREFIX);
       if (config.fontEnabled) {
         body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
+        
+        // apply font size
+        body.css('--dyslexia-friendly-font-size', config.fontSize + 'px');
       }
-
-      // apply font size
-      body.css('--dyslexia-friendly-font-size', config.fontSize + 'px');
 
       // remove previous background class
       removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
