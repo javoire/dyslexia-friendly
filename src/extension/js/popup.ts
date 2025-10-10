@@ -7,7 +7,7 @@ import '../../shared/css/fonts.css';
 import '../css/popup.css';
 
 import { formToConfig, debug, removeClassStartsWith } from './lib/util';
-import { FONT_CLASS_PREFIX } from './lib/consts';
+import { FONT_CLASS_PREFIX, BACKGROUND_CLASS_PREFIX } from './lib/consts';
 import { DEFAULT_CONFIG, UserConfig } from './lib/store';
 
 // Mock chrome runtime for development
@@ -93,6 +93,12 @@ function updateUiFromConfig(
   // update font size preset button states
   $('.font-size-preset').removeClass('bg-primary text-white').addClass('bg-neutral-200 dark:bg-neutral-700');
   $(`.font-size-preset[data-size="${config.fontSize}"]`).removeClass('bg-neutral-200 dark:bg-neutral-700').addClass('bg-primary text-white');
+
+  // toggle background
+  removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
+  if (config.backgroundEnabled && config.backgroundChoice !== 'none') {
+    body.addClass(BACKGROUND_CLASS_PREFIX + config.backgroundChoice);
+  }
 
   // toggle visible sections
   const visibleSections = $('[data-show-when]');

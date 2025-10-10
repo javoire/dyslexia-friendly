@@ -7,7 +7,7 @@ import '../../shared/css/fonts.css';
 import '../css/contentscript.css';
 
 import { debug, removeClassStartsWith } from './lib/util';
-import { CSS_NAMESPACE, FONT_CLASS_PREFIX, RULER_ID } from './lib/consts';
+import { CSS_NAMESPACE, FONT_CLASS_PREFIX, BACKGROUND_CLASS_PREFIX, RULER_ID } from './lib/consts';
 import { UserConfig } from './lib/store';
 
 interface RuntimeMessage {
@@ -41,6 +41,12 @@ $(document).ready(function () {
 
       // apply font size
       body.css('--dyslexia-friendly-font-size', config.fontSize + 'px');
+
+      // remove previous background class
+      removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
+      if (config.backgroundEnabled && config.backgroundChoice !== 'none') {
+        body.addClass(BACKGROUND_CLASS_PREFIX + config.backgroundChoice);
+      }
 
       // ruler
       ruler.css('background-color', config.rulerColor);

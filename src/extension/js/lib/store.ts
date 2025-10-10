@@ -9,6 +9,8 @@ export interface UserConfig {
   rulerOpacity: number;
   fontChoice: string;
   fontSize: number;
+  backgroundEnabled: boolean;
+  backgroundChoice: string;
 }
 
 export type ConfigKey = keyof UserConfig;
@@ -27,6 +29,8 @@ export const DEFAULT_CONFIG: UserConfig = {
   rulerOpacity: 0.1,
   fontChoice: 'opendyslexic',
   fontSize: 14,
+  backgroundEnabled: false,
+  backgroundChoice: 'none',
 };
 
 export const updateChangedConfigValues = (
