@@ -85,8 +85,8 @@ export async function loadExtensionInBrowser(): Promise<ExtensionTestContext> {
     });
 
     const page = await browser.newPage();
-    await page.setDefaultTimeout(30000);
-    await page.setDefaultNavigationTimeout(30000);
+    page.setDefaultTimeout(30000);
+    page.setDefaultNavigationTimeout(30000);
 
     // Get extension ID from chrome://extensions page
     const extensionId = EXTENSION_ID;
