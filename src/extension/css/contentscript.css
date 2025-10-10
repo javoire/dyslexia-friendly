@@ -45,7 +45,18 @@ body.dyslexia-friendly.dyslexia-friendly-bg-cream {
 body.dyslexia-friendly.dyslexia-friendly-bg-cream article,
 body.dyslexia-friendly.dyslexia-friendly-bg-cream main,
 body.dyslexia-friendly.dyslexia-friendly-bg-cream section:not([role="navigation"]):not([role="banner"]):not([role="complementary"]),
-body.dyslexia-friendly.dyslexia-friendly-bg-cream div:not([class*="button"]):not([class*="btn"]):not([role="button"]):not([class*="modal"]):not([class*="dialog"]):not([class*="menu"]):not([class*="dropdown"]):not([class*="popup"]):not([class*="tooltip"]):not([class*="card"]):not([class*="alert"]):not([class*="badge"]):not([class*="toast"]):not([class*="image"]):not([class*="img"]):not([class*="picture"]):not([class*="photo"]):not([class*="thumbnail"]):not([class*="avatar"]):not([class*="icon"]):not([style*="background-image"]) {
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="article-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="-article"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="post-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="-post"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="entry-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="-entry"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="message-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="-message"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="comment-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[class*="-comment"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[role="article"],
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div[role="main"] {
   background-color: #fdf6e3 !important;
   color: #5c4317 !important;
 }
@@ -59,7 +70,18 @@ body.dyslexia-friendly.dyslexia-friendly-bg-softblue {
 body.dyslexia-friendly.dyslexia-friendly-bg-softblue article,
 body.dyslexia-friendly.dyslexia-friendly-bg-softblue main,
 body.dyslexia-friendly.dyslexia-friendly-bg-softblue section:not([role="navigation"]):not([role="banner"]):not([role="complementary"]),
-body.dyslexia-friendly.dyslexia-friendly-bg-softblue div:not([class*="button"]):not([class*="btn"]):not([role="button"]):not([class*="modal"]):not([class*="dialog"]):not([class*="menu"]):not([class*="dropdown"]):not([class*="popup"]):not([class*="tooltip"]):not([class*="card"]):not([class*="alert"]):not([class*="badge"]):not([class*="toast"]):not([class*="image"]):not([class*="img"]):not([class*="picture"]):not([class*="photo"]):not([class*="thumbnail"]):not([class*="avatar"]):not([class*="icon"]):not([style*="background-image"]) {
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="article-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="-article"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="post-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="-post"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="entry-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="-entry"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="message-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="-message"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="comment-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[class*="-comment"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[role="article"],
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div[role="main"] {
   background-color: #f0f8ff !important;
   color: #2c3e50 !important;
 }
@@ -73,7 +95,18 @@ body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow {
 body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow article,
 body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow main,
 body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow section:not([role="navigation"]):not([role="banner"]):not([role="complementary"]),
-body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div:not([class*="button"]):not([class*="btn"]):not([role="button"]):not([class*="modal"]):not([class*="dialog"]):not([class*="menu"]):not([class*="dropdown"]):not([class*="popup"]):not([class*="tooltip"]):not([class*="card"]):not([class*="alert"]):not([class*="badge"]):not([class*="toast"]):not([class*="image"]):not([class*="img"]):not([class*="picture"]):not([class*="photo"]):not([class*="thumbnail"]):not([class*="avatar"]):not([class*="icon"]):not([style*="background-image"]) {
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="article-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="-article"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="post-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="-post"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="entry-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="-entry"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="message-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="-message"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="comment-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[class*="-comment"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[role="article"],
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div[role="main"] {
   background-color: #fffacd !important;
   color: #3c3c3c !important;
 }
@@ -87,7 +120,18 @@ body.dyslexia-friendly.dyslexia-friendly-bg-classic {
 body.dyslexia-friendly.dyslexia-friendly-bg-classic article,
 body.dyslexia-friendly.dyslexia-friendly-bg-classic main,
 body.dyslexia-friendly.dyslexia-friendly-bg-classic section:not([role="navigation"]):not([role="banner"]):not([role="complementary"]),
-body.dyslexia-friendly.dyslexia-friendly-bg-classic div:not([class*="button"]):not([class*="btn"]):not([role="button"]):not([class*="modal"]):not([class*="dialog"]):not([class*="menu"]):not([class*="dropdown"]):not([class*="popup"]):not([class*="tooltip"]):not([class*="card"]):not([class*="alert"]):not([class*="badge"]):not([class*="toast"]):not([class*="image"]):not([class*="img"]):not([class*="picture"]):not([class*="photo"]):not([class*="thumbnail"]):not([class*="avatar"]):not([class*="icon"]):not([style*="background-image"]) {
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="article-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="-article"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="post-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="-post"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="entry-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="-entry"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="message-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="-message"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="comment-"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[class*="-comment"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[role="article"],
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div[role="main"] {
   background-color: snow !important;
   color: #2c3e50 !important;
 }
