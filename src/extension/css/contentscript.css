@@ -23,35 +23,59 @@ body.dyslexia-friendly.dyslexia-friendly-font-comicsans
   font-family: 'Comic Sans MS' !important;
 }
 
-/* Background color options for improved readability */
+/* Background color options for improved readability
+ * 
+ * Color choices based on accessibility research:
+ * - Cream (#fdf6e3): Solarized Light base, reduces screen glare, WCAG AAA compliant with dark text
+ * - Soft Blue (#f0f8ff): AliceBlue, calming color that reduces eye strain
+ * - Pale Yellow (#fffacd): LemonChiffon, high contrast option often recommended for dyslexia
+ * - Classic (snow): Original light background for those who prefer traditional appearance
+ * 
+ * Strategy: Apply background to body and main content containers only.
+ * We target text containers (article, main, section, p, div) while explicitly
+ * excluding UI components (buttons, nav, modals, etc.) to avoid breaking websites.
+ */
+
+/* Cream background option */
 body.dyslexia-friendly.dyslexia-friendly-bg-cream {
   background-color: #fdf6e3 !important;
   color: #5c4317 !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-bg-cream *:not([style*="background"]):not([style*="color"]) {
-  background-color: inherit !important;
-  color: inherit !important;
+body.dyslexia-friendly.dyslexia-friendly-bg-cream article,
+body.dyslexia-friendly.dyslexia-friendly-bg-cream main,
+body.dyslexia-friendly.dyslexia-friendly-bg-cream section:not([role="navigation"]):not([role="banner"]):not([role="complementary"]),
+body.dyslexia-friendly.dyslexia-friendly-bg-cream div:not([class*="button"]):not([class*="btn"]):not([role="button"]):not([class*="modal"]):not([class*="dialog"]):not([class*="menu"]):not([class*="dropdown"]):not([class*="popup"]):not([class*="tooltip"]):not([class*="card"]):not([class*="alert"]):not([class*="badge"]):not([class*="toast"]) {
+  background-color: #fdf6e3 !important;
+  color: #5c4317 !important;
 }
 
+/* Soft blue background option */
 body.dyslexia-friendly.dyslexia-friendly-bg-softblue {
   background-color: #f0f8ff !important;
   color: #2c3e50 !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-bg-softblue *:not([style*="background"]):not([style*="color"]) {
-  background-color: inherit !important;
-  color: inherit !important;
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue article,
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue main,
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue section:not([role="navigation"]):not([role="banner"]):not([role="complementary"]),
+body.dyslexia-friendly.dyslexia-friendly-bg-softblue div:not([class*="button"]):not([class*="btn"]):not([role="button"]):not([class*="modal"]):not([class*="dialog"]):not([class*="menu"]):not([class*="dropdown"]):not([class*="popup"]):not([class*="tooltip"]):not([class*="card"]):not([class*="alert"]):not([class*="badge"]):not([class*="toast"]) {
+  background-color: #f0f8ff !important;
+  color: #2c3e50 !important;
 }
 
+/* Pale yellow background option */
 body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow {
   background-color: #fffacd !important;
   color: #3c3c3c !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow *:not([style*="background"]):not([style*="color"]) {
-  background-color: inherit !important;
-  color: inherit !important;
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow article,
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow main,
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow section:not([role="navigation"]):not([role="banner"]):not([role="complementary"]),
+body.dyslexia-friendly.dyslexia-friendly-bg-paleyellow div:not([class*="button"]):not([class*="btn"]):not([role="button"]):not([class*="modal"]):not([class*="dialog"]):not([class*="menu"]):not([class*="dropdown"]):not([class*="popup"]):not([class*="tooltip"]):not([class*="card"]):not([class*="alert"]):not([class*="badge"]):not([class*="toast"]) {
+  background-color: #fffacd !important;
+  color: #3c3c3c !important;
 }
 
 /* Classic background option - original light mode background */
@@ -60,9 +84,12 @@ body.dyslexia-friendly.dyslexia-friendly-bg-classic {
   color: #2c3e50 !important;
 }
 
-body.dyslexia-friendly.dyslexia-friendly-bg-classic *:not([style*="background"]):not([style*="color"]) {
-  background-color: inherit !important;
-  color: inherit !important;
+body.dyslexia-friendly.dyslexia-friendly-bg-classic article,
+body.dyslexia-friendly.dyslexia-friendly-bg-classic main,
+body.dyslexia-friendly.dyslexia-friendly-bg-classic section:not([role="navigation"]):not([role="banner"]):not([role="complementary"]),
+body.dyslexia-friendly.dyslexia-friendly-bg-classic div:not([class*="button"]):not([class*="btn"]):not([role="button"]):not([class*="modal"]):not([class*="dialog"]):not([class*="menu"]):not([class*="dropdown"]):not([class*="popup"]):not([class*="tooltip"]):not([class*="card"]):not([class*="alert"]):not([class*="badge"]):not([class*="toast"]) {
+  background-color: snow !important;
+  color: #2c3e50 !important;
 }
 
 /* Use an off-white background. Some users need high
