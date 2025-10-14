@@ -3,6 +3,7 @@ import { debug } from './util';
 export interface UserConfig {
   extensionEnabled: boolean;
   fontEnabled: boolean;
+  fontSizeEnabled: boolean;
   rulerEnabled: boolean;
   rulerSize: number;
   rulerColor: string;
@@ -23,12 +24,13 @@ export const DEFAULT_CONFIG: UserConfig = {
   // names need to be manually in sync...
   extensionEnabled: true,
   fontEnabled: true,
+  fontSizeEnabled: true,
   rulerEnabled: true,
   rulerSize: 30,
   rulerColor: '#000000',
   rulerOpacity: 0.1,
   fontChoice: 'opendyslexic',
-  fontSize: 14,
+  fontSize: 1.0,
   backgroundEnabled: false,
   backgroundChoice: 'none',
 };

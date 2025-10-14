@@ -1,4 +1,4 @@
-import { afterAll, beforeAll, describe, expect, test } from '@jest/globals';
+import { afterAll, beforeAll, beforeEach, describe, expect, test } from '@jest/globals';
 import { Browser, Page } from 'puppeteer';
 import {
   loadExtensionInBrowser,
@@ -28,6 +28,8 @@ async function resetExtensionToDefault(
       const defaultConfig = {
         extensionEnabled: true,
         fontEnabled: true,
+        fontSizeEnabled: true,
+        fontSize: 1.0,
         rulerEnabled: true,
         rulerSize: 30,
         rulerColor: '#000000',
@@ -56,6 +58,7 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
       try {
         await resetExtensionToDefault(context);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.warn('Failed to reset extension to default:', error);
       }
     }
@@ -72,6 +75,7 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
         break;
       } catch (error) {
         attempts++;
+        // eslint-disable-next-line no-console
         console.error(
           `Failed to load extension (attempt ${attempts}/${maxAttempts}):`,
           error,
@@ -355,7 +359,7 @@ describe('Dyslexia Friendly Extension Integration Tests', () => {
             form.dispatchEvent(new Event('submit'));
           }
           return true;
-        } catch (error) {
+        } catch {
           return false;
         }
       });

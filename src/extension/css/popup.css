@@ -133,6 +133,15 @@ a {
   margin-bottom: 5px;
 }
 
+.font-size-helper {
+  line-height: 1.4;
+}
+
+.font-size-preset--disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
 .popup-section-body .form-label {
   display: block;
 }

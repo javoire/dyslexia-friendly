@@ -8,6 +8,7 @@ import '../css/contentscript.css';
 
 import { debug, removeClassStartsWith } from './lib/util';
 import { CSS_NAMESPACE, FONT_CLASS_PREFIX, BACKGROUND_CLASS_PREFIX, RULER_ID } from './lib/consts';
+import { applyFontScale } from './lib/fontScale';
 import { UserConfig } from './lib/store';
 
 interface RuntimeMessage {
@@ -28,6 +29,11 @@ $(document).ready(function () {
   function applyConfigOnPage(config: UserConfig): void {
     debug('applying user settings to webpage', config);
 
+    const root = document.documentElement;
+    const fontScaleEnabled =
+      config.extensionEnabled && config.fontEnabled && config.fontSizeEnabled;
+    applyFontScale(root, fontScaleEnabled, config.fontSize);
+
     if (config.extensionEnabled) {
       debug('extension enabled');
       // apply base CSS
@@ -37,9 +43,6 @@ $(document).ready(function () {
       removeClassStartsWith(body, FONT_CLASS_PREFIX);
       if (config.fontEnabled) {
         body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
-        
-        // apply font size
-        body.css('--dyslexia-friendly-font-size', config.fontSize + 'px');
       }
 
       // remove previous background class
@@ -62,6 +65,9 @@ $(document).ready(function () {
       debug('extension disabled');
       // remove main class to disable all modifications
       body.removeClass(CSS_NAMESPACE);
+      removeClassStartsWith(body, FONT_CLASS_PREFIX);
+      removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
+      applyFontScale(root, false, config.fontSize);
       ruler.hide();
     }
   }

@@ -1,5 +1,6 @@
 export const CSS_NAMESPACE = 'dyslexia-friendly';
 export const FONT_CLASS_PREFIX = 'dyslexia-friendly-font-';
+export const FONT_SIZE_CLASS = 'dyslexia-friendly-font-size-enabled';
 export const BACKGROUND_CLASS_PREFIX = 'dyslexia-friendly-bg-';
 export const RULER_ID = 'dyslexia-friendly-ruler';
 

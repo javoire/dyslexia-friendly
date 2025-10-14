@@ -8,6 +8,10 @@ This one is designed for dyslexic readers, though
 it can be useful to increase readability for anyone
 else                                                 */
 
+html.dyslexia-friendly-font-size-enabled {
+  font-size: calc(var(--dyslexia-font-scale, 1) * 1em) !important;
+}
+
 body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic *,
 body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic article,
 body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic main,
@@ -22,6 +26,7 @@ body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic h4,
 body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic h5,
 body.dyslexia-friendly.dyslexia-friendly-font-opendyslexic h6 {
   font-family: 'opendyslexic' !important;
+  line-height: 200% !important;
 }
 
 body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono *,
@@ -38,6 +43,7 @@ body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono h4,
 body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono h5,
 body.dyslexia-friendly.dyslexia-friendly-font-opendyslexicmono h6 {
   font-family: 'opendyslexicmono' !important;
+  line-height: 200% !important;
 }
 
 body.dyslexia-friendly.dyslexia-friendly-font-comicsans *,
@@ -54,6 +60,7 @@ body.dyslexia-friendly.dyslexia-friendly-font-comicsans h4,
 body.dyslexia-friendly.dyslexia-friendly-font-comicsans h5,
 body.dyslexia-friendly.dyslexia-friendly-font-comicsans h6 {
   font-family: 'Comic Sans MS' !important;
+  line-height: 200% !important;
 }
 
 /* Background color options for improved readability
@@ -177,23 +184,6 @@ likely overrides stylesheets.
 The text is colored dark blue to assist with "glare"
 issues, but also to make the black symbols subtly stand
 out.                                                  */
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"],
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] *,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] article,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] main,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] section,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] div,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] p,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] span,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h1,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h2,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h3,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h4,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h5,
-body.dyslexia-friendly[class*="dyslexia-friendly-font-"] h6 {
-  font-size: var(--dyslexia-friendly-font-size, 14px) !important;
-  line-height: 200% !important;
-}
 /*
 Setting bg color is tricky, since some websites switch between dark/light mode and some don't.
 So at least we might have to also control the text color in accordance to the background color.
