@@ -46,7 +46,7 @@
     "eslint-config-prettier": "^10.0.1",
     "eslint-plugin-jest": "^28.10.0",
     "file-loader": "^6.2.0",
-    "firebase-tools": "^13.20.1",
+    "firebase-tools": "^14.23.0",
     "fs-extra": "7.0.1",
     "globals": "^15.7.0",
     "html-loader": "^5.1.0",
