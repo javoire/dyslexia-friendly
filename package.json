@@ -48,7 +48,7 @@
     "file-loader": "^6.2.0",
     "firebase-tools": "^14.23.0",
     "fs-extra": "7.0.1",
-    "globals": "^15.7.0",
+    "globals": "^16.5.0",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.5.0",
     "husky": "^9.1.7",
