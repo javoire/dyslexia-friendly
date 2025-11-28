@@ -47,7 +47,7 @@
     "eslint-plugin-jest": "^28.10.0",
     "file-loader": "^6.2.0",
     "firebase-tools": "^14.23.0",
-    "fs-extra": "7.0.1",
+    "fs-extra": "11.3.2",
     "globals": "^16.5.0",
     "html-loader": "^5.1.0",
     "html-webpack-plugin": "^5.5.0",
