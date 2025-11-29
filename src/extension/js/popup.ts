@@ -90,20 +90,12 @@ function updateUiFromConfig(
   removeClassStartsWith(body, FONT_CLASS_PREFIX);
   body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
 
-  // update font size preset button states
-  $('.font-size-preset').removeClass('bg-primary text-white border-2 border-primary').addClass('bg-neutral-200 dark:bg-neutral-700 border-2 border-transparent');
-  $(`.font-size-preset[data-size="${config.fontSize.toFixed(1)}"]`).removeClass('bg-neutral-200 dark:bg-neutral-700 border-2 border-transparent').addClass('bg-primary text-white border-2 border-primary');
-
   // update font size value display
   $('#font-size-value').text(config.fontSize.toFixed(1) + 'x');
 
   const fontSizeEnabled = !!config.fontSizeEnabled;
   const fontSizeRange = $('#font-size-range');
   fontSizeRange.prop('disabled', !fontSizeEnabled);
-
-  const fontSizePresets = $('.font-size-preset');
-  fontSizePresets.prop('disabled', !fontSizeEnabled);
-  fontSizePresets.toggleClass('font-size-preset--disabled', !fontSizeEnabled);
 
   // toggle background
   removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
@@ -199,19 +191,6 @@ window.onload = function () {
         updateUiFromConfig(config, inputs, body, ruler);
       });
       e.preventDefault();
-    });
-
-    // handle font size preset buttons
-    $('.font-size-preset').on('click', function () {
-      const size = $(this).data('size') as number;
-      $('#font-size-range').val(size).trigger('input');
-      
-      // update button states immediately for better UX
-      $('.font-size-preset').removeClass('bg-primary text-white border-2 border-primary').addClass('bg-neutral-200 dark:bg-neutral-700 border-2 border-transparent');
-      $(this).removeClass('bg-neutral-200 dark:bg-neutral-700 border-2 border-transparent').addClass('bg-primary text-white border-2 border-primary');
-      
-      // save the new font size to storage
-      saveFormStateToStore(configForm);
     });
 
     // bind ruler to mouse

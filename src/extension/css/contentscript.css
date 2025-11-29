@@ -8,6 +8,7 @@ This one is designed for dyslexic readers, though
 it can be useful to increase readability for anyone
 else                                                 */
 
+/* Apply font scaling to the root element - this scales all font sizes proportionally */
 html.dyslexia-friendly-font-size-enabled {
   font-size: calc(var(--dyslexia-font-scale, 1) * 1em) !important;
 }
