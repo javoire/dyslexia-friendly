@@ -61,7 +61,7 @@
     "prettier": "^3.3.2",
     "prettier-eslint": "^16.4.2",
     "prettier-eslint-cli": "^8.0.1",
-    "puppeteer": "^24.11.2",
+    "puppeteer": "^24.31.0",
     "style-loader": "^4.0.0",
     "tailwindcss": "^4.0.0",
     "ts-jest": "^29.4.0",
