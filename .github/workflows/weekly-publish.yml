@@ -2,7 +2,7 @@ name: Weekly Publish Check
 
 on:
   schedule:
-    - cron: '0 9 * * 1' # Mondays 09:00 UTC
+    - cron: '0 0 * * 1' # Mondays 00:00 UTC
   workflow_dispatch:
 
 env:
