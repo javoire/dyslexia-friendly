@@ -22,7 +22,7 @@ $(document).ready(function () {
   const body = $('body');
   body.append(ruler);
   body.mousemove(function (event: JQuery.MouseMoveEvent) {
-    ruler.css('top', event.pageY);
+    ruler.css('top', event.clientY);
   });
 
   // Apply user settings to webpage
