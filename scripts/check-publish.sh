@@ -9,9 +9,20 @@ if [ -z "$LATEST_TAG" ]; then
   exit 0
 fi
 
-ACCESS_TOKEN=$(curl --fail "https://oauth2.googleapis.com/token" \
-  -d "client_secret=${CLIENT_SECRET}&grant_type=refresh_token&refresh_token=${REFRESH_TOKEN}&client_id=${CLIENT_ID}" \
-  | jq -r .access_token)
+TOKEN_RESPONSE=$(curl -sS -w "\n%{http_code}" "https://oauth2.googleapis.com/token" \
+  -d "client_secret=${CLIENT_SECRET}&grant_type=refresh_token&refresh_token=${REFRESH_TOKEN}&client_id=${CLIENT_ID}")
+TOKEN_BODY=$(printf '%s' "${TOKEN_RESPONSE}" | sed '$d')
+TOKEN_STATUS=$(printf '%s' "${TOKEN_RESPONSE}" | tail -n1)
+
+if [ "${TOKEN_STATUS}" != "200" ]; then
+  TOKEN_ERROR=$(printf '%s' "${TOKEN_BODY}" | jq -r '.error // empty' 2>/dev/null || true)
+  TOKEN_ERROR_DESC=$(printf '%s' "${TOKEN_BODY}" | jq -r '.error_description // empty' 2>/dev/null || true)
+  echo "should_publish=false" >> "$GITHUB_OUTPUT"
+  echo "reason=OAuth token exchange failed (status ${TOKEN_STATUS}). ${TOKEN_ERROR} ${TOKEN_ERROR_DESC}" >> "$GITHUB_OUTPUT"
+  exit 0
+fi
+
+ACCESS_TOKEN=$(printf '%s' "${TOKEN_BODY}" | jq -r .access_token)
 
 PUBLISHED_VERSION=$(curl --fail \
   -H "Authorization: Bearer ${ACCESS_TOKEN}" \
