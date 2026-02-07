@@ -9,16 +9,20 @@ if [ -z "$LATEST_TAG" ]; then
   exit 0
 fi
 
-ACCESS_TOKEN=$(curl --fail "https://oauth2.googleapis.com/token" \
-  -d "client_secret=${CLIENT_SECRET}&grant_type=refresh_token&refresh_token=${REFRESH_TOKEN}&client_id=${CLIENT_ID}" \
-  | jq -r .access_token)
+TOKEN_BODY=$(curl -sS "https://oauth2.googleapis.com/token" \
+  --fail \
+  -d "client_secret=${CLIENT_SECRET}&grant_type=refresh_token&refresh_token=${REFRESH_TOKEN}&client_id=${CLIENT_ID}") \
+  || { echo "OAuth token exchange failed" >&2; exit 1; }
 
-PUBLISHED_VERSION=$(curl --fail \
+ACCESS_TOKEN=$(printf '%s' "${TOKEN_BODY}" | jq -r .access_token)
+
+PUBLISHED_BODY=$(curl -sS --fail \
   -H "Authorization: Bearer ${ACCESS_TOKEN}" \
   -H "x-goog-api-version: 2" \
-  "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}" \
-  | jq -r .crxVersion)
+  "https://www.googleapis.com/chromewebstore/v1.1/items/${APP_ID}?projection=DRAFT") \
+  || { echo "Chrome Web Store API failed" >&2; exit 1; }
 
+PUBLISHED_VERSION=$(printf '%s' "${PUBLISHED_BODY}" | jq -r .crxVersion)
 LATEST_VERSION="${LATEST_TAG#v}"
 SHOULD_PUBLISH=false
 
