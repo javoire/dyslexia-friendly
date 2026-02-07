@@ -1,4 +1,4 @@
-name: Weekly Publish Check
+name: Weekly Auto-Release
 
 on:
   schedule:
@@ -10,64 +10,53 @@ env:
   PACKAGE_PATH: build/dyslexia-friendly.zip
 
 jobs:
-  publish_if_newer_tag:
+  release:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          persist-credentials: false
 
-      - name: Install system dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y curl jq zip
-
-      - name: Check latest tag vs published version
-        id: version_check
-        run: scripts/check-publish.sh
-        env:
-          CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
-          REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
-          CLIENT_ID: ${{ secrets.CLIENT_ID }}
-
-      - name: Log skip reason
-        if: steps.version_check.outputs.should_publish != 'true'
-        run: |
-          echo "Skipping publish."
-          echo "Reason: ${{ steps.version_check.outputs.reason }}"
-          echo "Latest tag: ${{ steps.version_check.outputs.latest_tag }}"
-          echo "Published version: ${{ steps.version_check.outputs.published_version }}"
-
-      - name: Checkout latest tag
-        if: steps.version_check.outputs.should_publish == 'true'
-        run: git checkout "${{ steps.version_check.outputs.latest_tag }}"
-
-      - name: Setup Node.js
-        if: steps.version_check.outputs.should_publish == 'true'
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'yarn'
 
+      - name: Run semantic-release
+        id: release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          extra_plugins: |
+            @semantic-release/changelog
+            @semantic-release/git
+            @semantic-release/exec
+            conventional-changelog-conventionalcommits
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Checkout new tag
+        if: steps.release.outputs.new_release_published == 'true'
+        run: git checkout "v${{ steps.release.outputs.new_release_version }}"
+
       - name: Install dependencies
-        if: steps.version_check.outputs.should_publish == 'true'
+        if: steps.release.outputs.new_release_published == 'true'
         run: yarn install --frozen-lockfile
 
       - name: Build
-        if: steps.version_check.outputs.should_publish == 'true'
+        if: steps.release.outputs.new_release_published == 'true'
         run: yarn build
 
       - name: Package
-        if: steps.version_check.outputs.should_publish == 'true'
+        if: steps.release.outputs.new_release_published == 'true'
         run: yarn package
 
       - name: Publish to Chrome Web Store
-        if: steps.version_check.outputs.should_publish == 'true'
+        if: steps.release.outputs.new_release_published == 'true'
         run: utils/publish.sh
         env:
           CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
           REFRESH_TOKEN: ${{ secrets.REFRESH_TOKEN }}
           CLIENT_ID: ${{ secrets.CLIENT_ID }}
-          APP_ID: ${{ env.APP_ID }}
-          PACKAGE_PATH: ${{ env.PACKAGE_PATH }}
