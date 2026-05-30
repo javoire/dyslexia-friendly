@@ -15,6 +15,8 @@ export interface UserConfig {
   customBackgroundColor: string;
   fontColorEnabled: boolean;
   fontColor: string;
+  // hostnames where the extension is disabled (per-site blacklist, RAN-21)
+  disabledSites: string[];
 }
 
 export type ConfigKey = keyof UserConfig;
@@ -39,6 +41,7 @@ export const DEFAULT_CONFIG: UserConfig = {
   customBackgroundColor: '#fdf6e3',
   fontColorEnabled: false,
   fontColor: '#000000',
+  disabledSites: [],
 };
 
 export const updateChangedConfigValues = (

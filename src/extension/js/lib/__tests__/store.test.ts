@@ -174,6 +174,31 @@ describe('store', () => {
     expect(result.fontColor).toBe('#cc0033');
   });
 
+  // RAN-21: per-site blacklist
+  test('default config includes an empty disabledSites array', () => {
+    expect(DEFAULT_CONFIG.disabledSites).toEqual([]);
+  });
+
+  test('disabledSites survives updateChangedConfigValues (boolean reset)', () => {
+    const storedConfig = {
+      ...DEFAULT_CONFIG,
+      disabledSites: ['example.com'],
+    };
+    // a boolean-only update must not wipe the array
+    const result = updateChangedConfigValues(storedConfig, {
+      fontEnabled: true,
+    });
+    expect(result.disabledSites).toEqual(['example.com']);
+  });
+
+  test('updateChangedConfigValues can write disabledSites', () => {
+    const storedConfig = { ...DEFAULT_CONFIG };
+    const result = updateChangedConfigValues(storedConfig, {
+      disabledSites: ['127.0.0.1', 'foo.test'],
+    });
+    expect(result.disabledSites).toEqual(['127.0.0.1', 'foo.test']);
+  });
+
   test('supports all background color options', () => {
     const supportedBackgrounds = ['none', 'classic', 'cream', 'softblue', 'paleyellow', 'custom'];
     
