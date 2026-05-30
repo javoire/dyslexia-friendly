@@ -25,8 +25,24 @@ body.dyslexia-friendly-font-comicsans {
   font-family: 'Comic Sans MS' !important;
 }
 
+body.dyslexia-friendly-font-trebuchet {
+  font-family: 'Trebuchet MS' !important;
+}
+
+body.dyslexia-friendly-font-couriernew {
+  font-family: 'Courier New', Courier, monospace !important;
+}
+
 label[for='font-comicsans-radio'] {
   font-family: 'Comic Sans MS' !important;
+}
+
+label[for='font-trebuchet-radio'] {
+  font-family: 'Trebuchet MS' !important;
+}
+
+label[for='font-couriernew-radio'] {
+  font-family: 'Courier New', Courier, monospace !important;
 }
 
 label[for='font-opendyslexic-radio'] {
