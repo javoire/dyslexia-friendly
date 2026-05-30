@@ -18,6 +18,37 @@ interface RuntimeMessage {
 
 const ruler = $(`<div id="${RULER_ID}"></div>`);
 
+const FONT_COLOR_STYLE_ID = 'dyslexia-friendly-font-color-style';
+
+/**
+ * Apply (or clear) the user's chosen text color.
+ *
+ * Background presets and the namespace CSS set `color` with `!important` on
+ * `body *` and various content selectors, so a plain inline style on `body`
+ * can't win for descendants. We inject a dedicated <style> element whose
+ * selectors match those of the presets (same specificity) but appear later in
+ * document order, so the user's explicit choice wins. The style is removed
+ * entirely when disabled so no leftover state remains.
+ */
+function applyFontColor(enabled: boolean, color: string): void {
+  const existing = document.getElementById(FONT_COLOR_STYLE_ID);
+  if (!enabled) {
+    if (existing) {
+      existing.remove();
+    }
+    return;
+  }
+  const css = `body.${CSS_NAMESPACE},body.${CSS_NAMESPACE} *{color:${color} !important;}`;
+  if (existing) {
+    existing.textContent = css;
+  } else {
+    const style = document.createElement('style');
+    style.id = FONT_COLOR_STYLE_ID;
+    style.textContent = css;
+    document.head.appendChild(style);
+  }
+}
+
 $(document).ready(function () {
   const body = $('body');
   body.append(ruler);
@@ -58,6 +89,9 @@ $(document).ready(function () {
         body.addClass(BACKGROUND_CLASS_PREFIX + config.backgroundChoice);
       }
 
+      // text color: the user's explicit choice wins over background presets
+      applyFontColor(config.fontColorEnabled, config.fontColor);
+
       // ruler
       ruler.css('background-color', config.rulerColor);
       ruler.css('opacity', config.rulerOpacity);
@@ -75,6 +109,7 @@ $(document).ready(function () {
       removeClassStartsWith(body, FONT_CLASS_PREFIX);
       removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
       body.css('background-color', '');
+      applyFontColor(false, config.fontColor);
       applyFontScale(root, false, config.fontSize);
       ruler.hide();
     }
