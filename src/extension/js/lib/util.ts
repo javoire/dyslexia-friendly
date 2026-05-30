@@ -47,6 +47,10 @@ export const formToConfig = (form: JQuery<HTMLElement>): Config => {
   // Handle unchecked checkboxes - they don't appear in serializeArray()
   form.find('input[type="checkbox"]').each(function () {
     const checkbox = this as HTMLInputElement;
+    // skip nameless inputs so they never pollute the config (e.g. with a '' key)
+    if (!checkbox.name) {
+      return;
+    }
     if (!Object.prototype.hasOwnProperty.call(obj, checkbox.name)) {
       obj[checkbox.name] = false;
     }

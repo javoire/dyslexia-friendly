@@ -10,6 +10,11 @@ import { formToConfig, debug, removeClassStartsWith } from './lib/util';
 import { FONT_CLASS_PREFIX, BACKGROUND_CLASS_PREFIX } from './lib/consts';
 import { DEFAULT_CONFIG, UserConfig } from './lib/store';
 
+// Last-known per-site blacklist (RAN-21). The live-preview push builds its
+// payload from the form, which has no disabledSites field; we merge this in so
+// dragging a slider on a disabled site doesn't transiently re-apply effects.
+let knownDisabledSites: string[] = [];
+
 /**
  * Resolve the active tab's hostname so the popup can show and toggle the
  * per-site blacklist (RAN-21). Returns null for pages without a usable
@@ -61,9 +66,9 @@ function setupDisableSiteToggle(): void {
     chrome.runtime.sendMessage(
       { message: 'getConfig' },
       (config: UserConfig) => {
-        const disabledSites = config.disabledSites || [];
+        knownDisabledSites = config.disabledSites || [];
         (checkbox.get(0) as HTMLInputElement).checked =
-          disabledSites.includes(hostname);
+          knownDisabledSites.includes(hostname);
       },
     );
 
@@ -76,6 +81,7 @@ function setupDisableSiteToggle(): void {
           const disabledSites = disable
             ? Array.from(new Set([...current, hostname]))
             : current.filter((h) => h !== hostname);
+          knownDisabledSites = disabledSites;
           debug('updating disabledSites', disabledSites);
           // persist via the normal update flow; the service worker pushes
           // the new config to the active tab so the change applies live.
@@ -251,7 +257,12 @@ window.onload = function () {
       // this sends directly to the active tab, not via storage, to not spam the storage
       // there's a rate limit https://developer.chrome.com/docs/extensions/reference/api/storage
       // MAX_WRITE_OPERATIONS_PER_MINUTE
-      const config = formToConfig(configForm);
+      // the form has no disabledSites field; merge in the known blacklist so a
+      // disabled site stays disabled during live preview (no effect flicker).
+      const config = {
+        ...formToConfig(configForm),
+        disabledSites: knownDisabledSites,
+      };
       debug('sending config to active tab', config);
       requestAnimationFrame(() => {
         chrome.runtime.sendMessage({

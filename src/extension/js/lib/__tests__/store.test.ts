@@ -199,6 +199,31 @@ describe('store', () => {
     expect(result.disabledSites).toEqual(['127.0.0.1', 'foo.test']);
   });
 
+  // RAN-21: flipping an unrelated switch goes through the form-submit path,
+  // i.e. updateChangedConfigValues(storedConfig, formToConfig(form)). The
+  // form payload has NO disabledSites key (and, after the util fix, no stray
+  // '' key), so the previously-stored array must survive that round-trip.
+  test('form-submit path preserves stored disabledSites', () => {
+    const storedConfig = {
+      ...DEFAULT_CONFIG,
+      disabledSites: ['example.com'],
+    };
+    // payload mimics formToConfig output for flipping the font switch off:
+    // booleans present, but no disabledSites key.
+    const formPayload = {
+      extensionEnabled: true,
+      fontEnabled: false,
+      fontSizeEnabled: true,
+      rulerEnabled: true,
+      backgroundEnabled: false,
+      fontChoice: 'opendyslexic',
+    };
+    const result = updateChangedConfigValues(storedConfig, formPayload);
+    expect(result.disabledSites).toEqual(['example.com']);
+    expect(result.fontEnabled).toBe(false);
+    expect(Object.prototype.hasOwnProperty.call(result, '')).toBe(false);
+  });
+
   test('supports all background color options', () => {
     const supportedBackgrounds = ['none', 'classic', 'cream', 'softblue', 'paleyellow', 'custom'];
     
