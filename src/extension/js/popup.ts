@@ -106,6 +106,14 @@ function updateUiFromConfig(
     body.addClass(BACKGROUND_CLASS_PREFIX + config.backgroundChoice);
   }
 
+  // only show the custom color picker when the custom background is selected
+  const customColorWrapper = $('#background-custom-color-wrapper');
+  if (config.backgroundChoice === 'custom') {
+    customColorWrapper.show();
+  } else {
+    customColorWrapper.hide();
+  }
+
   // toggle visible sections
   const visibleSections = $('[data-show-when]');
   visibleSections.each(function (this: HTMLElement) {
