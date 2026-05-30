@@ -88,6 +88,16 @@ Configuration stored in `chrome.storage.sync` as single `config` object. Default
 - Tests run in separate Jest projects with different configurations
 - Integration tests have 2-minute timeout for Chrome startup
 
+### Visual Verification
+
+Features can be visually verified by loading the built extension into real headless Chrome with Puppeteer and screenshotting the result (not just asserting in jsdom). Reuse the launch pattern in `test/integration/extension-loader.ts` (loads `build/extension`, fixed extension ID `miepjgfkkommhllbbjaedffcpkncboeo`). Workflow per feature: `yarn build` → launch Chrome with the extension → set config in `chrome.storage.sync` → open a page → screenshot.
+
+Non-obvious gotchas when driving the extension this way:
+
+- The content script only matches `http(s)://*` (per `manifest.json`), **not** `data:` URLs. Serve test pages from a local `http.createServer` on `127.0.0.1`, otherwise the content script never injects.
+- Config reaches the content script via the service worker pushing to the **active** tab on navigation. Reliable delivery = set `chrome.storage.sync` from an extension page (popup/options) **and** `page.bringToFront()` **and** send `chrome.runtime.sendMessage({ message: 'sendConfigToActiveTab', data: config })`. A storage write alone races and often doesn't apply.
+- Reading computed style immediately after applying config is racy. To verify pure-CSS behaviour (e.g. font-size scaling), isolate the CSS rule on a plain page rather than fighting delivery timing.
+
 ### Build Process
 
 Webpack handles TypeScript compilation, CSS processing with PostCSS/Tailwind, font copying, and HTML generation. Extension fonts are rewritten for chrome-extension:// protocol in content scripts.
