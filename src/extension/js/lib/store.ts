@@ -144,6 +144,10 @@ export const store: Store = {
   // subscribe to changes in store
   subscribe: function (callback: ConfigCallback): void {
     subscribers.push(callback);
-    callback(DEFAULT_CONFIG);
+    // Prime with the actual stored config, not DEFAULT_CONFIG. Priming with
+    // defaults (rulerEnabled:true) pushed the ruler back on every
+    // service-worker cold start, making a disabled ruler reappear in new
+    // tabs (RAN-23).
+    store.getAll(callback);
   },
 };

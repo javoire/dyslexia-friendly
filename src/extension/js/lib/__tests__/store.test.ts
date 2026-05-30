@@ -116,6 +116,31 @@ describe('store', () => {
     );
   });
 
+  // RAN-23: a new subscriber must be primed with the *stored* config,
+  // not DEFAULT_CONFIG. The old behaviour pushed rulerEnabled:true on every
+  // service-worker cold start, making a disabled ruler reappear in new tabs.
+  test('subscribe() primes the callback with stored config, not defaults', (done) => {
+    const storedConfig = { ...DEFAULT_CONFIG, rulerEnabled: false };
+    global.chrome = {
+      storage: {
+        sync: {
+          get: function (key, fn) {
+            fn({ config: { ...storedConfig } });
+          },
+        },
+      },
+    };
+    store.subscribe(function (config) {
+      try {
+        expect(config).toEqual(storedConfig);
+        expect(config.rulerEnabled).toBe(false);
+        done();
+      } catch (error) {
+        done(error);
+      }
+    });
+  });
+
   test('default config includes background options', () => {
     expect(DEFAULT_CONFIG.backgroundEnabled).toBe(false);
     expect(DEFAULT_CONFIG.backgroundChoice).toBe('none');
