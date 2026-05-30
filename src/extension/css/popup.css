@@ -166,3 +166,10 @@ a {
   display: block;
   margin-top: 9px;
 }
+
+#popup-wrapper .version {
+  margin-top: 12px;
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.5;
+}

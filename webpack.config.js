@@ -108,6 +108,7 @@ const extensionConfig = {
   },
   entry: {
     popup: path.join(extensionSrcPath, 'js', 'popup.ts'),
+    about: path.join(extensionSrcPath, 'js', 'about.ts'),
     options: path.join(extensionSrcPath, 'js', 'options.ts'),
     serviceWorker: path.join(extensionSrcPath, 'js', 'serviceWorker.ts'),
     contentscript: path.join(extensionSrcPath, 'js', 'contentscript.ts'),
@@ -142,7 +143,7 @@ const extensionConfig = {
     new HtmlWebpackPlugin({
       template: path.join(extensionSrcPath, 'about.html'),
       filename: extensionOutPath + '/about.html',
-      chunks: ['popup'],
+      chunks: ['about'],
     }),
     new HtmlWebpackPlugin({
       template: path.join(extensionSrcPath, 'options.html'),
