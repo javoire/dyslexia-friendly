@@ -237,6 +237,11 @@ body.dyslexia-friendly li:hover {
 /* Ruler */
 
 #dyslexia-friendly-ruler {
+  /* Hidden until config explicitly enables it (.show()). Without this the
+     div defaults to display:block and the always-on mousemove handler drags
+     it into view before/without a config arriving — making a disabled ruler
+     reappear on new tabs when config delivery is delayed (RAN-23). */
+  display: none;
   height: 1.6em;
   /* ideally keep in sync with default config */
   background-color: black;
