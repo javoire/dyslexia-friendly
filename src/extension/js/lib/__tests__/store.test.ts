@@ -158,6 +158,22 @@ describe('store', () => {
     expect(result.customBackgroundColor).toBe('#ffcc00');
   });
 
+  test('default config includes font color options', () => {
+    expect(DEFAULT_CONFIG.fontColorEnabled).toBe(false);
+    expect(DEFAULT_CONFIG.fontColor).toBe('#000000');
+  });
+
+  test('updates font color', () => {
+    const storedConfig = { ...DEFAULT_CONFIG };
+    const newConfigValues = {
+      fontColorEnabled: true,
+      fontColor: '#cc0033',
+    };
+    const result = updateChangedConfigValues(storedConfig, newConfigValues);
+    expect(result.fontColorEnabled).toBe(true);
+    expect(result.fontColor).toBe('#cc0033');
+  });
+
   test('supports all background color options', () => {
     const supportedBackgrounds = ['none', 'classic', 'cream', 'softblue', 'paleyellow', 'custom'];
     

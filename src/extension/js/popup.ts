@@ -106,6 +106,12 @@ function updateUiFromConfig(
     body.addClass(BACKGROUND_CLASS_PREFIX + config.backgroundChoice);
   }
 
+  // toggle font (text) color live preview in the popup
+  body.css('color', '');
+  if (config.fontColorEnabled) {
+    body.css('color', config.fontColor);
+  }
+
   // only show the custom color picker when the custom background is selected
   const customColorWrapper = $('#background-custom-color-wrapper');
   if (config.backgroundChoice === 'custom') {

@@ -13,6 +13,8 @@ export interface UserConfig {
   backgroundEnabled: boolean;
   backgroundChoice: string;
   customBackgroundColor: string;
+  fontColorEnabled: boolean;
+  fontColor: string;
 }
 
 export type ConfigKey = keyof UserConfig;
@@ -35,6 +37,8 @@ export const DEFAULT_CONFIG: UserConfig = {
   backgroundEnabled: false,
   backgroundChoice: 'none',
   customBackgroundColor: '#fdf6e3',
+  fontColorEnabled: false,
+  fontColor: '#000000',
 };
 
 export const updateChangedConfigValues = (
