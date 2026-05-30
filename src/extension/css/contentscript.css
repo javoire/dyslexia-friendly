@@ -64,6 +64,40 @@ body.dyslexia-friendly.dyslexia-friendly-font-comicsans h6 {
   line-height: 200% !important;
 }
 
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet *,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet article,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet main,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet section,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet div,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet p,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet span,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet h1,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet h2,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet h3,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet h4,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet h5,
+body.dyslexia-friendly.dyslexia-friendly-font-trebuchet h6 {
+  font-family: 'Trebuchet MS' !important;
+  line-height: 200% !important;
+}
+
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew *,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew article,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew main,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew section,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew div,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew p,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew span,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew h1,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew h2,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew h3,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew h4,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew h5,
+body.dyslexia-friendly.dyslexia-friendly-font-couriernew h6 {
+  font-family: 'Courier New', Courier, monospace !important;
+  line-height: 200% !important;
+}
+
 /* Background color options for improved readability
  *
  * Color choices based on accessibility research:
