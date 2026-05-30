@@ -174,6 +174,56 @@ describe('store', () => {
     expect(result.fontColor).toBe('#cc0033');
   });
 
+  // RAN-21: per-site blacklist
+  test('default config includes an empty disabledSites array', () => {
+    expect(DEFAULT_CONFIG.disabledSites).toEqual([]);
+  });
+
+  test('disabledSites survives updateChangedConfigValues (boolean reset)', () => {
+    const storedConfig = {
+      ...DEFAULT_CONFIG,
+      disabledSites: ['example.com'],
+    };
+    // a boolean-only update must not wipe the array
+    const result = updateChangedConfigValues(storedConfig, {
+      fontEnabled: true,
+    });
+    expect(result.disabledSites).toEqual(['example.com']);
+  });
+
+  test('updateChangedConfigValues can write disabledSites', () => {
+    const storedConfig = { ...DEFAULT_CONFIG };
+    const result = updateChangedConfigValues(storedConfig, {
+      disabledSites: ['127.0.0.1', 'foo.test'],
+    });
+    expect(result.disabledSites).toEqual(['127.0.0.1', 'foo.test']);
+  });
+
+  // RAN-21: flipping an unrelated switch goes through the form-submit path,
+  // i.e. updateChangedConfigValues(storedConfig, formToConfig(form)). The
+  // form payload has NO disabledSites key (and, after the util fix, no stray
+  // '' key), so the previously-stored array must survive that round-trip.
+  test('form-submit path preserves stored disabledSites', () => {
+    const storedConfig = {
+      ...DEFAULT_CONFIG,
+      disabledSites: ['example.com'],
+    };
+    // payload mimics formToConfig output for flipping the font switch off:
+    // booleans present, but no disabledSites key.
+    const formPayload = {
+      extensionEnabled: true,
+      fontEnabled: false,
+      fontSizeEnabled: true,
+      rulerEnabled: true,
+      backgroundEnabled: false,
+      fontChoice: 'opendyslexic',
+    };
+    const result = updateChangedConfigValues(storedConfig, formPayload);
+    expect(result.disabledSites).toEqual(['example.com']);
+    expect(result.fontEnabled).toBe(false);
+    expect(Object.prototype.hasOwnProperty.call(result, '')).toBe(false);
+  });
+
   test('supports all background color options', () => {
     const supportedBackgrounds = ['none', 'classic', 'cream', 'softblue', 'paleyellow', 'custom'];
     

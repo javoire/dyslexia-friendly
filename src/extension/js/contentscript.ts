@@ -65,11 +65,21 @@ $(document).ready(function () {
     debug('applying user settings to webpage', config);
 
     const root = document.documentElement;
+
+    // per-site blacklist (RAN-21): if this host is disabled, treat the
+    // extension as fully disabled regardless of other config.
+    const siteDisabled = (config.disabledSites || []).includes(
+      window.location.hostname,
+    );
+
     const fontScaleEnabled =
-      config.extensionEnabled && config.fontEnabled && config.fontSizeEnabled;
+      config.extensionEnabled &&
+      !siteDisabled &&
+      config.fontEnabled &&
+      config.fontSizeEnabled;
     applyFontScale(root, fontScaleEnabled, config.fontSize);
 
-    if (config.extensionEnabled) {
+    if (config.extensionEnabled && !siteDisabled) {
       debug('extension enabled');
       // apply base CSS
       body.addClass(CSS_NAMESPACE);

@@ -10,6 +10,91 @@ import { formToConfig, debug, removeClassStartsWith } from './lib/util';
 import { FONT_CLASS_PREFIX, BACKGROUND_CLASS_PREFIX } from './lib/consts';
 import { DEFAULT_CONFIG, UserConfig } from './lib/store';
 
+// Last-known per-site blacklist (RAN-21). The live-preview push builds its
+// payload from the form, which has no disabledSites field; we merge this in so
+// dragging a slider on a disabled site doesn't transiently re-apply effects.
+let knownDisabledSites: string[] = [];
+
+/**
+ * Resolve the active tab's hostname so the popup can show and toggle the
+ * per-site blacklist (RAN-21). Returns null for pages without a usable
+ * http(s) host (e.g. chrome:// pages or the dev server).
+ */
+function getActiveTabHostname(callback: (hostname: string | null) => void): void {
+  if (!chrome.tabs || !chrome.tabs.query) {
+    return callback(null);
+  }
+  chrome.tabs.query(
+    { active: true, lastFocusedWindow: true },
+    function (tabs: chrome.tabs.Tab[]) {
+      const url = tabs[0]?.url;
+      if (!url) {
+        return callback(null);
+      }
+      try {
+        const parsed = new URL(url);
+        if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+          return callback(null);
+        }
+        callback(parsed.hostname);
+      } catch {
+        callback(null);
+      }
+    },
+  );
+}
+
+/**
+ * Set up the "Disable on this site" toggle: reflect current blacklist state
+ * for the active tab, and add/remove the hostname on change.
+ */
+function setupDisableSiteToggle(): void {
+  const section = $('#disable-site-section');
+  const checkbox = $('#disable-site-checkbox');
+  const hostnameLabel = $('#disable-site-hostname');
+
+  getActiveTabHostname(function (hostname) {
+    // No usable host (chrome:// pages etc.) — hide the toggle entirely.
+    if (!hostname) {
+      section.hide();
+      return;
+    }
+
+    hostnameLabel.text(hostname);
+    section.show();
+
+    chrome.runtime.sendMessage(
+      { message: 'getConfig' },
+      (config: UserConfig) => {
+        knownDisabledSites = config.disabledSites || [];
+        (checkbox.get(0) as HTMLInputElement).checked =
+          knownDisabledSites.includes(hostname);
+      },
+    );
+
+    checkbox.off('change.disableSite').on('change.disableSite', function () {
+      const disable = (this as HTMLInputElement).checked;
+      chrome.runtime.sendMessage(
+        { message: 'getConfig' },
+        (config: UserConfig) => {
+          const current = config.disabledSites || [];
+          const disabledSites = disable
+            ? Array.from(new Set([...current, hostname]))
+            : current.filter((h) => h !== hostname);
+          knownDisabledSites = disabledSites;
+          debug('updating disabledSites', disabledSites);
+          // persist via the normal update flow; the service worker pushes
+          // the new config to the active tab so the change applies live.
+          chrome.runtime.sendMessage({
+            message: 'updateConfig',
+            data: { disabledSites },
+          });
+        },
+      );
+    });
+  });
+}
+
 // Mock chrome runtime for development
 declare global {
   interface Window {
@@ -172,7 +257,12 @@ window.onload = function () {
       // this sends directly to the active tab, not via storage, to not spam the storage
       // there's a rate limit https://developer.chrome.com/docs/extensions/reference/api/storage
       // MAX_WRITE_OPERATIONS_PER_MINUTE
-      const config = formToConfig(configForm);
+      // the form has no disabledSites field; merge in the known blacklist so a
+      // disabled site stays disabled during live preview (no effect flicker).
+      const config = {
+        ...formToConfig(configForm),
+        disabledSites: knownDisabledSites,
+      };
       debug('sending config to active tab', config);
       requestAnimationFrame(() => {
         chrome.runtime.sendMessage({
@@ -219,6 +309,9 @@ window.onload = function () {
     chrome.runtime.sendMessage({ message: 'getConfig' }, (config) => {
       updateUiFromConfig(config, inputs, body, ruler);
     });
+
+    // per-site blacklist toggle (RAN-21)
+    setupDisableSiteToggle();
   });
 };
 
