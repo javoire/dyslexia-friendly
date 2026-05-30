@@ -144,10 +144,22 @@ describe('store', () => {
   test('default config includes background options', () => {
     expect(DEFAULT_CONFIG.backgroundEnabled).toBe(false);
     expect(DEFAULT_CONFIG.backgroundChoice).toBe('none');
+    expect(DEFAULT_CONFIG.customBackgroundColor).toBe('#fdf6e3');
+  });
+
+  test('updates custom background color', () => {
+    const storedConfig = { ...DEFAULT_CONFIG };
+    const newConfigValues = {
+      backgroundChoice: 'custom',
+      customBackgroundColor: '#ffcc00',
+    };
+    const result = updateChangedConfigValues(storedConfig, newConfigValues);
+    expect(result.backgroundChoice).toBe('custom');
+    expect(result.customBackgroundColor).toBe('#ffcc00');
   });
 
   test('supports all background color options', () => {
-    const supportedBackgrounds = ['none', 'classic', 'cream', 'softblue', 'paleyellow'];
+    const supportedBackgrounds = ['none', 'classic', 'cream', 'softblue', 'paleyellow', 'custom'];
     
     // Test that updateChangedConfigValues works with all background options
     supportedBackgrounds.forEach(background => {

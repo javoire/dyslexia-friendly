@@ -12,6 +12,7 @@ export interface UserConfig {
   fontSize: number;
   backgroundEnabled: boolean;
   backgroundChoice: string;
+  customBackgroundColor: string;
 }
 
 export type ConfigKey = keyof UserConfig;
@@ -33,6 +34,7 @@ export const DEFAULT_CONFIG: UserConfig = {
   fontSize: 1.0,
   backgroundEnabled: false,
   backgroundChoice: 'none',
+  customBackgroundColor: '#fdf6e3',
 };
 
 export const updateChangedConfigValues = (

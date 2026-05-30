@@ -99,8 +99,19 @@ function updateUiFromConfig(
 
   // toggle background
   removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
-  if (config.backgroundEnabled && config.backgroundChoice !== 'none') {
+  body.css('background-color', '');
+  if (config.backgroundEnabled && config.backgroundChoice === 'custom') {
+    body.css('background-color', config.customBackgroundColor);
+  } else if (config.backgroundEnabled && config.backgroundChoice !== 'none') {
     body.addClass(BACKGROUND_CLASS_PREFIX + config.backgroundChoice);
+  }
+
+  // only show the custom color picker when the custom background is selected
+  const customColorWrapper = $('#background-custom-color-wrapper');
+  if (config.backgroundChoice === 'custom') {
+    customColorWrapper.show();
+  } else {
+    customColorWrapper.hide();
   }
 
   // toggle visible sections
