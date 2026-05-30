@@ -45,9 +45,16 @@ $(document).ready(function () {
         body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
       }
 
-      // remove previous background class
+      // remove previous background class and inline color
       removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
-      if (config.backgroundEnabled && config.backgroundChoice !== 'none') {
+      body.css('background-color', '');
+      if (config.backgroundEnabled && config.backgroundChoice === 'custom') {
+        // custom color is applied inline instead of via a preset class
+        body.css('background-color', config.customBackgroundColor);
+      } else if (
+        config.backgroundEnabled &&
+        config.backgroundChoice !== 'none'
+      ) {
         body.addClass(BACKGROUND_CLASS_PREFIX + config.backgroundChoice);
       }
 
@@ -67,6 +74,7 @@ $(document).ready(function () {
       body.removeClass(CSS_NAMESPACE);
       removeClassStartsWith(body, FONT_CLASS_PREFIX);
       removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
+      body.css('background-color', '');
       applyFontScale(root, false, config.fontSize);
       ruler.hide();
     }
