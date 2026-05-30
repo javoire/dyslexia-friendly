@@ -24,11 +24,14 @@ const FONT_COLOR_STYLE_ID = 'dyslexia-friendly-font-color-style';
  * Apply (or clear) the user's chosen text color.
  *
  * Background presets and the namespace CSS set `color` with `!important` on
- * `body *` and various content selectors, so a plain inline style on `body`
- * can't win for descendants. We inject a dedicated <style> element whose
- * selectors match those of the presets (same specificity) but appear later in
- * document order, so the user's explicit choice wins. The style is removed
- * entirely when disabled so no leftover state remains.
+ * `body`, `body *`, and various content containers (article/main/section/p and
+ * matched divs), so a plain inline style on `body` can't win for descendants.
+ * Among `!important` rules the winner is decided by specificity: the preset
+ * container rules reach up to (0,3,2) (two namespace classes + a class-matching
+ * attribute + two element names). We therefore repeat the namespace class four
+ * times so our selector is (0,4,1) for descendants — a higher class count that
+ * beats every preset rule regardless of its element/attribute parts. The style
+ * is removed entirely when disabled so no leftover state remains.
  */
 function applyFontColor(enabled: boolean, color: string): void {
   const existing = document.getElementById(FONT_COLOR_STYLE_ID);
@@ -38,7 +41,8 @@ function applyFontColor(enabled: boolean, color: string): void {
     }
     return;
   }
-  const css = `body.${CSS_NAMESPACE},body.${CSS_NAMESPACE} *{color:${color} !important;}`;
+  const ns = `.${CSS_NAMESPACE}`.repeat(4);
+  const css = `body${ns},body${ns} *{color:${color} !important;}`;
   if (existing) {
     existing.textContent = css;
   } else {
