@@ -6,9 +6,9 @@ import '../../shared/css/fonts.css';
 
 import '../css/popup.css';
 
-import { formToConfig, debug, removeClassStartsWith } from './lib/util';
-import { FONT_CLASS_PREFIX, BACKGROUND_CLASS_PREFIX } from './lib/consts';
+import { formToConfig, debug } from './lib/util';
 import { DEFAULT_CONFIG, UserConfig } from './lib/store';
+import { updateUiFromConfig } from './lib/popupForm';
 
 // Last-known per-site blacklist (RAN-21). The live-preview push builds its
 // payload from the form, which has no disabledSites field; we merge this in so
@@ -138,95 +138,6 @@ function saveFormStateToStore(
   );
 }
 
-/**
- * Update UI state from config
- */
-function updateUiFromConfig(
-  config: UserConfig,
-  inputs: JQuery<HTMLElement>,
-  body: JQuery<HTMLElement>,
-  ruler: JQuery<HTMLElement>,
-): void {
-  debug('Updating popup UI with config:', config);
-
-  // update all form input states
-  inputs.each(function (this: HTMLElement) {
-    const inputElement = this as HTMLInputElement;
-    const value = config[inputElement.name as keyof UserConfig];
-    switch (inputElement.type) {
-      case 'radio':
-        inputElement.checked = value === inputElement.value;
-        break;
-      case 'checkbox':
-        inputElement.checked = !!value;
-        break;
-      default:
-        inputElement.value = String(value);
-        break;
-    }
-  });
-
-  // update ruler
-  updateRulerSize(ruler, config.rulerSize);
-  updateRulerOpacity(ruler, config.rulerOpacity);
-  updateRulerColor(ruler, config.rulerColor);
-
-  // toggle font
-  removeClassStartsWith(body, FONT_CLASS_PREFIX);
-  body.addClass(FONT_CLASS_PREFIX + config.fontChoice);
-
-  // update font size value display
-  $('#font-size-value').text(config.fontSize.toFixed(1) + 'x');
-
-  const fontSizeEnabled = !!config.fontSizeEnabled;
-  const fontSizeRange = $('#font-size-range');
-  fontSizeRange.prop('disabled', !fontSizeEnabled);
-
-  // toggle background
-  removeClassStartsWith(body, BACKGROUND_CLASS_PREFIX);
-  body.css('background-color', '');
-  if (config.backgroundEnabled && config.backgroundChoice === 'custom') {
-    body.css('background-color', config.customBackgroundColor);
-  } else if (config.backgroundEnabled && config.backgroundChoice !== 'none') {
-    body.addClass(BACKGROUND_CLASS_PREFIX + config.backgroundChoice);
-  }
-
-  // toggle font (text) color live preview in the popup
-  body.css('color', '');
-  if (config.fontColorEnabled) {
-    body.css('color', config.fontColor);
-  }
-
-  // only show the custom color picker when the custom background is selected
-  const customColorWrapper = $('#background-custom-color-wrapper');
-  if (config.backgroundChoice === 'custom') {
-    customColorWrapper.show();
-  } else {
-    customColorWrapper.hide();
-  }
-
-  // toggle visible sections
-  const visibleSections = $('[data-show-when]');
-  visibleSections.each(function (this: HTMLElement) {
-    const elem = $(this);
-
-    // grab the data attr that controls when to show this element
-    const showWhen = elem.data('show-when') as string;
-
-    // very rudimentary support for and-operator...
-    const show = showWhen
-      .split('&&')
-      .map((s: string) => config[s.trim() as keyof UserConfig])
-      .every(Boolean);
-
-    if (show) {
-      elem.show();
-    } else {
-      elem.hide();
-    }
-  });
-}
-
 window.onload = function () {
   $(document).ready(function () {
     const inputs = $('#configForm input');
@@ -313,26 +224,4 @@ window.onload = function () {
     // per-site blacklist toggle (RAN-21)
     setupDisableSiteToggle();
   });
-};
-
-const updateRulerSize = function (
-  ruler: JQuery<HTMLElement>,
-  value: number,
-): void {
-  ruler.css('height', value);
-  ruler.css('marginTop', -value / 2);
-};
-
-const updateRulerOpacity = function (
-  ruler: JQuery<HTMLElement>,
-  value: number,
-): void {
-  ruler.css('opacity', value);
-};
-
-const updateRulerColor = function (
-  ruler: JQuery<HTMLElement>,
-  value: string,
-): void {
-  ruler.css('background-color', value);
 };
