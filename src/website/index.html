@@ -20,58 +20,105 @@
     <title>Dyslexia Friendly - A browser extension for dyslexia</title>
   </head>
   <body>
-    <header>
-      <a href="/">
-        <div class="header-title">
-          <div class="logo">
-            <img src="../shared/img/icon-128.png" alt="" />
+    <!--
+      RAN-176: the ENTIRE marketing page lives inside #site-root. The popup is a
+      sibling (below), so applying the extension styles to #site-root transforms
+      the whole site live while leaving the popup chrome untouched. The ruler is
+      a child of #site-root and follows the cursor across the page.
+    -->
+    <div id="site-root">
+      <div id="dyslexia-friendly-ruler-site"></div>
+      <header>
+        <a href="/">
+          <div class="header-title">
+            <div class="logo">
+              <img src="../shared/img/icon-128.png" alt="" />
+            </div>
+            <h2>Dyslexia Friendly</h2>
           </div>
-          <h2>Dyslexia Friendly</h2>
-        </div>
-      </a>
-      <a
-        class="get-extension"
-        href="https://chromewebstore.google.com/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo?hl=en&authuser=0"
-        target="_blank"
-        >+ get extension</a
-      >
-    </header>
-    <main>
-      <div class="hero">
-        <img class="popup-image non-mobile" src="./img/popup.png" alt="" />
-        <div class="hero-text">
-          <h1>Dyslexia Friendly</h1>
-          <p>
-            Dyslexia Friendly is a Google Chrome
-            <strong>browser extension</strong> that increases readability of
-            websites.
-          </p>
-          <p>
-            Uses fonts that are easier to read and adds visual enhancements.
-          </p>
-          <img class="popup-image mobile" src="./img/popup.png" alt="" />
-          <a
-            class="get-extension"
-            href="https://chromewebstore.google.com/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo?hl=en&authuser=0"
-            target="_blank"
-            >+ get extension</a
-          >
-        </div>
-      </div>
-      <div class="wiki-screenie">
-        <img src="./img/wikiscreenielight.png" alt="" />
-      </div>
-    </main>
-    <footer>
-      <a href="/">Home</a>
-      |
-      <a href="/privacy-policy.html">Privacy Policy</a>
-      <span class="copyright">
-        Copyright &copy; <span class="copyright-year"></span>
-        <a style="font-weight: normal" href="https://randomcreations.wtf"
-          >randomcreations.wtf</a
+        </a>
+        <a
+          class="get-extension"
+          href="https://chromewebstore.google.com/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo?hl=en&authuser=0"
+          target="_blank"
+          >+ get extension</a
         >
-      </span>
-    </footer>
+      </header>
+      <main>
+        <div class="hero">
+          <div class="hero-text">
+            <h1>Dyslexia Friendly</h1>
+            <p>
+              Dyslexia Friendly is a Google Chrome
+              <strong>browser extension</strong> that increases readability of
+              websites.
+            </p>
+            <p>
+              Uses fonts that are easier to read and adds visual enhancements.
+              <strong>This very page is being rendered by the extension</strong>
+              — tweak the controls and watch it change.
+            </p>
+            <a
+              class="get-extension"
+              href="https://chromewebstore.google.com/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo?hl=en&authuser=0"
+              target="_blank"
+              >+ get extension</a
+            >
+          </div>
+        </div>
+
+        <!-- Sample body text (the Wikipedia "Dyslexia" intro) so visitors can
+             see the extension transform real article content, not just the
+             hero. It is ordinary page content now — not a separate panel. -->
+        <article class="sample-article">
+          <h2>Dyslexia</h2>
+          <p>
+            Dyslexia, also known as reading disorder, is a
+            <span class="highlight">neurodevelopmental</span> condition in which
+            people have difficulty reading despite normal intelligence.
+            Different people are affected to different degrees.
+          </p>
+          <p>
+            Problems may include difficulties in spelling words, reading
+            quickly, writing words, sounding out words in the head, pronouncing
+            words when reading aloud, and understanding what one reads. Often
+            these difficulties are first noticed at school.
+          </p>
+          <p>
+            The cause of dyslexia is believed to involve both genetic and
+            environmental factors. Some cases run in families. Dyslexia that
+            develops due to a traumatic brain injury, stroke, or dementia is
+            sometimes called acquired dyslexia.
+          </p>
+          <p>
+            Treatment involves adjusting teaching methods to meet the person's
+            needs. While not curing the underlying problem, it may decrease the
+            degree or impact of symptoms. Treatments targeting vision are not
+            effective.
+          </p>
+        </article>
+      </main>
+      <footer>
+        <a href="/">Home</a>
+        |
+        <a href="/privacy-policy.html">Privacy Policy</a>
+        <span class="copyright">
+          Copyright &copy; <span class="copyright-year"></span>
+          <a style="font-weight: normal" href="https://randomcreations.wtf"
+            >randomcreations.wtf</a
+          >
+        </span>
+      </footer>
+    </div>
+
+    <!--
+      The real extension popup form, floating top-right like the Chrome popup.
+      Sibling of #site-root => exempt from the live transform; stays clean and
+      usable. See index.css for the floating/responsive layout.
+    -->
+    <div id="popup-wrapper" class="floating-popup">
+      <p class="floating-popup-hint">Live demo &mdash; try the controls</p>
+      <%= configFormHtml %>
+    </div>
   </body>
 </html>

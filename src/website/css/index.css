@@ -3,6 +3,13 @@ html {
   font-family: 'opendyslexic', sans-serif;
 }
 
+/* RAN-176: the whole marketing page lives in #site-root and is what the popup
+   transforms. min-height: 100vh so a chosen background color/preset fills the
+   viewport, not just the content height. */
+#site-root {
+  min-height: 100vh;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -88,21 +95,80 @@ footer {
   margin-bottom: 40px;
 }
 
-.popup-image {
-  margin-top: 30px;
-  margin-bottom: 20px;
+/* Sample article (Wikipedia "Dyslexia") shown as ordinary page content so the
+   live transform is visible on real body text. */
+.sample-article {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 0 4px;
+}
+.sample-article h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.sample-article p {
+  margin: 12px 0;
+  line-height: 1.6;
 }
 
-.popup-image.non-mobile {
-  display: none;
+/* Floating popup (RAN-176): the real extension form, docked top-right like the
+   Chrome popup, floating above the page. Sibling of #site-root, so it stays
+   clean while the page behind it transforms. z-index sits above the ruler
+   (z-index 1e10 in contentscript.css) so the ruler never covers the controls. */
+.floating-popup {
+  position: fixed;
+  /* Sit below the fixed header so the panel never covers the site
+     logo/title at top-left. */
+  top: 84px;
+  left: 16px;
+  z-index: 2147483647;
+  width: 360px;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.22);
+  box-sizing: border-box;
 }
-.wiki-screenie {
-  margin-top: 40px;
-  margin-bottom: 40px;
+
+/* The shared popup chrome (#popup-wrapper) carries a 350px min-width sized for
+   the Chrome popup; cap the floating instance to its frame so it can shrink to
+   the bottom-sheet width on narrow viewports without overflowing. */
+#popup-wrapper.floating-popup {
+  min-width: 0;
+}
+
+.floating-popup-hint {
+  background-color: #1a56db;
+  color: #fff;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+  padding: 8px 12px;
+  margin: 0;
 }
 
 .copyright {
   float: right;
+}
+
+/* Narrow/medium viewports: dock the popup as a full-width bottom sheet. Below
+   1024px there isn't room for the left-docked card plus its gutter and the page
+   content without the fixed header colliding, so use the sheet instead. */
+@media (max-width: 1023px) {
+  .floating-popup {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-height: 60vh;
+    border-radius: 12px 12px 0 0;
+  }
+  /* keep page content clear of the docked sheet */
+  #site-root {
+    padding-bottom: 60vh;
+  }
 }
 
 @media (min-width: 768px) {
@@ -136,9 +202,6 @@ footer {
     font-size: 1.3em;
     display: inline-block;
   }
-  .hero .popup-image.non-mobile {
-    max-height: 570px;
-  }
   .hero p {
     font-size: 1.2em;
   }
@@ -152,11 +215,15 @@ footer {
   .header-title img {
     max-height: 50px;
   }
+}
 
-  .popup-image.mobile {
-    display: none;
-  }
-  .popup-image.non-mobile {
-    display: block;
+/* The popup left-docks only at >=1024px (below that it's a bottom sheet).
+   Reserve a left gutter the width of the docked card so the page header,
+   hero, and content never slide under it. */
+@media (min-width: 1024px) {
+  header,
+  main,
+  footer {
+    padding-left: 400px;
   }
 }
