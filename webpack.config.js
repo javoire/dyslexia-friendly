@@ -1,4 +1,5 @@
 import webpack from 'webpack';
+import fs from 'fs';
 import path from 'path';
 import CopyWebpackPlugin from 'copy-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
@@ -10,11 +11,20 @@ import { CleanWebpackPlugin } from 'clean-webpack-plugin';
 import WebpackStringReplacer from 'webpack-string-replacer';
 
 import env from './utils/env.js';
+import postcssScopeSite from './utils/postcss-scope-site.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const sharedSrcPath = path.join(__dirname, 'src/shared');
+
+// The popup configForm markup, shared verbatim by the extension popup and the
+// marketing-site live demo (RAN-176). Injected into both templates via
+// HtmlWebpackPlugin's `templateParameters` so neither page duplicates it.
+const configFormHtml = fs.readFileSync(
+  path.join(sharedSrcPath, 'html/configForm.html'),
+  'utf8',
+);
 const extensionSrcPath = path.join(__dirname, 'src/extension');
 const extensionOutPath = path.join(__dirname, 'build/extension');
 const websiteSrcPath = path.join(__dirname, 'src/website');
@@ -53,12 +63,39 @@ const sharedConfig = {
         },
       },
       {
+        // Don't run html-loader on the HtmlWebpackPlugin entry templates:
+        // they must reach the plugin's built-in lodash compiler so the
+        // `<%= configFormHtml %>` shared-partial injection (RAN-176) and
+        // `templateParameters` are evaluated. html-loader would otherwise turn
+        // the template into a module and emit the interpolation verbatim.
         test: /\.html$/,
         use: ['html-loader'],
-        exclude: /node_modules/,
+        exclude: [/node_modules/, /popup\.html$/, /index\.html$/],
+      },
+      {
+        // Site-scoped import of contentscript.css (RAN-176): re-scope every
+        // `body`/`html`/`#dyslexia-friendly-ruler` selector to `#site-root`
+        // via the postcss-scope-site plugin so the whole marketing page (which
+        // lives inside #site-root) reacts to the popup, while reusing
+        // contentscript.css verbatim (single source of truth, no synced copy).
+        test: /\.css$/,
+        resourceQuery: /site/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [postcssScopeSite()],
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.css$/,
+        resourceQuery: { not: [/site/] },
         use: [MiniCssExtractPlugin.loader, 'css-loader', 'postcss-loader'],
       },
     ],
@@ -139,6 +176,7 @@ const extensionConfig = {
       template: path.join(extensionSrcPath, 'popup.html'),
       filename: extensionOutPath + '/popup.html',
       chunks: ['popup'],
+      templateParameters: { configFormHtml },
     }),
     new HtmlWebpackPlugin({
       template: path.join(extensionSrcPath, 'about.html'),
@@ -183,10 +221,22 @@ const websiteConfig = {
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['website'],
     }),
+    // Website images aren't imported anywhere (referenced via static src in
+    // index.html), so copy them into the build. Without this the mobile popup
+    // fallback (popup.png) 404s on narrow viewports (RAN-176).
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: websiteSrcPath + '/img',
+          to: 'img',
+        },
+      ],
+    }),
     new HtmlWebpackPlugin({
       template: path.join(websiteSrcPath, 'index.html'),
       filename: websiteOutPath + '/index.html',
       chunks: ['index'],
+      templateParameters: { configFormHtml },
     }),
     new HtmlWebpackPlugin({
       template: path.join(websiteSrcPath, 'privacy-policy.html'),
