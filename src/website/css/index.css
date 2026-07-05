@@ -218,12 +218,13 @@ footer {
 }
 
 /* The popup left-docks only at >=1024px (below that it's a bottom sheet).
-   Reserve a left gutter the width of the docked card so the page header,
-   hero, and content never slide under it. */
+   Shift the content block right of the docked card with a left margin (not
+   padding) so the page clears the panel without shrinking the content box —
+   the existing max-width/auto right margin keeps it from going edge-to-edge. */
 @media (min-width: 1024px) {
   header,
   main,
   footer {
-    padding-left: 400px;
+    margin-left: 392px;
   }
 }
