@@ -30,16 +30,10 @@ jobs:
         uses: cycjimmy/semantic-release-action@v4
         with:
           extra_plugins: |
-            @semantic-release/changelog
-            @semantic-release/git
             @semantic-release/exec
             conventional-changelog-conventionalcommits
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Checkout new tag
-        if: steps.release.outputs.new_release_published == 'true'
-        run: git checkout "v${{ steps.release.outputs.new_release_version }}"
 
       - name: Install dependencies
         if: steps.release.outputs.new_release_published == 'true'
