@@ -179,7 +179,7 @@ footer {
     padding-top: 60px;
     padding-bottom: 60px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
   }
   .hero h1 {
@@ -190,8 +190,6 @@ footer {
 
   .hero .hero-text {
     max-width: 700px;
-    margin-left: 40px;
-    margin-right: 40px;
   }
   header .get-extension {
     padding: 10px 30px;
@@ -218,13 +216,28 @@ footer {
 }
 
 /* The popup left-docks only at >=1024px (below that it's a bottom sheet).
-   Shift the content block right of the docked card with a left margin (not
-   padding) so the page clears the panel without shrinking the content box —
-   the existing max-width/auto right margin keeps it from going edge-to-edge. */
+   The page then reads as "left panel + content column": everything clears the
+   panel and shares one left edge (408px), rather than a wide box centered in
+   the shoved-over space with a dead gap after the panel. */
 @media (min-width: 1024px) {
-  header,
+  /* Header is a full-width fixed bar: clear the panel on the left, keep the
+     "get extension" action at the top-right corner. */
+  header {
+    max-width: none;
+    margin: 0;
+    padding-left: 408px;
+  }
+  /* Main/footer form a left-aligned reading column hugging the panel; its left
+     edge (margin 392 + padding 16 = 408px) lines up with the header title. */
   main,
   footer {
     margin-left: 392px;
+    margin-right: auto;
+    max-width: 840px;
+  }
+  /* Left-align the article with the column instead of auto-centering it. */
+  .sample-article {
+    margin-left: 0;
+    margin-right: 0;
   }
 }
