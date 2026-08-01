@@ -58,9 +58,16 @@
             </p>
             <p>
               Uses fonts that are easier to read and adds visual enhancements.
-              <strong>This very page is being rendered by the extension</strong>
-              — tweak the controls and watch it change.
+              <!-- Only true where the live demo actually renders (>=1024px). -->
+              <span class="demo-only"
+                ><strong
+                  >This very page is being rendered by the extension</strong
+                >
+                — tweak the controls and watch it change.</span
+              >
             </p>
+            <!-- Stand-in for the live demo on screens too small to fit it. -->
+            <img class="popup-image" src="./img/popup.png" alt="" />
             <a
               class="get-extension"
               href="https://chromewebstore.google.com/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo?hl=en&authuser=0"
@@ -72,34 +79,46 @@
 
         <!-- Sample body text (the Wikipedia "Dyslexia" intro) so visitors can
              see the extension transform real article content, not just the
-             hero. It is ordinary page content now — not a separate panel. -->
-        <article class="sample-article">
-          <h2>Dyslexia</h2>
-          <p>
-            Dyslexia, also known as reading disorder, is a
-            <span class="highlight">neurodevelopmental</span> condition in which
-            people have difficulty reading despite normal intelligence.
-            Different people are affected to different degrees.
-          </p>
-          <p>
-            Problems may include difficulties in spelling words, reading
-            quickly, writing words, sounding out words in the head, pronouncing
-            words when reading aloud, and understanding what one reads. Often
-            these difficulties are first noticed at school.
-          </p>
-          <p>
-            The cause of dyslexia is believed to involve both genetic and
-            environmental factors. Some cases run in families. Dyslexia that
-            develops due to a traumatic brain injury, stroke, or dementia is
-            sometimes called acquired dyslexia.
-          </p>
-          <p>
-            Treatment involves adjusting teaching methods to meet the person's
-            needs. While not curing the underlying problem, it may decrease the
-            degree or impact of symptoms. Treatments targeting vision are not
-            effective.
-          </p>
-        </article>
+             hero. Framed in a mock browser window so the demo reads as a real
+             page being restyled beneath the popup hovering at the top-right. -->
+        <div class="browser-mock">
+          <div class="browser-bar">
+            <span class="browser-dots" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </span>
+            <span class="browser-url">en.wikipedia.org/wiki/Dyslexia</span>
+          </div>
+          <article class="sample-article">
+            <h2>Dyslexia</h2>
+            <p class="article-subtitle">
+              From Wikipedia, the free encyclopedia
+            </p>
+            <p>
+              Dyslexia, also known as reading disorder, is a
+              <span class="highlight">neurodevelopmental</span> condition in
+              which people have difficulty reading despite normal intelligence.
+              Different people are affected to different degrees.
+            </p>
+            <p>
+              Problems may include difficulties in spelling words, reading
+              quickly, writing words, sounding out words in the head,
+              pronouncing words when reading aloud, and understanding what one
+              reads. Often these difficulties are first noticed at school.
+            </p>
+            <p>
+              The cause of dyslexia is believed to involve both genetic and
+              environmental factors. Some cases run in families. Dyslexia that
+              develops due to a traumatic brain injury, stroke, or dementia is
+              sometimes called acquired dyslexia.
+            </p>
+            <p>
+              Treatment involves adjusting teaching methods to meet the person's
+              needs. While not curing the underlying problem, it may decrease
+              the degree or impact of symptoms. Treatments targeting vision are
+              not effective.
+            </p>
+          </article>
+        </div>
       </main>
       <footer>
         <a href="/">Home</a>
@@ -122,6 +141,12 @@
     <div id="popup-wrapper" class="floating-popup">
       <p class="floating-popup-hint">Live demo &mdash; try the controls</p>
       <%= configFormHtml %>
+      <a
+        class="get-extension floating-popup-cta"
+        href="https://chromewebstore.google.com/detail/dyslexia-friendly/miepjgfkkommhllbbjaedffcpkncboeo?hl=en&authuser=0"
+        target="_blank"
+        >+ get extension</a
+      >
     </div>
   </body>
 </html>
