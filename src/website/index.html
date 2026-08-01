@@ -32,7 +32,10 @@
         <a href="/">
           <div class="header-title">
             <div class="logo">
-              <img src="../shared/img/icon-128.png" alt="" />
+              <!-- CopyWebpackPlugin emits the shared icon to img/; this
+                   template is excluded from html-loader (RAN-176) so the src
+                   is used verbatim and must match the emitted path. -->
+              <img src="./img/icon-128.png" alt="" />
             </div>
             <h2>Dyslexia Friendly</h2>
           </div>
