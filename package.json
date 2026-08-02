@@ -69,7 +69,7 @@
     "ts-node": "^10.9.2",
     "tw-elements": "^2.0.0",
     "typescript": "^5.7.2",
-    "webpack": "^5.94.0",
+    "webpack": "^5.109.2",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.2",
     "webpack-string-replacer": "^0.0.20",
