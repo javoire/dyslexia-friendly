@@ -53,11 +53,11 @@ label[for='font-opendyslexicmono-radio'] {
   font-family: 'opendyslexicmono' !important;
 }
 
-p {
+#popup-wrapper p {
   margin: 10px 0;
 }
 
-a {
+#popup-wrapper a {
   font-weight: bold;
 }
 

@@ -3,6 +3,13 @@ html {
   font-family: 'opendyslexic', sans-serif;
 }
 
+/* RAN-176: the whole marketing page lives in #site-root and is what the popup
+   transforms. min-height: 100vh so a chosen background color/preset fills the
+   viewport, not just the content height. */
+#site-root {
+  min-height: 100vh;
+}
+
 header {
   position: fixed;
   top: 0;
@@ -14,8 +21,22 @@ header {
   /*padding-top: 32px;*/
   /*padding-bottom: 32px;*/
   padding-top: 12px;
-  padding-bottom: 12px;
-  background-color: #f2f2f2;
+  padding-bottom: 24px;
+  /* Fade the page out beneath the fixed bar rather than cutting it off against
+     a hard edge. Opaque behind the logo/CTA, transparent by the bottom. */
+  background: linear-gradient(
+    to bottom,
+    #f2f2f2 0%,
+    #f2f2f2 55%,
+    rgba(242, 242, 242, 0) 100%
+  );
+  /* The transparent tail must not swallow clicks meant for the content
+     scrolling underneath it; the bar's own links opt back in. */
+  pointer-events: none;
+}
+
+header a {
+  pointer-events: auto;
 }
 
 main {
@@ -34,8 +55,12 @@ footer {
   /*padding-right: 44px;*/
   padding-left: 16px;
   padding-right: 16px;
-  max-width: 1440px;
-  margin-left: auto;
+  max-width: 1400px;
+  /* Left-aligned rather than centred: the popup floats at the top-right, so
+     hugging the left keeps content and popup on opposite sides instead of
+     leaving a gap down the middle. The desktop rule below adds the left gutter
+     so "left-aligned" doesn't mean flush against the viewport edge. */
+  margin-left: 0;
   margin-right: auto;
 }
 
@@ -49,8 +74,12 @@ footer {
 .header-title img {
   max-height: 30px;
 }
+/* Spacing from the logo. The header's own 16px padding is what lines the block
+   up with the page content below, so the logo edge — not the text — aligns.
+   Vertical margins are zeroed: flex centres the margin box, so an inherited
+   bottom margin would push the text off-centre against the logo. */
 .header-title h2 {
-  margin-left: 10px;
+  margin: 0 0 0 10px;
 }
 
 .get-extension {
@@ -88,21 +117,201 @@ footer {
   margin-bottom: 40px;
 }
 
-.popup-image {
-  margin-top: 30px;
-  margin-bottom: 20px;
+/* Mock browser window framing the Wikipedia sample, so the live demo reads as
+   a real page being restyled under the popup hovering at the top-right. */
+.browser-mock {
+  margin: 40px 0 0;
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: #fff;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.14);
 }
 
-.popup-image.non-mobile {
+.browser-bar {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 14px;
+  background-color: #e4e4e4;
+  border-bottom: 1px solid #d2d2d2;
+}
+
+.browser-dots {
+  display: flex;
+  flex: none;
+  gap: 6px;
+}
+.browser-dots i {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  background-color: #c6c6c6;
+}
+
+/* The address field: neutral chrome, never restyled to look like body copy. */
+.browser-url {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background-color: #fff;
+  color: #5f5f5f;
+  font-size: 13px;
+}
+
+/* Sample article (Wikipedia "Dyslexia") shown as ordinary page content so the
+   live transform is visible on real body text. */
+.sample-article {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 28px 24px 36px;
+}
+.sample-article h2 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 4px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #d8d8d8;
+}
+.sample-article .article-subtitle {
+  margin: 0 0 16px;
+  font-size: 13px;
+  font-style: italic;
+  color: #6a6a6a;
+}
+.sample-article p {
+  margin: 12px 0;
+  line-height: 1.6;
+}
+
+/* Floating popup (RAN-176): the real extension form, hovering at the top-right
+   exactly like the Chrome popup dropping from the toolbar icon. Sibling of
+   #site-root, so it stays clean while the page behind it transforms. z-index
+   sits above the ruler (z-index 1e10 in contentscript.css) so the ruler never
+   covers the controls. */
+.floating-popup {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  z-index: 2147483647;
+  width: 360px;
+  max-height: calc(100vh - 24px);
+  overflow-y: auto;
+  /* Chrome's popup: tight radius, no border, and a strong ambient shadow that
+     lifts it clearly off the page it is transforming. */
+  border-radius: 12px;
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 12px 32px rgba(0, 0, 0, 0.24);
+  box-sizing: border-box;
+}
+
+/* The shared popup chrome (#popup-wrapper) carries a 350px min-width sized for
+   the Chrome popup; cap the floating instance to its frame so it can shrink to
+   the bottom-sheet width on narrow viewports without overflowing. */
+#popup-wrapper.floating-popup {
+  min-width: 0;
+}
+
+/* Trim popup chrome that only makes sense inside the real extension: the title
+   row (the "Live demo" hint bar already labels this) and the master Enabled
+   switch (turning the demo off would just look broken). Scoped to the floating
+   instance so the extension popup itself keeps both. They stay in the DOM —
+   display:none, not removed — so the shared form's JS still binds to them. */
+/* ID-prefixed to outrank the shared `#popup-wrapper .header` rule. */
+#popup-wrapper.floating-popup .header,
+#popup-wrapper.floating-popup .popup-section:has(#master-switch) {
   display: none;
 }
-.wiki-screenie {
-  margin-top: 40px;
-  margin-bottom: 40px;
+
+/* CTA as a button within the panel's content, sharing the control sections'
+   10px inset and 5px radius so it reads as part of the stack rather than a bar
+   welded to the bottom edge. */
+#popup-wrapper.floating-popup .floating-popup-cta {
+  /* Sits in the flow normally; pins to the bottom edge only when the panel is
+     tall enough to scroll, so the CTA never falls off-screen. */
+  position: sticky;
+  bottom: 10px;
+  display: block;
+  margin: 10px;
+  padding: 10px 16px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  /* While pinned, this ring masks controls scrolling through the 10px inset
+     around the button. Matches the panel background. */
+  box-shadow: 0 0 0 10px #fff;
+}
+
+/* ID-prefixed: the shared popup CSS sets a paragraph margin at #popup-wrapper
+   specificity, which would otherwise leave a white strip above the banner. */
+#popup-wrapper.floating-popup .floating-popup-hint {
+  background-color: #1a56db;
+  color: #fff;
+  font-weight: bold;
+  font-size: 13px;
+  text-align: center;
+  padding: 8px 12px;
+  margin: 0;
 }
 
 .copyright {
   float: right;
+}
+
+/* Small screens: drop the header CTA. Chrome for Android/iOS can't install Web
+   Store extensions, so it's a dead end there — and removing it leaves the bar
+   as just logo + title on one line instead of two wrapped, colliding columns.
+   The hero keeps its button so the store listing is still reachable. */
+@media (max-width: 767px) {
+  header .get-extension {
+    display: none;
+  }
+  .header-title img {
+    max-height: 26px;
+  }
+  .header-title h2 {
+    margin-left: 8px;
+    white-space: nowrap;
+  }
+}
+
+/* Static stand-in for the live demo, shown only where the demo is hidden. */
+.popup-image {
+  display: block;
+  max-width: 100%;
+  margin: 30px 0 20px;
+}
+
+/* The live demo is desktop-only: it needs room for a 360px control panel to sit
+   beside real page content. Below that there's nowhere to put it that isn't in
+   the way, so hide it and show the popup screenshot instead — same story, no
+   unusable UI. The copy that promises interactive controls goes with it. */
+@media (max-width: 1023px) {
+  .floating-popup,
+  .demo-only {
+    display: none;
+  }
+}
+
+@media (min-width: 1024px) {
+  .popup-image {
+    display: none;
+  }
+  .demo-only {
+    display: inline;
+  }
+  /* Stop the content column short of the popup so nothing ever runs underneath
+     it. The popup occupies the rightmost 372px (360 wide + 12 offset); reserving
+     396px leaves the column an ~80px gap once its own 56px padding is counted.
+     Past ~1796px the 1400px cap binds first and the gap just grows. */
+  main,
+  footer {
+    max-width: min(1400px, calc(100vw - 396px));
+  }
 }
 
 @media (min-width: 768px) {
@@ -113,7 +322,7 @@ footer {
     padding-top: 60px;
     padding-bottom: 60px;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: flex-start;
     align-items: center;
   }
   .hero h1 {
@@ -124,8 +333,6 @@ footer {
 
   .hero .hero-text {
     max-width: 700px;
-    margin-left: 40px;
-    margin-right: 40px;
   }
   header .get-extension {
     padding: 10px 30px;
@@ -136,14 +343,19 @@ footer {
     font-size: 1.3em;
     display: inline-block;
   }
-  .hero .popup-image.non-mobile {
-    max-height: 570px;
-  }
   .hero p {
     font-size: 1.2em;
   }
+  /* Desktop left gutter for the page body. The header keeps the original
+     16px so the logo stays tucked in the corner like a site chrome bar,
+     rather than indenting with the content. */
+  main,
+  footer {
+    padding-left: 56px;
+    padding-right: 56px;
+  }
   header {
-    padding: 20px 24px;
+    padding: 20px 16px;
   }
   .header-title h2 {
     font-size: 1.4em;
@@ -152,11 +364,28 @@ footer {
   .header-title img {
     max-height: 50px;
   }
+}
 
-  .popup-image.mobile {
+/* The page is laid out as if the popup weren't there — it simply floats over it,
+   the way the real Chrome popup overlays whatever page you open it on.
+
+   The header's right-aligned CTA is the one thing that would sit *under* the
+   popup rather than beside it, so hide it while the popup is top-docked and
+   wide enough to reach it. The hero's identical "+ get extension" button is
+   still on screen, so nothing is lost. Upper bound: with the column pinned
+   left, the header's right edge is min(vw, 1400) - 16 and the popup's left edge
+   is vw - 372; those stop overlapping once the viewport passes ~1756px. */
+@media (min-width: 1024px) and (max-width: 1755px) {
+  header .get-extension {
     display: none;
   }
-  .popup-image.non-mobile {
-    display: block;
+}
+
+/* Generous hero indent, but only once there's room to spare. Below this the
+   content column is already squeezed by the popup (min(1400px, 100vw - 396px)),
+   so the indent would come straight out of the hero's line length. */
+@media (min-width: 1400px) {
+  .hero .hero-text {
+    margin-left: 96px;
   }
 }
